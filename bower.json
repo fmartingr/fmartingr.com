@@ -1,0 +1,23 @@
+{
+  "name": "fmartingrcom",
+  "description": "fmartingr.com",
+  "main": "gulpfile.js",
+  "authors": [
+    "Felipe Martin"
+  ],
+  "license": "GPLv2",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "fmartingrcom/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "google-code-prettify": "~1.0.4"
+  }
+}

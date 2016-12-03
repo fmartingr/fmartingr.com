@@ -1,0 +1,11 @@
+{% macro render_blog_post(post, from_index=false) %}
+  <article class="center">
+    <h1><a href="{{ post|url }}">{{ post.title }}</a></h1>
+    <div class="info">
+      Published on {{ post.pub_date }}. // <a href="#">No comments.</a>
+    </div>
+    <div class="content">
+      {{ post.body }}
+    </div>
+  </article>
+{% endmacro %}

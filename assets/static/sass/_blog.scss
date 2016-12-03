@@ -1,0 +1,20 @@
+body.blog {
+    &.post {
+        article {
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 0.3em;
+            }
+            .info {
+                font-size: 0.9em;
+            }
+            .content {
+                margin-top: 1em;
+
+                &.md {
+                    img { margin: 0 auto; }
+                }
+            }
+        }
+    }
+}

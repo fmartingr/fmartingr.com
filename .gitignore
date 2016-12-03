@@ -1,0 +1,10 @@
+# node/bower
+node_modules
+bower_components
+
+# emacs
+*~
+
+# static js
+assets/static/js
+assets/static/css

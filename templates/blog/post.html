@@ -1,0 +1,8 @@
+{% extends "blog/_base.html" %}
+{% from "macros/blog.html" import render_blog_post %}
+
+{% block main_content %}
+  {{ render_blog_post(this) }}
+{% endblock %}
+
+{% block body_class %}blog post{% endblock %}
