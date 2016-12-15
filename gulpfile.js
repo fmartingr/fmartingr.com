@@ -12,7 +12,6 @@ var livereload = require('gulp-livereload');
 var yargs = require('yargs').argv;
 var minify = require('gulp-minify');
 
-
 gulp.task('sass', function () {
   var sassStream = gulp.src('./assets/static/sass/style.scss')
              .pipe(sass().on('error', sass.logError))
@@ -27,10 +26,11 @@ gulp.task('sass', function () {
 });
 
 gulp.task('js', function () {
-  var bowerStream = gulp.src([
-    './bower_components/google-code-prettify/bin/run_prettify.min.js'
-  ])
-  return bowerStream
+  var jsStream = gulp.src([
+    './bower_components/google-code-prettify/bin/prettify.min.js',
+    './assets/static/js/main.js'
+  ]);
+  return jsStream
          .pipe(concatJs('app.js'))
          .pipe(minify({
            exclude: [],
@@ -45,6 +45,6 @@ gulp.task('livereload', function () {
 
 gulp.task('sass:watch', function () {
   livereload.listen();
-  gulp.watch('./templates/static/sass/**/*.scss', ['sass']);
-  gulp.watch('./templates/static/templates/**/*.html', ['livereload']);
+  gulp.watch('./assets/static/sass/**/*', ['sass']);
+  gulp.watch('./assets/static/templates/**/*.html', ['livereload']);
 });

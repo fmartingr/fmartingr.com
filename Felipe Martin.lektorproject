@@ -1,2 +1,6 @@
 [project]
 name = Felipe Martin
+
+[packages]
+lektor-disqus-comments = 0.2
+lektor-markdown-highlighter = 0.1
