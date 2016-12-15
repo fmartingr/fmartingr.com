@@ -1,0 +1,34 @@
+
+title: Emacs: Day zero
+---
+body:
+
+They tricked me.
+
+I was confortably on my Atom editor when I had to open this ugly thing.
+
+![](emacs-original.png)
+
+I'm trying to make the change. Also, to make things easier I switched my
+layout to US since all my servers have that keyboard layout but... my muscle
+memory is really good, so I still miss a lot.
+
+After a basic configuration yesterday, I thought that the best way to achieve
+this was to change completely from one to another and that's what I've done,
+work the entire day with this. At first I was slowed down a bit because I had
+to configure some keybinding I was used to and install the basic addons I use
+the most (and setup them emacs style), but after a short period I was _mostly_
+used to the harm of my little finger. It still hurts.
+
+It's a long way to go and this is only day zero but I will keep writing posts
+every one or two weeks with my improvements as a newbie guide to emacs.
+
+Also, my UI now looks _more or less_ like this:
+
+![](/media/ckeditor/2015/07/23/emacs.png)
+
+
+---
+pub_date: 2015-07-23
+---
+_template: blog/post.html

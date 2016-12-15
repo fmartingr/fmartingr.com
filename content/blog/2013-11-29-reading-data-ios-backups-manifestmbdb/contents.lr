@@ -1,0 +1,215 @@
+title: Reading data from iOS backups: Manifest.mbdb
+---
+body:
+
+<p>Recently, I&#39;ve been working on a tool to extract data from iOS backups, and one of the files that a backup have is the Manifest.mbdb (or mbdx for old versions).</p>
+
+<p>The Manifest.mbdb is a binary file that contains records for the hashed files that the backup includes, the hashed files can be anything that a certain application requires or saved, from a image thumbnail to a sqlite3 database file.</p>
+
+<p>Reading the file can be tricky, since the record itself have a variable length, so you can just split the file based on a delimiter, you need to read it byte to byte. I&#39;m going to expose here the data structures this file contains:</p>
+
+<table border="0" cellpadding="0" cellspacing="0" id="string_entity" style="width:100%">
+	<tbody>
+		<tr>
+			<td colspan="4"><strong>String entity</strong></td>
+		</tr>
+		<tr>
+			<td><strong>Type</strong></td>
+			<td><strong>Name</strong></td>
+			<td><strong>Description</strong></td>
+			<td><strong>Null value</strong></td>
+		</tr>
+		<tr>
+			<td>uint16</td>
+			<td>Lenght</td>
+			<td>Length of the string</td>
+			<td>0x0000</td>
+		</tr>
+		<tr>
+			<td>ASCII data</td>
+			<td>Data</td>
+			<td>Actual string of (length) size. Don&#39;t need to read this if length is null.</td>
+			<td><em>nothing</em></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" id="property_entity" style="width:100%">
+	<tbody>
+		<tr>
+			<td colspan="3"><strong>Property entity</strong></td>
+		</tr>
+		<tr>
+			<td><strong>Type</strong></td>
+			<td><strong>Name</strong></td>
+			<td><strong>Description</strong></td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>Key</td>
+			<td>Key of the property</td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>value</td>
+			<td>Property value</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+	<tbody>
+		<tr>
+			<td colspan="4"><strong>Record entity</strong></td>
+		</tr>
+		<tr>
+			<td><strong>Type</strong></td>
+			<td><strong>Field name</strong></td>
+			<td><strong>Description</strong></td>
+			<td><strong>Null value</strong></td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>Domain</td>
+			<td>App domain</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>Path</td>
+			<td>Path to file</td>
+			<td>0x0000</td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>Target</td>
+			<td>&nbsp;</td>
+			<td>0xFFFF</td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>Hash</td>
+			<td>SHA-1 hash of the file</td>
+			<td>0xFFFF</td>
+		</tr>
+		<tr>
+			<td><a href="#string_entity">string</a></td>
+			<td>Encription key</td>
+			<td>Encryption key -if any-</td>
+			<td>0xFFFF</td>
+		</tr>
+		<tr>
+			<td>uint16</td>
+			<td>Mode</td>
+			<td>File mode:
+			<ul>
+				<li>0xAXXX: Symlink</li>
+				<li>0x4000: Directory</li>
+				<li>0x8000: File</li>
+			</ul>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint64</td>
+			<td>inode number</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint32</td>
+			<td>User ID</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint32</td>
+			<td>Group ID</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint32</td>
+			<td>Last modified time</td>
+			<td>EPOCH</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint32</td>
+			<td>Last accesed time</td>
+			<td>EPOCH</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint32</td>
+			<td>Created time</td>
+			<td>EPOCH</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint64</td>
+			<td>File size</td>
+			<td>&nbsp;</td>
+			<td>0x0...0</td>
+		</tr>
+		<tr>
+			<td>uint8</td>
+			<td>Flag</td>
+			<td>0x1 to 0xB</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>uint8</td>
+			<td>Properties number</td>
+			<td>Number of properties to follow with this record</td>
+			<td>0x00</td>
+		</tr>
+		<tr>
+			<td><a href="#property_entity">property</a>[0...n]</td>
+			<td>Property objects</td>
+			<td>Each property object -if any-</td>
+			<td><em>nothing</em></td>
+		</tr>
+		<tr>
+			<td>--</td>
+			<td>File name</td>
+			<td>SHA1(domain + path)</td>
+			<td>&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><strong>More info:&nbsp;</strong> <a href="http://theiphonewiki.com/wiki/ITunes_Backup#Manifest.mbdb">The iPhone Wiki</a> | <a href="http://nagareshwar.securityxploded.com/wp-content/uploads/2012/09/mbdb-record.jpg">This image I found</a></p>
+
+---
+uint16 | Mode | File mode:
+
+  * 0xAXXX: Symlink
+  * 0x4000: Directory
+  * 0x8000: File
+
+|  
+uint64 | inode number |   |  
+uint32 | User ID |   |  
+uint32 | Group ID |   |  
+uint32 | Last modified time | EPOCH |  
+uint32 | Last accesed time | EPOCH |  
+uint32 | Created time | EPOCH |  
+uint64 | File size |   | 0x0...0  
+uint8 | Flag | 0x1 to 0xB |  
+uint8 | Properties number | Number of properties to follow with this record |
+0x00  
+property[0...n] | Property objects | Each property object -if any- | _nothing_  
+\-- | File name | SHA1(domain + path) |  
+  
+**More info: ** [The iPhone Wiki](http://theiphonewiki.com/wiki/ITunes_Backup#Manifest.mbdb) | [This image I found](http://nagareshwar.securityxploded.com/wp-content/uploads/2012/09/mbdb-record.jpg)
+
+
+---
+pub_date: 2013-11-29
+---
+_template: blog/post.html

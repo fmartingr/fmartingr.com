@@ -1,0 +1,22 @@
+
+title: 2016 updates
+---
+body:
+
+It's sad but I always end up not writing in the blog for some reason. I will
+post here a short TL;DR of what happened in the last months and some of the
+stuff I want to do for the site (and what I've already done).
+
+  * First of all, I got promoted at my job (this was like... months ago!) which left me with even less time that before for personal stuff. I can't believe I'm saying this but when I get out of the office the last thing I want to do is sitting in front of my computer again. 
+  * Good part, I have been trying all the stuff at work I couldn't before and adding goodies to the dev team (automatic code reviews, unit testing, deployments, etc) 
+  * Bad stuff: now I develop less than before. :_ 
+  * Also, I wasn't comfortable with how the editor on the site worked (it's a CKEditor) because I'm a big fan of markdown so I wasn't eager to do nothing until some day I did a clumsy implementation to support markdown conversion to HTML to the blog. [I also added some other goodies](https://trello.com/b/QgoVFfl2/fmartingr-com). 
+  * More stuff to the mix? I got pretty much overwhelmed with all the things I had to/want to/should do on a daily basis so my workflow was chaotic. I have been trying new habits to sort everything out and now I'm more or less comfortable with the results. And I will write an entry about that :) 
+  * Related with the last one now I'm not giving up on reading all the stuff in "the read later vault" which until not so long ago was filled with diverse stuff and articles came in but not out. 
+  * I play a bit now! Since I have thoughts and days in order now I can rest from time to time to play some videogames. It was time to remove the dust from my 3DS.
+
+
+---
+pub_date: 2016-04-08
+---
+_template: blog/post.html

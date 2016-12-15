@@ -1,0 +1,20 @@
+title: Zombiepress is here
+---
+body:
+
+It finally happened. I got tired of octopress and decided to finish what I
+started: my own blogging CMS.
+
+It's a really modest thing built with django. I've added some thing to make it
+easy to use (in my oppinion):
+
+  * settings.py main preferences (required for running the app) are set on environment variables instead of environment dependant settings files or the not so cool local_settings.py.
+  * A a key-&gt;value preferences config in the admin ([a simple django model with 3 fields](https://github.com/fmartingr/zombiepress/blob/master/zombiepress/apps/config/models.py#L5)) for settings that may be needed to modify in a live environment and would be a shame if it were on the _settings.py_ file. In example, I use it to [set some RSS preferences](https://github.com/fmartingr/zombiepress-fmartingr-theme/blob/master/blog/rss.jinja2#L4-L6) and the [Disqus shortname for the blog comments](https://github.com/fmartingr/zombiepress-fmartingr-theme/blob/master/blog/entry.jinja2#L62-L65). To disable blog comments I just need to uncheck the "pass to template" option on the required variable.
+  * Theming: Not an absolute state of the art, but it's function works: a themes folder and a variable to select one on the settings.py, I just need to create the basic theme.
+  * **(experimental)** Multilanguage support. A friend asked for a easy to use CMS with multilingual support, so I want to give it a shot. Since I never used django with managed multilingual content, it may be easy or it may be not. The code is there, someone has to try it.
+
+
+---
+pub_date: 2013-06-24
+---
+_template: blog/post.html

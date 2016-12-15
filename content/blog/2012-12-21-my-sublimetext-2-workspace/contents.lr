@@ -1,0 +1,74 @@
+
+title: My SublimeText 2 workspace
+---
+body:
+
+## Package Control
+
+Essential. Install this and forget about downloading files, updating, … Choose
+to use or not every other plugin, but this one is mandatory. Just install it.
+
+## Soda theme
+
+The best theme I've seen for SublimeText. It's really clean and elegant. Don't
+forget to use it's custom colors too!
+
+!["Soda
+theme"](SodaTheme.png)
+
+## SublimeLinter
+
+Highlight potential errors using _lint_ programs so you can keep your code
+clean.
+
+!["Example of
+SublimeLinter"](SublimeLinter.png)
+
+## SublimeCode Intel
+
+Helps with autocomplete, allows _jump-to_ and displays information of the
+highlighted function on the status bar.
+
+!["Example of SublimeCode
+Intel"](SublimeCodeIntel.png)
+
+## SublimeRope [**Python only!**]
+
+Add a lot of IDE-like features to python developers thanks to the rope
+library.
+
+!["Example of
+SublimeRope"](SublimeRope.png)
+
+## Git &amp; GitGutter
+
+The first one is a tool to integrate git commands onto the command palette,
+the second one inserts an icon in the gutter area whether a line has been
+modified, added or removed.
+
+!["Example of
+GitGutter"](GitGutter.png)
+
+## SideBarEnchancements
+
+Add tons of functions to the sidebar contextual menu!
+
+!["SidebarEnhancements contextual
+menu"](SidebarEnhancements.png)
+
+## AdvancedNewFile
+
+This is the best. Create a new file just with a key combination, no popups, no
+nothing. Just press `CMD`+`ALT`+`N`, write the full path -relative to your
+project path- of the file you want to create and press enter.
+
+!["Example of
+AdvancedNewFile"](AdvancedNewFile.png)
+
+I use some other plugins, but this is my top. Do you use other really good
+plugins not listed here? Tell me!
+
+---
+pub_date: 2012-12-21
+---
+_template: blog/post.html

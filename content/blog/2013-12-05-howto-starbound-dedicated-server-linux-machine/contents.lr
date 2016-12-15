@@ -1,0 +1,65 @@
+title: How to: Starbound dedicated server on a linux machine
+---
+body:
+
+![Starbound logo](starbound-
+logo.jpg)
+
+The day it's here! Starbound beta is finally here, and what could be better
+than having a dedicated server to play with your friends? Let's get this done.
+
+## Install SteamCMD
+
+Official documentation: <https://developer.valvesoftware.com/wiki/SteamCMD>
+
+Basically you need to download it's shell script to manage steam apps, take
+special attention to the lib32 section if you're running the server in a 64bit
+machine.
+
+ ```
+wget http://media.steampowered.com/client/steamcmd_linux.tar.gz
+tar xzf steamcmd_linux.tar.gz
+```
+
+## Install Starbound on the server
+
+You will need to login with your steam username here to download/update
+starbound. Your account** is not needed** to keep the server running.
+
+
+```
+./steamcmd.sh
+# Steam updating and validating stuff
+Steam> login your_username_here
+# Your password WILL BE VISIBLE. But after a first login
+# your credentials will be cached so you don't need to
+# expose them everytime you need to use the steamcmd.
+Steam> app_update 211820
+# This will install starbound, it will take a while
+# depending on the server bandwidth.
+Steam> app_update 211820 validate
+# Validate installation, just in case.
+# I do this in two separate steps because -at least for me-
+# validating on a fresh install take a lot longer that
+# just installing and validating afterwards. Don't sure why.
+Steam> quit
+# Finished!
+```
+
+## Start the server
+
+Go to `Steam/SteamApps/common/Starbound/linuxXX/` (where XX is 32 or 64 based
+on your server architecture).
+
+Launch `launch_starbound_client.sh`
+
+If you want to use the universe you played on your computer, just upload the
+universe folder found on your computer to the same folder where the server
+script is.
+
+Happy gaming!
+
+---
+pub_date: 2013-12-05
+---
+_template: blog/post.html

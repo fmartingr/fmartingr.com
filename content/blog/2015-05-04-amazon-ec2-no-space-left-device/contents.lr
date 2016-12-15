@@ -1,0 +1,67 @@
+
+title: Amazon EC2: No space left on device
+---
+body:
+
+So a funny thing happened today at out pre-production environment. I was
+performing our pre-big-PR deployment when a beautiful error was shown in my
+terminal:
+
+```
+cannot create X: No space left on device
+```
+
+What?! How could that be possible. I know that our environment don't have a
+lot of bytes for us to play with but having the storage already full with our
+database and other services outside this machine just wasn't possible. And I
+was right.
+
+```
+fmartingr@pre-production:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/xvda1       59G   37G   21G  65% /
+none            4.0K     0  4.0K   0% /sys/fs/cgroup
+udev            2.0G   12K  2.0G   1% /dev
+tmpfs           396M  400K  395M   1% /run
+none            5.0M     0  5.0M   0% /run/lock
+none            2.0G     0  2.0G   0% /run/shm
+none            100M     0  100M   0% /run/user
+```
+
+What?! Now I sure don't understand a thing. I was laughing hysterically when
+my brain just started working as I remembered an old friend: the
+[inode](http://www.wikiwand.com/en/Inode).
+
+```
+fmartingr@pre-production:~$ df -i
+Filesystem      Inodes   IUsed   IFree IUse% Mounted on
+/dev/xvda1     3932160 3932160       0  100% /
+none            505855       2  505853    1% /sys/fs/cgroup
+udev            504558     403  504155    1% /dev
+tmpfs           505855     332  505523    1% /run
+none            505855       1  505854    1% /run/lock
+none            505855       1  505854    1% /run/shm
+none            505855       4  505851    1% /run/user
+```
+
+F**k you. Our deploys are made using "isolated" builds. That is, we reinstall
+pip/bower requirements **for every build.** So each build take about ~50k
+inodes, and we keep some in case some rollback is needed, but of course,
+keeping two months old builds wasn't needed at all, so I made a script that
+just deletes builds older than two weeks and our poor thing was happy again.
+
+To search which folder of your server is eating the inode limit, you can run
+this command:
+
+```
+find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -nr
+```
+
+This will show the path name and the inode count, keep going inside dirs to
+get some detailed input, once found, just delete the files that are causing
+havok.
+
+---
+pub_date: 2015-05-04
+---
+_template: blog/post.html

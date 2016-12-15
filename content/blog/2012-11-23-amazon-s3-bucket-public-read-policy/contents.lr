@@ -1,0 +1,45 @@
+
+title: Amazon S3 bucket public read policy
+---
+body:
+
+After migrating the blog to a PaaS service I had a proble that the disk space
+was volatile and I had to store the images and binary files on another server
+or CDN. After thinking for a while I decied to give a try to amazon S3.
+
+Created a bucket that I'm going to use as CDN for now on, but geeking around I
+saw that the permissions are modified by file, not by folder/bucket. Searching
+aroung the docs I found the policies, that are JSON strings wich include
+properties for the entire bucket.
+
+For making a read-only public bucket you need this:
+
+``` js
+{
+  "Version": "2008-10-17",
+  "Statement": [{
+    "Sid": "AllowPublicRead",
+    "Effect": "Allow",
+    "Principal": {
+      "AWS": "*"
+    },
+    "Action": ["s3:GetObject"],
+    "Resource": ["arn:aws:s3:::/*"]
+  }]
+}
+```
+
+Replace &lt;bucket name&gt; for yours and apply changes. With this the entire
+bucket will be publicy accesible, but if you want to be more restrictive, you
+may specify a subfolder:
+
+``` js
+"Resource": ["arn:aws:s3:::<bucket>/<path>/*"]
+```
+
+Hope this helps.
+
+---
+pub_date: 2012-11-23
+---
+_template: blog/post.html

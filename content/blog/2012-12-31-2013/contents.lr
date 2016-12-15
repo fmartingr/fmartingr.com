@@ -1,0 +1,31 @@
+
+title: 2013
+---
+body:
+
+According to the Gregorian calendar, a new year is coming.
+
+I'm not gonna waste my time -nor yours- making promises, wishing things and
+all that crappy stuff. 2012 has been good and bad, I want 2013 to stay that
+way, but I will keep that to me and I'm going to expose what I've thought
+about the blog and what I want to do with it during 2013.
+
+  * First of all, the **#AppSunday** thing: doing it. I've missed the last two because of the date and also I wasn't really in the mood to write a word either. I really want to do it, so I will keep writing a Sunday post about apps and stuff as long as I've something about to write.
+
+  * As for _new technologies_, the reason I do not write too much about developing is because I do not think I'm a good programmer. I can't think I'm either good nor bad for something I **love**. I develop just because I enjoy it, as I've the bless that it's also my job. But after a lot of thinking, I'm going to post some micro-entries about new things I'm using -that could be things you already know long time ago- like PaaS services, libraries and stuff in general. I've a draft about _how to copy a mysql record with one SQL statement_, for example. If people like the posts as I like writing them, I will keep on with it.
+
+  * Also, this last year has been really… complete? I've started a lot of new projects -I really mean it, a lot of things whisper around my mind and some of it already have drafts and time invested on them-, so I've thought writing about its evolution. I don't know if I will make individual posts of each project or a weekly summary of all of them -or at least the ones I've worked that week-, but I want to share experiences, problems, solutions, technologies, _code_… with you.
+
+  * I still don't know if I will write personal experiences/opinion posts. I assumed that I will decide it when the time comes.
+
+  * There won't be a "What I've done in the last six months" post anymore. The one that is already in the blog will be purged when the translation is completed.
+
+Now, get off the screen, eat a lot and get drunk. Today is the day.
+
+Happy new year!
+
+
+---
+pub_date: 2012-12-31
+---
+_template: blog/post.html

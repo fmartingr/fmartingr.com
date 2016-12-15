@@ -1,6 +1,6 @@
 {% extends "_base.html" %}
 
-{% block page_title %}About me // Felipe Martín{% endblock %}
+{% block page_title %}{{ super() }} | {{ this.title }}{% endblock %}
 
 {% block main_content %}
   <div class="grid center">
@@ -8,10 +8,7 @@
       <img src="{{ 'static/images/avatar.png'|url }}">
     </div>
     <div class="col-2-3">
-      <p>Hi! I'm Felipe, and I am a developer. Whatever that is.</p>
-      <p>I have been playing with code for a while now, but I also enjoy geeking around with computers, algorithms and other stuff; the less I know about it, the better! Learning new things every day is my way of life.</p>
-      <p>I think that developers are like artists, writers and composers... we all make art. But we don't use strokes and colors, words or notes, we make it through code. And I really love it.</p>
-      <p>If you want to get in touch, feel free to drop me a line.</p>
+      {{ this.body }}
     </div>
   </div>
 {% endblock %}

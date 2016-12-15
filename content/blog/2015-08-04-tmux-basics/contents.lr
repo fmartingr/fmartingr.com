@@ -1,0 +1,67 @@
+
+title: Tmux basics
+---
+body:
+
+![](2015/08/04/tmux.png)
+
+Discovered it not a long time ago (and now replaced with the experimental
+version of iterm2 [because of goodies](https://iterm2.com/features.html)),
+tmux deserves a lot of attention because it have lots of potential.
+
+TMUX stands for Terminal Multiplexer. _It lets you switch easily between
+several programs in one terminal, detach them (they keep running in the
+background) and reattach them to a different terminal. And do a lot more._
+Yeah, they sell themselves well.
+
+For the novices, it lets you have panels (split terminals) and windows just
+with some keybinds, detaching from them (so they keep running) and with the
+possibility of storing configurations for certain tasks, in which you need to
+open a running server and editor and some watcher at the same time, just with
+a command.
+
+For example, if you are like in the top screenshot, pressing `CTRL`+`b` `%`
+`CTRL`+`b` `"` changes the layout to this:
+
+![](tmux-horver.png)
+
+And those numbers with a tilde at the bottom? The open windows. You can open
+more pressing `CTRL`+`b` `c`, like this:
+
+![](tmux-window.png)
+
+This are the two basic things you will use everyday. Of course, there are
+[more stuff you can do](http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-
+current/man1/tmux.1?query=tmux&sec=1), but for the basics I will list the more
+frequent keybinds here to start using it right now.
+
+Meta key | `CTRL`+`b`
+---|---
+Split pane horizontal | `Meta`+`"`
+Split pane vertical | `Meta`+`%`
+Swap pane | `Meta`+`o`
+Kill pane | `Meta`+`x`
+Toggle focus on current pane | `Meta`+`z`
+Show pane numbers | `Meta`+`q`
+Press a the number of the pane you want to focus when shown.
+Break pane into window | `Meta`+`+`
+Restore window to pane | `Meta`+`-`
+Change pane layout | `Meta`+`spacebar`
+Create new window | `Meta`+`c`
+Switch to window #x | `Meta`+`<number>`
+Kill window | `Meta`+`&`
+Next window | `Meta`+`n`
+Previous window | `Meta`+`p`
+List windows | `Meta`+`w`
+Rename window | `Meta`+`,`
+Find window | `Meta`+`f`
+
+**Homepage: **[tmux](https://tmux.github.io)
+**My tmux.conf:** [Github](https://github.com/fmartingr/dotfiles/blob/master/home/.tmux.conf)
+**Cheatsheet by [MohamedAlaa](https://github.com/MohamedAlaa)**: [Tmux cheatsheet gist](https://gist.github.com/MohamedAlaa/2961058)
+
+
+---
+pub_date: 2015-08-04
+---
+_template: blog/post.html

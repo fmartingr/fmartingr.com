@@ -1,0 +1,109 @@
+
+title: How to install and configure the yubikey-pam module on archlinux
+---
+body:
+
+![](yubico.jpg)
+
+Not so long ago I've been gifted with a Yubikey. It's a two-auth hardware
+solution with multiple auth methods (OTP, Challenge-response, OATH-HOTP and
+static password). It easily scaled to one of my favourite and most useful
+gadgets.
+
+I've been a google authenticator user for a while, but the yubikey is just
+much easier to work with: when configured, you only need to tap a button on
+the usb stick to generate your key. You can use this in many ways, but in this
+post I'm focusing on ssh authentication and how to install the yubico-pam
+module into an Arch installation.
+
+## Installing the required packages
+
+Thanks to the awesome arch community we already have the needed packages on
+the AUR, these are: [yubico-pam-
+git](https://aur.archlinux.org/packages/yubico-pam-git/), [yubico-c-client-
+git](https://aur.archlinux.org/packages/yubico-c-client-git/), [yubikey-
+personalization-git](https://aur.archlinux.org/packages/yubikey-
+personalization-git/) and
+[libyubikey](https://aur.archlinux.org/packages/libyubikey/). Keep in mind
+that you _may_ need to install more packages depending on your system
+installation.
+
+You can install that with your favourite AUR helper or using `makepkg`:
+
+```
+$ curl -O https://aur.archlinux.org/packages/li/libyubikey/libyubikey.tar.gz
+$ tar xvzf libyubikey.tar.gz
+$ cd libyubikey
+$ makepkg PKGBUILD
+# ...
+$ sudo pacman -U libyubikey-1.10-2-x86_64.pkg.tar.xz
+```
+
+Repeat that step for all the packages, in order: _libyubikey_, _yubico-c-
+client_, _yubikey-personalization_ and _yubico-pam_. If you have trouble
+installing from the AUR [refer to the appropiate wiki
+page](https://wiki.archlinux.org/index.php/AUR#Installing_packages).
+
+## Configure the PAM module
+
+Edit `/etc/pam.d/sshd` and add on top on the rest of the auth modules:
+
+```
+auth sufficient pam_yubico.so id=XXXX key=XXXX
+```
+
+You can obtain an ID/key conbination by registering your yubikey [at this
+page](https://upgrade.yubico.com/getapikey/).
+
+## Authorization methods
+
+### Individual authorization mapping
+
+If your server have multiple users this is the easiest method to let them
+configure their yubikeys. You just need to create the file
+`$HOME/.yubico/authorized_yubikeys` with the following contents:
+
+```
+<username>:<Yubikey token ID 1>[:<Yubikey token ID 2][:...]
+```
+
+The yubikey token identifier can be obtained by removing the last 32
+characters of any OTP value, and you can add more than one ID to the file.
+
+Restart your ssh server to apply the changes.
+
+### Central authorization mapping
+
+Create a file on `/etc/yubikey_mappings` that will contain all your users and
+their respective yubikey token identifiers, like this:
+
+```
+<first username>:<Yubikey token ID 1>[:<Yubikey token ID 2][:...]
+<second username>:<Yubikey token ID 3>[:<Yubikey token ID 4][:...]
+```
+
+For this to work, you need to specify this file to the pam module `authfile`
+parameter:
+
+```
+auth sufficient pam_yubico.so id=XXXX key=XXXX authfile=/etc/yubikey_mappings
+```
+
+After that estart your ssh server to apply the changes.
+
+## Logging in
+
+The next time you're asked for a password on you ssh login you can use a
+yubikey OTP instead of your current password -if you have any-.
+
+This method works pretty well with authorized ssh keys as well, since you will
+log-in automatically from a computer with a configured ssh key but an OTP -or
+password- will be required for logging in from anywhere else.
+
+**Yubico-pam module |** [Github](https://github.com/Yubico/yubico-pam)
+**Yubico |** [Home page](http://www.yubico.com/)
+
+---
+pub_date: 2013-07-09
+---
+_template: blog/post.html

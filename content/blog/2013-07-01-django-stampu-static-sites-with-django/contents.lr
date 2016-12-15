@@ -1,0 +1,46 @@
+title: django-stampu: Static sites with django
+---
+body:
+
+![](django-stampu.png)
+
+> After finishing zombiepress a friend of mine wanted to use it but asked for
+some kind of conversion to static since he uploads its current blog to github.
+That's how this project was born.
+
+Django as a static site? Of course, it's possible, only if your project it's
+using a simple backend infrastructure, it doesn't let users modify the
+database, and also doesn't have contact forms or that kind of stuff. The
+conversion of a blog into static content was really easy, in about 30 minutes
+I had an alpha working -which is the 0.1.2 version uploaded in github/pypi-.
+
+django-stampu is basically a crawler. Some people led me to solutions much
+more complicated. (Ex. Running a command and let the computer work.) And I
+didn't like that. I wanted a conversion of the site as I see it when running
+the `runserver` command, for that purpose you have to follow all the internal
+links of the site and save the items as *.html if the content-type matches. It
+also saves the static files in the site, but I need to look further into that,
+because it can't save files needed by css files yet, it only checks for
+src/href attributes on all tags in html files.
+
+Want to try it?
+
+  1. Install django-stampu: `pip install django-stampu`
+  2. Add it to your `INSTALLED_APPS`
+  3. Execute the command: `python manage.py stamp`
+  4. Check the `_static` folder.
+
+Easy, right? That's what I want to hear!
+
+Keep in mind that this is a proof of concept, I need to improve lots of things
+and add some configuration variables for people that want to customize their
+sites.
+
+If you want to contribute in any way, you can [check the source code at
+github](https://github.com/fmartingr/django-stampu).
+
+
+---
+pub_date: 2013-07-01
+---
+_template: blog/post.html

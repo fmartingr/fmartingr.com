@@ -1,17 +1,19 @@
 <html>
   <head>
-    <title>{% block page_title %}{% endblock %}</title>
+    <title>{% block page_title %}Felipe Martin{% endblock %}</title>
     <link href='https://fonts.googleapis.com/css?family=Antic+Slab' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/static/css/style.css'|asseturl }}">
+    <link rel="stylesheet" href="{{ get_pygments_stylesheet()|url }}">
   </head>
   <body class="{% block body_class %}{% endblock %}">
     <header class="center">
       <h1>Felipe Martín</h1>
       <h2>Be incomprehensible. If they can't understand, they can't disagree.</h2>
       <nav class="main-menu">
-        <a href="{{ '/'|url }}">About me</a> //
-        <a href="{{ '/blog'|url }}">Blog</a> //
-        <a href="{{ '/portfolio'|url }}">Portfolio</a>
+        <a href="{{ '/'|url }}">/about</a> &nbsp;
+        <a href="{{ '/blog'|url }}">/blog</a> &nbsp;
+        <a href="{{ '/portfolio'|url }}">/portfolio</a> &nbsp;
+        <a href="{{ '/contact'|url }}">/contact</a>
       </nav>
       <hr class="light">
     </header>
@@ -22,10 +24,12 @@
         <a href="mailto:me@fmartingr.com" target="_blank">E-mail</a> //
         <a href="https://telegram.me/fmartingr" target="_blank">Telegram</a> //
         <a href="http://es.linkedin.com/in/felipemartingarcia" target="_blank">LinkedIn</a> //
-        <a href="https://github.com/fmartingr" target="_blank">Github</a> //
-        <a href="https://twitter.com/fmartingr" target="_blank">Twitter</a>
+        <a href="https://github.com/fmartingr" target="_blank">Github</a>
+      </div>
+      <div class="center text-center">
+        <a href="{{ "/made-with-open-source"|url }}">Made with Open Source tools</a>
       </div>
     </footer>
-    <script type="text/javascript" src="{{ 'static/js/app-min.js'|url }}"></script>
+    <script type="text/javascript" src="{{ '/static/js/app-min.js'|url }}"></script>
   </body>
 </html>

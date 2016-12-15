@@ -1,0 +1,284 @@
+
+title: The penguin trials after two weeks
+---
+body:
+
+It's been two weeks already and I will make a quick post with two subjects:
+the stuff broken that needed to be fixed (from my point of view) and
+improvements to the workstation that made my life easier.
+
+After other two weeks I will post a summary with the good and bad parts.
+
+## Stuff fixed
+
+### Lightdm black screen
+
+After the first reboot the first problem appeared, the lightdm login window
+was a black screen (accepting input but showing nothing). I remember that from
+not so long ago when I tried to install linux on my home computer and that
+happened, luckily it had a solution, I just needed to install `lightdm-gtk-
+greeter` and replace it at the lightdm configuration.
+
+
+
+    # /etc/lightdm/lightdm.conf
+    # ...
+    greeter-session=lightdm-gtk-greeter
+    # ...
+
+
+### Better font rendering for i3
+
+The default fonts for the i3bar and so on are a bit clunky for my personal
+taste so I changed the rendering from `pango` to `xft` and now it looks nice.
+
+
+
+    font xft:monospace 8
+
+
+### Better font rendering system wide (ala. OS X)
+
+One of my worst problems with linux is the font rendering. Everything looks
+worse than on OS X, that's a fact. Even people using linux desktops say it
+when looking text on a OS X machine. Luckily I found `infinality`, a patch for
+the font rendering in the freetype2 package that left my fonts almost
+_Macish_.
+
+I just installed the `infinality-bundle` following [the official ArchLinux
+Wiki entry](https://wiki.archlinux.org/index.php/Infinality) on the subject
+and used the setup for the _Soft of OS X_ appareance editing the
+`/etc/profile.d/infinality-settings.sh` using the `ultimate5` configuration.
+
+
+
+    export INFINALITY_FT="ultimate5"
+
+
+Just restart X to the settings to take effect. I haven't seen problems with
+the infinality patch until now.
+
+## Improvements over the base system
+
+### Adding some background with feh
+
+The most basic stuff! I don't really know if there's another way to do this
+but looking around I found that using `feh` you can just point to an image
+file and use that as wallpaper.
+
+Just adding this to my i3 config file:
+
+
+
+    exec_always feh --bg ~/.config/i3/wallpaper.png
+
+
+I want to improve it having a script that will iterate over png images inside
+a folder and using one at random but since I don't need fancy stuff this will
+work for now.
+
+### Running stuff when I log in
+
+To start programs when you log in at your session adding them to your i3
+configuration seems like the way to go:
+
+
+
+    # Startup programs
+    exec dropbox
+
+
+### Adding a lock screen with i3lock
+
+Another thing I missed a lot. When I leave my desk I lock my computer so no
+one can, just say, put a David Hasselhoff wallpaper on it or something, so
+with `i3lock`, `scrut`, a bash script and a key binding I have a very nice
+screen locker in place!
+
+
+
+    #!/bin/sh
+
+    # Take screenshot
+    scrot /tmp/lockscreen.png
+
+    # Pixellate
+    mogrify -scale 10% -scale 1000% /tmp/lockscreen.png
+
+    # Lock screen with the image
+    i3lock -i /tmp/lockscreen.png
+
+
+And in the i3 config file:
+
+
+
+    bindsym $mod+l ~/.config/i3/i3lock.sh
+
+
+### More integrated notifications with dunst
+
+Since the default desktop environment I installed was xfce4, the notifications
+being shown was from them and it were horrible. Instead of that I installed
+[dunst](https://github.com/knopwob/dunst).
+
+![dunst notifications](dunst.png)
+
+They are not the best looking notifications but are well integrated with the
+system design and are highly customizable, they will change soon enough :)
+
+### Using the media keys for volume with alsa mixer
+
+This was easy since I just need to bind the X media volume up and down to the
+alsa mixer control app so I can use the keyboard to control the system volume
+easily.
+
+
+
+    # Media keys
+    bindsym XF86AudioRaiseVolume exec amixer -q set Master 4%+ unmute
+    bindsym XF86AudioLowerVolume exec amixer -q set Master 4%- unmute
+
+
+### Using the media keys for media players with playerctl
+
+By default my system didn't recognize the media keys for
+play/pause/back/forward for any player but this was the easiest of them all.
+Just installed `playerctl` and every app I used until now worked out of the
+box. Even the forward/backwards keys for `mpv` which wasn't working for mpv
+with mps-youtube on OS X are functional on my linux box!
+
+
+
+    # Media player controls
+    bindsym XF86AudioPlay exec playerctl play-pause
+    #bindsym XF86AudioPause exec playerctl pause
+    bindsym XF86AudioNext exec playerctl next
+    bindsym XF86AudioPrev exec playerctl previous
+
+
+### Removing the title bars for the windows
+
+That was space I didn't need, it may seem stupid but... how often do you look
+at the titlebar of the app you're using? Some like the browsers didn't even
+have one! So I've removed the titlebars and left only 2px borders for the
+application windows.
+
+
+
+    # Windows without titlebars
+    for_window [class="^.*"] border pixel 2
+
+
+### Auto enable floating for pop-up windows
+
+It was really annoying watching a google login window take half of the desktop
+just for a moment to login into a service, so every window with the role of
+popup is now floating by default.
+
+
+
+    # Browser popups floating
+    for_window [window_role="pop-up"] floating enable
+
+
+### Using a custom i3bar with i3pystatus
+
+Since most of the default information the i3bar was unnecesary I found out
+about i3pystatus that allows you to use python modules to customize the i3bar
+at will. Below are my config file and the i3bar.py I use for it.
+
+
+
+    from i3pystatus import Status
+    from i3pystatus.updates import pacman, yaourt
+
+
+    status = Status()
+
+    # Pacman/Yaourt updates
+    status.register("updates",
+                    format="Updates: {count}",
+                    format_no_updates="No updates",
+                    backends=[pacman.Pacman(), yaourt.Yaourt()])
+
+    # Displays clock like this:
+    status.register("clock",
+                    format="%a %-d %b %H:%M",)
+
+    # CPU
+    status.register('cpu_usage')
+
+    # Memory
+    status.register('mem',
+                    format='{used_mem}/{total_mem}')
+
+    # Shows the average load of the last minute and the last 5 minutes
+    # (the default value for format is used)
+    status.register("load", color='#00ff00')
+
+    # Shows the address and up/down state of enp6s0
+    status.register("network",
+                    interface="enp6s0",
+                    format_up="{v4cidr}")
+
+    # Shows disk usage of /
+    status.register("disk",
+                    path="/",
+                    format="{used}/{total}G [{avail}G]",)
+
+    # Shows pulseaudio default sink volume
+    status.register("pulseaudio",
+                    format="♪{volume}",)
+
+    status.run()
+
+
+
+    # .config/i3/config
+    bar {
+        status_command ~/.config/i3/i3bar.py
+        position up
+    }
+
+
+### Hide the mouse cursor when not needed
+
+Using i3 I rely on the keyboard a lot, so much that sometimes my wireless
+mouse turn itself off to save battery due to inactivity. That said, it's
+really annoying for me having the cursor over text I'm writing or just sitting
+there when I don't need it so I installed
+[unclutter](https://wiki.archlinux.org/index.php/unclutter) and running it on
+startup was very relieving.
+
+
+
+    # .config/i3/unclutter.sh
+    #!/bin/bash
+    unclutter &
+
+
+
+    # .config/i3/config
+    exec ~/.config/i3/unclutter.sh
+
+
+## What's next?
+
+There are still two weeks pending and even after all this tweaks the
+customization is far from over! There are still stuff I miss a lot, like:
+
+  * Easily take screenshots with keybinds.
+  * Better window switching.
+  * Better dmenu launcher
+  * Prevent the screenshoter from drawing the area selector on the screenshot taken. (**xfce4-screenshoter**)
+  * `ctrl`+`e`/`a` for end and start of line global keybinds.
+  * Use the scratchpad more and try to improve it.
+
+See ya in two weeks!
+
+
+---
+pub_date: 2016-04-27
+---
+_template: blog/post.html

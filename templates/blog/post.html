@@ -1,8 +1,17 @@
 {% extends "blog/_base.html" %}
 {% from "macros/blog.html" import render_blog_post %}
 
+{% block body_class %}blog post{% endblock %}
+
+{% block page_title %}{{ super() }} | {{ this.title }}{% endblock %}
+
 {% block main_content %}
   {{ render_blog_post(this) }}
+  {% if this.comments_enabled %}
+    <div class="center comments">{{ render_disqus_comments() }}</div>
+  {% else %}
+    <div class="center info">
+      Comments have been disabled in this post, if you want to contact me please <a href="{{ '/contact'|url }}">go ahead</a>!
+    </div>
+  {% endif %}
 {% endblock %}
-
-{% block body_class %}blog post{% endblock %}

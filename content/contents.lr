@@ -2,7 +2,13 @@ title: Welcome to Felipe Martin!
 ---
 body:
 
-This is a basic demo website that shows how to use Lektor for a basic
-website with some pages and a blog.
+Hi! I'm Felipe, and I am a developer. Whatever that is.
+
+I have been playing with code for a while now, but I also enjoy geeking around with computers, algorithms and other stuff; the less I know about it, the better! Learning new things every day is my way of life.
+
+I think that developers are like artists, writers and composers... we all make art. But we don't use strokes and colors, words or notes, we make it through code. And I really love it.
+
+If you want to get in touch, feel free to drop me a line.
+
 ---
 _template: home.html

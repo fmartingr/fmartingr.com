@@ -1,0 +1,213 @@
+
+title: Extracting data from obfuscated java code
+---
+body:
+
+![](header.png)
+
+For those who don't know, I started a site a while ago minecraft related (yes,
+[the one I dropped](/blog/2013/1/12/weekly-project-status-dropping-projects-
+hard/)). If you don't know what minecraft is (really?!), you can check [the
+official site](http://minecraft.net/), since this game can be a little
+difficult to explain.
+
+The project (which is online at
+[minecraftcodex.com](http://www.minecraftcodex.com)) is just a database of
+items, blocks, entities, etc. related to the game, but as in any other site of
+this kind, entering all this information can lead to an absolute _boredom_. So
+I thought... what if I can extract some of the data from the game
+_classfiles_? That would be awesome! *Spoiler alert* I did it.
+
+> Think this as my personal approach to all steps below: it doesn't mean that they're the best solutions.
+
+## Unpackaging the jarfile and decompiling the classes
+
+First of all, you have a _minecraft.jar_ file that it's just a packaged set of
+java compiled files, you can just `tar -xf` or `unzip` it into a folder:
+
+```
+  unzip -qq minecraft.jar -d ./jarfile
+```
+
+With this we now have a folder called _jarfile__ _filled with all the jar
+contents. We now need to use a tool to decompile all the compiled files into
+.java files, because the data we're looking for it's hard-coded into the
+source. For this purpose we're going to use [JAD](http://varaneckas.com/jad/),
+a java decompiler. With a single line of _bash_ we can look for all the .class
+files and decompile them into .java source code:
+
+```
+ls ./jarfile/*.class | xargs -n1 jad -sjava -dclasses &> /dev/null
+```
+
+All the class files have been converted and for ease of use, we've moved them
+into a separate directory. But there's a lot of files! And also, when we open
+one...
+
+``` java
+public class aea extends aeb
+{
+    public aea()
+    {
+    }
+
+    protected void a(long l, int i, int j, byte abyte0[], double d,
+            double d1, double d2)
+    {
+        a(l, i, j, abyte0, d, d1, d2, 1.0F + b.nextFloat() * 6F, 0.0F, 0.0F, -1, -1, 0.5D);
+    }
+    // ...
+}
+```
+
+Look at that beautiful obfuscated piece of code! This is getting more
+interesting at every step: almost 1.600 java files with obfuscated source
+code.
+
+## Searching for the data
+
+I took the following approach: Since I know what I'm looking for (blocks,
+items, etc) and I also know that the information is hard-coded into the
+source, there must be some kind of string I can use to search all the files
+and get only the ones that contains the pieces of information I look for. For
+this test, I used the string "diamond":
+
+```
+$ grep diamond ./classes/*
+./classes/bfp.java:        "cloth", "chain", "iron", "diamond", "gold"
+./classes/bge.java:        "cloth", "chain", "iron", "diamond", "gold"
+./classes/kd.java:        w = (new kc(17, "diamonds", -1, 5, xn.p, k)).c();
+./classes/rf.java:        null, "mob/horse/armor_metal.png", "mob/horse/armor_gold.png", "mob/horse/armor_diamond.png"
+./classes/xn.java:        p = (new xn(8)).b("diamond").a(wh.l);
+./classes/xn.java:        cg = (new xn(163)).b("horsearmordiamond").d(1).a(wh.f);
+```
+
+As you can see, with a simple word we've filtered down to five files (from
+1.521 in this test). Is proof that we can get some information from the source
+code and we now to filter even more, looking around some files I selected
+another keyword: _flintAndSteel_, works great here, but in a real example you
+will need to use more than one keyword to look for data.
+
+```
+$ grep flintAndSteel ./classes/*
+./classes/xn.java:    public static xn k = (new xh(3)).b("flintAndSteel");
+```
+
+Only one file now, we're going to assume that all the items are listed there
+and proceed to extract the information.
+
+## Parsing the items
+
+This was the more complicated thing to do. I started doing some regular
+expressions to matchs the values I wanted to extract, but soon that became
+inneficient due to:
+
+- The obfuscated code varies with every released version/snapshot -or it should.
+- The use of OOP difficulted method searching with RegEx matching, since the names could change from version to version, making the tool unusable on updates.
+- The need to modify the RegEx if something in the code changes, or if we want to extract some other value.
+
+After some tests, I decided to _convert_ the java code into python. For that,
+I used simple find and match to get the lines that had the definitions I
+wanted, something line this:
+
+``` java
+// As a first simple filter, we only use a code line if a double quote is found on it.
+// Then, regex: /new (?P<code>[a-z]{2}\((?P<id>[1-9]{1,3}).*\"(?P<name>\w+)\"\))/
+// ...
+T = (new xm(38, xo.e)).b("hoeGold");
+U = (new yi(39, aqh.aD.cE, aqh.aE.cE)).b("seeds");
+V = (new xn(40)).b("wheat").a(wh.l);
+X = (vr)(new vr(42, vt.a, 0, 0)).b("helmetCloth");
+Y = (vr)(new vr(43, vt.a, 0, 1)).b("chestplateCloth");
+// ...
+```
+
+Since that java code is not python evaluable, just convert it:
+
+- Remove unmatched parenthesis and double definitions
+- Remove semicolons
+- Remove variable definitios
+- Converted arguments to string. This can be improved a lot, leaving decimals, converting floats to python notation, detecting words for string conversion, etc. Since for now I am not using any of the extra parameters this works for me.
+- Be careful with reserved python names! (`and`, `all`, `abs`, ...)
+
+``` python
+// Java: U = (new yi(39, aqh.aD.cE, aqh.aE.cE)).b("seeds");
+yi("39", "aqh.ad.cE", "aqh.aE.cE").b("seeds")
+// Java: bm = (new xi(109, 2, 0.3F, true)).a(mv.s.H, 30, 0, 0.3F).b("chickenRaw");
+xi("109", "2", "0.3F", "true").a("mv.s.H", "30", "0", "0.3F").b("chickenRaw")
+```
+
+Now I defined an object to match with the java code definitions when
+evaluating:
+
+``` python
+class GameItem(object):
+    def __init__(self, game_id, *args):
+        self.id = int(game_id)
+
+    def __str__(self, *args):
+        return "<Item(%d: '%s')>" % (
+            self.id,
+            self.name
+        )
+
+    def method(self, *args):
+        if len(args) == 1 and isinstance(args[0], str):
+            "Sets the name"
+            self.name = args[0]
+        return self
+
+    def __getattr__(self, *args):
+        return self.method
+```
+
+As you can see, this class have a global "catch-all" method, since we don't
+know the obsfuscated java names, that function will handle every call. In that
+concrete class, we now that an object method with only one string parameter is
+the one that define the item's name, and we do so in our model.
+
+Now, we will evaluate a line of code that will raise and exception saying that
+the class name _&lt;insert obfuscated class name here&gt;_ is not defined.
+With that, we will declare that name as an instance of the GameItem class, so
+re-evaluating the code again will return a GameItem object:
+
+``` python
+try:
+    # Tries to evaluate the piece of code that we converted
+    obj = eval(item['code'])
+except NameError as error:
+    # Class name do not exist! We need to define it.
+    # Extract class name from the error message
+    # Defined somewhere else: class_error_regex = re.compile('name \'(?P<name>\w+)\' is not defined')
+    class_name = class_error_regex.search(error.__str__()).group('name')
+    # Define class name as instance of GameItem
+    setattr(sys.modules[__name__], class_name, type(class_name, (GameItem,), {}))
+    # Evaluate again to get the object
+    obj = eval(item['code'])
+```
+
+And with this, getting data from source code was possible and really helpful.
+
+A lot of things could be improved from this to get even more information from
+the classes, since after spending lot's of time looking for certain patterns
+on the code I can say what some/most of the parameters mean, and that means
+more automation on new releases!
+
+## Real use case
+
+Apart from getting the base data for the site (all the data shown on minecraft
+codex is directly mined from the source code), I made up a tool that shows
+changes from the last comparision -if any. This way I can easily discover what
+the awesome mojang team added to the game every snapshot they release:
+
+![](diff.png)
+
+This is the main tool I use for minecraft codex, is currently bound to the
+site itself but I'm refactoring it to made it standalone and publish it on
+github.
+
+
+---
+pub_date: 2013-07-04
+---
+_template: blog/post.html

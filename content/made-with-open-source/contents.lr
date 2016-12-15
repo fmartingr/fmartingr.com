@@ -1,0 +1,18 @@
+Title: Made with open source software
+---
+body:
+
+Even for a small site like this, is important to use the appropriate tools! This site was made using open source tools some of which are:
+
+* Atom
+* Bower
+* Emacs
+* Gulp
+* Lektor
+
+---
+_template: open-source.html
+---
+_discoverable: no
+---
+title: Made with Open Source
