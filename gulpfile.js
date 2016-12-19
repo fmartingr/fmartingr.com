@@ -12,38 +12,37 @@ var livereload = require('gulp-livereload');
 var yargs = require('yargs').argv;
 var minify = require('gulp-minify');
 
-gulp.task('sass', function () {
-  var sassStream = gulp.src('./assets/static/sass/style.scss')
-             .pipe(sass().on('error', sass.logError))
-  var bowerStream = gulp.src([
-    ])
+gulp.task('sass', function() {
+    var sassStream = gulp.src('./assets/static/sass/style.sass')
+        .pipe(sass().on('error', sass.logError));
+    var bowerStream = gulp.src([]);
 
-  return merge(bowerStream, sassStream)
-         .pipe(concatCss("style.css"))
-         .pipe(minifyCss())
-         .pipe(gulp.dest('./assets/static/css'))
-         .pipe(livereload());
+    return merge(bowerStream, sassStream)
+        .pipe(concatCss("style.css"))
+        .pipe(minifyCss())
+        .pipe(gulp.dest('./assets/static/css'))
+        .pipe(livereload());
 });
 
-gulp.task('js', function () {
-  var jsStream = gulp.src([
-    './assets/static/js/main.js'
-  ]);
-  return jsStream
-         .pipe(concatJs('app.js'))
-         .pipe(minify({
-           exclude: [],
-           ignoreFiles: []
-         }))
-         .pipe(gulp.dest('./assets/static/js'))
+gulp.task('js', function() {
+    var jsStream = gulp.src([
+        './assets/static/js/main.js'
+    ]);
+    return jsStream
+        .pipe(concatJs('app.js'))
+        .pipe(minify({
+            exclude: [],
+            ignoreFiles: []
+        }))
+        .pipe(gulp.dest('./assets/static/js'))
 })
 
-gulp.task('livereload', function () {
-  return gulp.src('./templates/**/*.html').pipe(livereload());
+gulp.task('livereload', function() {
+    return gulp.src('./templates/**/*.html').pipe(livereload());
 });
 
-gulp.task('sass:watch', function () {
-  livereload.listen();
-  gulp.watch('./assets/static/sass/**/*', ['sass']);
-  gulp.watch('./assets/static/templates/**/*.html', ['livereload']);
+gulp.task('sass:watch', function() {
+    livereload.listen();
+    gulp.watch('./assets/static/sass/**/*', ['sass']);
+    gulp.watch('./assets/static/templates/**/*.html', ['livereload']);
 });
