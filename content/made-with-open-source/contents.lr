@@ -15,6 +15,6 @@ And of course, this site "source code" [is publicly accessible on Github too](ht
 ---
 _template: open-source.html
 ---
-_discoverable: no
+_discoverable: yes
 ---
 title: Made with Open Source
