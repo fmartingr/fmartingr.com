@@ -7,4 +7,5 @@ bower_components
 
 # static js
 assets/static/js/app-min.js
+assets/static/js/app.js
 assets/static/css
