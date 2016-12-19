@@ -7,7 +7,7 @@ So a funny thing happened today at out pre-production environment. I was
 performing our pre-big-PR deployment when a beautiful error was shown in my
 terminal:
 
-```
+``` text
 cannot create X: No space left on device
 ```
 
@@ -16,7 +16,7 @@ lot of bytes for us to play with but having the storage already full with our
 database and other services outside this machine just wasn't possible. And I
 was right.
 
-```
+``` text
 fmartingr@pre-production:~$ df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvda1       59G   37G   21G  65% /
@@ -32,7 +32,7 @@ What?! Now I sure don't understand a thing. I was laughing hysterically when
 my brain just started working as I remembered an old friend: the
 [inode](http://www.wikiwand.com/en/Inode).
 
-```
+``` text
 fmartingr@pre-production:~$ df -i
 Filesystem      Inodes   IUsed   IFree IUse% Mounted on
 /dev/xvda1     3932160 3932160       0  100% /
@@ -53,7 +53,7 @@ just deletes builds older than two weeks and our poor thing was happy again.
 To search which folder of your server is eating the inode limit, you can run
 this command:
 
-```
+``` text
 find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -nr
 ```
 

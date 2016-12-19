@@ -13,14 +13,14 @@ lot of things, these two solved the issue:
 
 ## Enable unilimited traffic on your loopback interface
 
-```
+``` text
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 ```
 
 ## Enable traffic for connections started by your server
 
-```
+``` text
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 ```
 

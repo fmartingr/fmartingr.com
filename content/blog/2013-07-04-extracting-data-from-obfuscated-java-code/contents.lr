@@ -25,8 +25,8 @@ _classfiles_? That would be awesome! *Spoiler alert* I did it.
 First of all, you have a _minecraft.jar_ file that it's just a packaged set of
 java compiled files, you can just `tar -xf` or `unzip` it into a folder:
 
-```
-  unzip -qq minecraft.jar -d ./jarfile
+``` text
+unzip -qq minecraft.jar -d ./jarfile
 ```
 
 With this we now have a folder called _jarfile__ _filled with all the jar
@@ -36,7 +36,7 @@ source. For this purpose we're going to use [JAD](http://varaneckas.com/jad/),
 a java decompiler. With a single line of _bash_ we can look for all the .class
 files and decompile them into .java source code:
 
-```
+``` text
 ls ./jarfile/*.class | xargs -n1 jad -sjava -dclasses &> /dev/null
 ```
 
@@ -72,7 +72,7 @@ source, there must be some kind of string I can use to search all the files
 and get only the ones that contains the pieces of information I look for. For
 this test, I used the string "diamond":
 
-```
+``` text
 $ grep diamond ./classes/*
 ./classes/bfp.java:        "cloth", "chain", "iron", "diamond", "gold"
 ./classes/bge.java:        "cloth", "chain", "iron", "diamond", "gold"
@@ -88,7 +88,7 @@ code and we now to filter even more, looking around some files I selected
 another keyword: _flintAndSteel_, works great here, but in a real example you
 will need to use more than one keyword to look for data.
 
-```
+``` text
 $ grep flintAndSteel ./classes/*
 ./classes/xn.java:    public static xn k = (new xh(3)).b("flintAndSteel");
 ```

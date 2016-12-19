@@ -16,11 +16,13 @@ there could be some `defaults` option for the same purpose. And it is!
 With this two commands you can use the normal keybinds to do _shadowless_
 screenshots:
 
-`defaults write com.apple.screencapture disable-shadow -bool true killall SystemUIServer`
+``` text
+defaults write com.apple.screencapture disable-shadow -bool true killall SystemUIServer`
+```
 
 To revert to the original status:
 
-```
+``` text
 defaults write com.apple.screencapture disable-shadow -bool false killall SystemUIServer
 ```
 
@@ -37,14 +39,14 @@ OS X provides us with the `screencapture` command, so we can hack around and
 build our own scripts. A simple one that allows interactive capture without
 shadow:
 
-```
+``` text
 screencapture -i -o filename.png
 ```
 
 A more complete one that saves the screenshot on the desktop with the datetime
 as filename:
-    
-```
+
+``` text
 screencapture -i -o ~/Desktop/screenshot_`date +%Y%m%d_%H%M%S`.png
 ```
 

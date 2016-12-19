@@ -16,7 +16,7 @@ Basically you need to download it's shell script to manage steam apps, take
 special attention to the lib32 section if you're running the server in a 64bit
 machine.
 
- ```
+``` text
 wget http://media.steampowered.com/client/steamcmd_linux.tar.gz
 tar xzf steamcmd_linux.tar.gz
 ```
@@ -27,7 +27,7 @@ You will need to login with your steam username here to download/update
 starbound. Your account** is not needed** to keep the server running.
 
 
-```
+``` text
 ./steamcmd.sh
 # Steam updating and validating stuff
 Steam> login your_username_here
