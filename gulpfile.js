@@ -27,7 +27,6 @@ gulp.task('sass', function () {
 
 gulp.task('js', function () {
   var jsStream = gulp.src([
-    './bower_components/google-code-prettify/bin/prettify.min.js',
     './assets/static/js/main.js'
   ]);
   return jsStream
