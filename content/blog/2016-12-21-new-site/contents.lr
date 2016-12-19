@@ -1,0 +1,35 @@
+title: New site
+---
+_template: blog/post.html
+---
+comments_enabled: yes
+---
+pub_date: 2016-12-21
+---
+body:
+
+After a really long time I finally managed to spend some time redesigning and moving my blog to another platform, everyone already know that [I tried really hard](https://gitlab.com/fmartingr/fmartingr.com/blob/master/fmartingrcom/themes/v1/templates/blog/entry.jinja#L67) to create an editor that satisfied me while the answer was simpler.
+
+<!-- readmore -->
+
+I like to *reinvent the wheel* (~~I don't even know if that expression exists or it's said like that in English, let me know!~~ [Apparently yes](http://www.urbandictionary.com/define.php?term=reinvent%20the%20wheel)) but this time I got really far... like years far: I stopped writting because I did not find any editor confortable to the point [I created my own blog application](https://gitlab.com/fmartingr/fmartingr.com) without success. This madness has to stop, there has to be something already there for me.
+
+After trying almost every blog and static content generator out there I stumbled upon [https://www.getlektor.com](Lektor), a simple but really powerful static site generator that almost completely fit my needs.
+
+After trying it a bit, I migrated the new theme I was making [in a refactor of my old site to Flask](https://gitlab.com/fmartingr/fmartingr.com/tree/v3) (*yikes!*) and recreated the same site structure to do a final test.
+
+I liked it.
+
+*But why?* you may ask... *Lektor's editor is worst that the one you made*.
+
+And you are right, Lektor's editor is just a `textarea`, but you forget one thing: **all the content are plain text files that I can edit with whatever I want**.
+
+Having this flexibility is awesome, most of the content of the site [is edited in either Emacs or Atom](/made-with-open-source). Even if it was tricky at first because Lektor creates all the content in the same path [I managed a -I'm sure overengineered- way](https://github.com/fmartingr/fmartingr-lektor/tree/master/content) to sort the files the way I wanted. Will improve it in the future when I know more about Lektor's internals.
+
+The theme also reflects the change I've been noticing in the past year: I want simplicity, so the site is as simple as it gets.
+
+Just a few colors, no CSS frameworks (only a simple grid) and everything is made up from scratch. It still needs a little enhancements but it wont get much further. Also I'm sure I left a few stuff broken when I migrated all the blog entries but everything will be fixed with time.
+
+I hope this gives me more time and motivation to keep writing. There are a few old drafts from tools that I'm going to finish up, and... well, more stuff that will be shared with you in future posts. :)
+
+P.S.: I do not forget that I owe you the conclusion of [the penguin trials](/blog/2016/04/11/penguin-trials/) too!
