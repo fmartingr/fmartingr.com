@@ -1,5 +1,7 @@
 [project]
 name = Felipe Martin
+url = https://fmartingr.com/
+url_style = absolute
 
 [packages]
 lektor-markdown-highlighter = 0.1
