@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+    <title>{{ config.rss_blog_title }}</title>
+    <description>{{ config.rss_blog_description }}</description>
+    <link>{{ config.base_url }}</link>
+    {% for item in items %}
+    <item>
+        <title><![CDATA[{{ item.title }}]]></title>
+        <description><![CDATA[{{ item.content|safe }}]]></description>
+        <link>{{ config.base_url }}{{ item.get_absolute_url() }}</link>
+        <pubDate>{{ item.date|dt('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+    </item>
+    {% endfor %}
+</channel>
+</rss>
