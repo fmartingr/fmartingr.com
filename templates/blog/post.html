@@ -8,7 +8,9 @@
 {% block main_content %}
   {{ render_blog_post(this) }}
   {% if this.comments_enabled %}
-    <div class="center comments">{{ render_disqus_comments() }}</div>
+    <div class="comments center" id="disqus_thread"></div>
+    {% from 'macros/comments.html' import disqus with context %}
+    {{ disqus() }}
   {% else %}
     <div class="center info">
       Comments have been disabled in this post, if you want to contact me please <a href="{{ '/contact'|url }}">go ahead</a>!

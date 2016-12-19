@@ -3,7 +3,7 @@
   <article class="blog-post center">
     <h1><a href="{{ post|url }}">{{ post.title }}</a></h1>
     <div class="info">
-      Published on {{ post.pub_date }} with <a href="#">no comments.</a>
+      Published on {{ post.pub_date }} with <a href="#disqus_thread">no comments.</a>
     </div>
     <div class="content">
       {% if from_index and summary|length > 1 %}
