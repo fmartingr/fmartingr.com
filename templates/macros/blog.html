@@ -8,7 +8,7 @@
     <div class="content">
       {% if from_index and summary|length > 1 %}
         {{ summary[0] }}
-        <p class="text-right"><a href="{{ post|url }}">Read more</a></p>
+        <p class="text-right"><a href="{{ post|url }}">Read more &raquo;</a></p>
       {% else %}
         {{ post.body }}
       {% endif %}
