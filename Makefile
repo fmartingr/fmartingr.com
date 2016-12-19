@@ -15,3 +15,6 @@ watch:
 deploy:
 	make build
 	lektor deploy
+
+deploy_tests:
+	bash tests/run.sh

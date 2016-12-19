@@ -1,3 +1,6 @@
+# python
+__pycache__
+
 # node/bower
 node_modules
 bower_components
@@ -9,3 +12,6 @@ bower_components
 assets/static/js/app-min.js
 assets/static/js/app.js
 assets/static/css
+
+# Tests
+tests/venv
