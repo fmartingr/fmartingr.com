@@ -12,7 +12,7 @@
     {% from 'macros/comments.html' import disqus with context %}
     {{ disqus() }}
   {% else %}
-    <div class="center info">
+    <div class="center block-info">
       Comments have been disabled in this post, if you want to contact me please <a href="{{ '/contact'|url }}">go ahead</a>!
     </div>
   {% endif %}
