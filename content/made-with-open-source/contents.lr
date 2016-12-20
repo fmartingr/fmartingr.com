@@ -2,7 +2,9 @@ Title: Made with open source software
 ---
 body:
 
-Even for a small site like this, is important to use the appropriate tools! This site was made using open source tools some of which are:
+Even for a small site like this, is important to use the appropriate tools!
+
+Some of the open source tools used to make this site are:
 
 * [Atom](https://atom.io)
 * [Bower](https://bower.io/)
