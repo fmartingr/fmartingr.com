@@ -8,6 +8,7 @@ dev:
 
 build:
 	make dev
+	lektor build
 
 watch:
 	node_modules/gulp/bin/gulp.js sass:watch
