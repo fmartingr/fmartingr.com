@@ -1,0 +1,99 @@
+title: A week for personal development
+---
+_template: blog/post.html
+---
+comments_enabled: yes
+---
+pub_date: 2016-12-26
+---
+body:
+
+Sadly, over time, my programming time at work is becoming less frequent. Doesn’t mean I don’t do stuff it’s just little by little most my time is spent on management things. Since I don’t want to get stalled and to give myself focus into other things I got last week off to see whatever I was capable of making. To my surprise it was time well spent.
+
+<!-- readmore -->
+
+> Side effect: instead of five or six days it was down to four or less cause you know, everyone is busy these days ;)
+
+So, what did I do?
+
+## Used Lektor to build this site
+
+[This site on github](https://github.com/fmartingr/fmartingr-lektor)
+
+I finally managed to rebuild my site from scratch with [lektor](https://www.getlektor.com). Already wrote about this [in a previous post](/blog/2016/12/21/new-site/).
+
+Summary:
+- :arrow_up_small: Read other people's code, which is nice.
+- :arrow_up_small: Made some goodies with Make, Gulp and Bash to automate stuff.
+- :arrow_up_small: Discovered that ARM servers are ~~not so~~ fun.
+- :arrow_down_small: It wasn't coding.
+
+## Natif
+
+[Natif on github](https://github.com/fmartingr/natif)
+
+Simple app to use a website as a desktop application.
+
+I wanted to do something with [electron](https://electron.atom.io) for some time now and since I use some webapps that I wanted outside of my browser this was a simple yet powerful ally for me.
+
+I wanted it mostly to create a *Netflix app* because my main browser is Firefox and Netflix isn't working on it but [I came into *trouble* when trying it out](https://github.com/fmartingr/natif/issues/1).
+
+Summary:
+- :arrow_up_small: Tried electron.
+- :arrow_up_small: Simple code, good results.
+- :arrow_down_small: Widevine.
+- :arrow_down_small: Packaging automation on release for every operating system without a decent server will force me to use jenkins, and I don't want to.
+
+## SymbolDoc
+
+[Symboldoc on github](https://github.com/fmartingr/symboldoc)
+
+Print a simple docstring based on a given python module and a symbol name.
+
+I wanted to use [abtract syntax trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree) for something thinking it was more difficult than it really were, and it came to a simple script that print a docstring for a symbol that also could be easily integrated into my emacs setup, forcing me to document my projects more.
+
+Summary:
+- :arrow_up_small: Used AST!
+- :arrow_up_small: Made tests.
+- :arrow_down_small: Understanding the AST wasn't as difficult as I expected.
+
+## Nout
+
+[Nout on github](https://github.com/fmartingr/nout)
+
+Maybe in the future a note taking app.
+
+After trying almost every note taking app out there mine are just files on a `Notes` folder written in markdown syntax. Thinking about what I needed, it came just to a couple features, so I thought that creating an index of my notes in a sqlite database would be enough. Parsing files to normalize the information and using simple queries to look up for the data.
+
+Right now I only made the file watcher and the database storage, there's a pull request on the works with some tests. It's not usable yet.
+
+Summary:
+- :arrow_up_small: Forgot how fun was working with multithreading.
+- :arrow_up_small: Getting the mindset to start bigger projects.
+- :arrow_up_small: Now I know that [fnmatch](https://docs.python.org/3.6/library/fnmatch.html) exists.
+- :arrow_down_small: Got the feeling that the components are not as modular as they should be.
+- :arrow_down_small: Not enough testing, solving it now.
+- :arrow_down_small: Not documented, but time was scarce.
+
+## Other stuff
+
+Other things I did:
+- Started reading [the pragmatic programmer](https://pragprog.com/book/tpp/the-pragmatic-programmer) and started to feel that it was money really well invested. **Highly recommended to every developer out there**. (Thank you [@RusEu](https://github.com/RusEu) and [@MiguelGR](https://github.com/miguelgr))
+- Made a few Pull Requests to [i3pystatus](https://github.com/enkore/i3pystatus). Minor things but it felt rewarding.
+- Made [a simple plugin for lektor](https://github.com/fmartingr/fmartingr-lektor/tree/master/packages/emojify). Not published yet.
+- Built a list of stuff to automate my laptop provisioning with Ansible even more.
+- Tuned a little bit more my i3 configuration.
+- Found out tools like codecov, scrutinizer and gemnasium.
+- Learn things about open source projects (guidelines, contribution, CI, ...).
+- Moved my site from a custom server to [Firebase](https://www.firebase.com).
+
+Things I miss:
+- Doing something in another programming language. Not so long ago [I tried golang](https://github.com/fmartingr/goshare) and I got the feeling that I should have invested more time in this or a new one.
+- Lack of documentation but you know, when there's not enough time...
+- Focus on unit testing more than I did.
+- Related with the above, should have tried to use [TDD](https://en.wikipedia.org/wiki/Test-driven_development) or another different development process.
+- Not having a boilerplate to create projects and its integrations and base file tree, spent a lot of time doing it. It's silly because you're not creating tons of projects in a short period of time but it's a task that could be automated somehow.
+
+Overall it felt really rewarding. I encourage everyone to get some time off to create new stuff, maintain your projects, create that tool you always wanted, research about that subject you read so long ago, etc.
+
+I don't know when but I will surely repeat this.
