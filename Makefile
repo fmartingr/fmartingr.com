@@ -8,14 +8,14 @@ dev:
 
 build:
 	make dev
-	lektor build
+	lektor build --output-path ./public
 
 watch:
 	node_modules/gulp/bin/gulp.js sass:watch
 
 deploy:
 	make build
-	lektor deploy
+	node_modules/firebase-tools/bin/firebase deploy
 
 deploy_tests:
 	bash tests/run.sh
