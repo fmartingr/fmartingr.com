@@ -1,6 +1,5 @@
 setup:
 	npm install
-	node_modules/bower/bin/bower install
 
 dev:
 	node_modules/gulp/bin/gulp.js sass
