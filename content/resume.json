@@ -1,0 +1,324 @@
+{
+    "basics": {
+        "name": "Felipe Martin",
+        "label": "Software Engineer",
+        "picture": "https://fmartingr.com/assets/images/avatar.png",
+        "email": "me@fmartingr.com",
+        "website": "https://fmartingr.com",
+        "summary": "I am a curious person always eager to learn new skills. I started working with computers at the age of eight and since then I have been researching this specific field. First, I started focusing on how computers work, the different operating systems and hardware, but soon enough I discovered that my real passion is software development. I coded my first working program when I was 14 years old and ever since then I have been looking for new languages to learn and new applications to create. I consider myself a proactive person who is always looking for the best way to solve a problem.",
+        "location": {
+            "city": "Madrid",
+            "countryCode": "ES",
+            "region": "Madrid"
+        },
+        "profiles": [
+            {
+                "network": "LinkedIn",
+                "username": "fmartingr",
+                "url": "https://www.linkedin.com/in/fmartingr/"
+            },
+            {
+                "network": "Github",
+                "username": "fmartingr",
+                "url": "https://github.com/fmartingr"
+            },
+            {
+                "network": "Twitter",
+                "username": "fmartingr",
+                "url": "https://twitter.com/fmaringr"
+            },
+            {
+                "network": "Telegram",
+                "username": "fmartingr",
+                "url": "https://telegram.me/fmartingr"
+            }
+        ]
+    },
+    "work": [
+        {
+            "company": "Saluspot Spain S.L.",
+            "position": "CTO",
+            "website": "",
+            "startDate": "2015-10-01",
+            "summary": "- Team manager: tasks estimation and asignation, user story reviewing from product/UX, team happiness fighter, brownie dispatcher, ...\n- Continuous Integration for unit and e2e testing using jenkins, docker, pylint, pyflakes, radon and selenium via python and bash scripting. Tools or services used: CircleCI, Codacy,\n- Code Quality auto review control with jenkins and pyflakes.\n- Automation of the translation workflow of the international site and the mobile app.\n- Error and logging control using sentry.\n- Backend developer with python, django, postgresql, redis, memcached, rabbitmq, celery and sphinxsearch.\n- Frontend developer with vanilla javascript, jquery, angularjs and some other minor libraries.\n- IT manager used to work with GNU/Linux environments. Currently using Ubuntu servers provided by amazon EC2 (along with RDS and ElasticCache services).\n- Server provisioning using Ansible, Fabric and bash scripts. Vagrant for local development.",
+            "highlights": []
+        },
+        {
+            "company": "Saluspot Spain S.L.",
+            "position": "Backend Engineer",
+            "website": "",
+            "startDate": "2015-01-01",
+            "summary": "- Backend engineer of a Django based service.\n- Design and implementation and automated testing of the REST service of the application using django-rest-framework.\n- Maintenance and new developments for the application\nStack: Python, Django, RabbitMQ, Celery, Postgresql, Redis, Sphinxsearch, Javascript, jQuery\nIT: AWS, Serverdensity, Jenkins, Sentry",
+            "highlights": [],
+            "endDate": "2015-10-01"
+        },
+        {
+            "company": "Saluspot Spain S.L.",
+            "position": "Freelance Developer",
+            "website": "",
+            "startDate": "2014-09-01",
+            "summary": "- Backend engineer of a Django based service.\n- Design and implementation and automated testing of the REST service of the application using django-rest-framework.\n- AngularJS support development for a mobile application built with ionic framework.",
+            "highlights": [],
+            "endDate": "2015-01-01"
+        },
+        {
+            "company": "A-House: A space for ideas S.L.",
+            "position": "Founder and CTO",
+            "website": "",
+            "startDate": "2013-09-01",
+            "summary": "Full stack web developer and I.T. Administrator.\n- Development on web stack applications with python and django, php or javascript.\n- Choosing and integrating the tools the team needed for our daily workflow.\n- Identifying and discussing the best technical solutions for the projects.",
+            "highlights": [],
+            "endDate": "2014-08-01"
+        },
+        {
+            "company": "Bytepix S.L.",
+            "position": "Founder and CTO",
+            "website": "",
+            "startDate": "2012-06-01",
+            "summary": "Full time Python developer, layout designer and I.T. administrator.\n- Learning and integrating tools like CVS (svn, git, mercurial), task managers, solutions for clients and project management.\n- Adapting new programming languages and frameworks like django, flask, sqlalchemy, as well as template engines like jinja2 and twig.\n- New collaboration tools like codebase, bugzilla, daylite and google apps for bussiness.\n- System improvements for automation: use of puppet and fabric for provisioning and deployment.  System monitorization using third-party tools like Geckoboard and ServerDensity.\n- Task automation (like deploy pipelines, testing and backup jobs) with Jenkins.\n- Creation and implementation of REST and SOAP APIs.\n- Preprocessors: Coffeescript for javascript, LESS and SASS for CSS and HAML/Jade for HTML.\n- Front-end developing with javascript and coffeescript. Automation tools like Grunt and Gulp.",
+            "highlights": [],
+            "endDate": "2014-08-01"
+        },
+        {
+            "company": "The Prime Tag",
+            "position": "Chief software engineer",
+            "website": "",
+            "startDate": "2009-06-01",
+            "summary": "Worked mainly as a Software Developer looking for new products, also participated on all the web projects of the company using the tools I made for the company. Worth mentioning:\n- Development of a Digital Signage Infrastructure (both backend and frontend) and the full maintenance of its services, with customised content input for every client along with automated news to have the displays always populated.\n- Creation of a PHP framework to create sites with the capability of editing the contents live on the site, with revisions, SEO support and tree of contents.",
+            "highlights": [],
+            "endDate": "2012-09-01"
+        },
+        {
+            "company": "Acomoda Solutions",
+            "position": "IT Administrator",
+            "website": "",
+            "startDate": "2009-03-01",
+            "summary": "IT administration using windows server and IIS solutions. Remote support for system failures with intranet server management. Helped with the development of an E.R.P. using ASP.NET and Visual Basic.",
+            "highlights": [],
+            "endDate": "2009-06-01"
+        }
+    ],
+    "education": [
+        {
+            "institution": "Clara del Rey",
+            "area": "Madrid, Spain",
+            "studyType": "Advanced Degree, IT System Management",
+            "startDate": "2007-09-01",
+            "gpa": "",
+            "courses": [],
+            "endDate": "2009-07-01"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Git",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Django",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Github",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Linux",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Mac OS X",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "AJAX",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "CouchDB",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "CoffeeScript",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "jQuery",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Flask",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "API",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "XML",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "JSON",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "MySQL",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "SQL",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "PostgreSQL",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "REST",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Front-end",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Web Development",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "HTML5",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Cascading Style Sheets (CSS)",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "APIs",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Representational State Transfer (REST)",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Back-end",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Gulp",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "PHP",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Grunt",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "CSS",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Celery",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "HTML",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Redis",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "HTML 5",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "RabbitMQ",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "JavaScript",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "C",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Python",
+            "level": "",
+            "keywords": []
+        },
+        {
+            "name": "Node.js",
+            "level": "",
+            "keywords": []
+        }
+    ],
+    "projects": [
+        {
+            "name": "AmiiboFindr",
+            "startDate": "2015-05-01",
+            "summary": "",
+            "url": "http://amiibofindr.com"
+        },
+        {
+            "name": "Shelfzilla",
+            "startDate": "2014-06-01",
+            "summary": "",
+            "url": "https://shelfzilla.com"
+        }
+    ],
+    "volunteer": [],
+    "languages": [
+        {
+            "language": "Spanish",
+            "fluency": "Native speaker"
+        },
+        {
+            "language": "English",
+            "fluency": ""
+        }
+    ]
+}
