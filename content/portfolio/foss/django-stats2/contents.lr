@@ -1,0 +1,11 @@
+name: django-stats2
+---
+slug: django-stats2
+---
+url: https://github.com/fmartingr/django-stats2
+---
+url_in_list: yes
+---
+description_in_list: yes
+---
+description: Django library to create custom stats for model objects.

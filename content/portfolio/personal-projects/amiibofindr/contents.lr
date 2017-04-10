@@ -1,0 +1,22 @@
+name: AmiiboFindr
+---
+date: 2015-06-23
+---
+description:
+
+A site for user to show and keep track of the Nintendo collectible figures called _Amiibo_, with also background jobs to fetch prices from configured shops.
+
+Mostly an experiment to build something bigger.
+---
+stack: Django, REST, CSS3, SemanticUI
+---
+type: personal
+---
+role: One-man project
+---
+slug: amiibofindr
+---
+url:
+
+http://amiibofindr.com
+    

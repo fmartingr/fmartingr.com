@@ -1,0 +1,21 @@
+name: Pendulum Framework
+---
+date: 2011-12-11
+---
+description:
+
+A simple MVC framework built with vanilla PHP. The framework contained basic model support to easily create interaction of the site with the database as a simple yet extensible ORM, basic views that you could associate with templates and a core class to load modules or models as required.
+
+This framework was built for the Projeggt project but [@albertogcatalan](https://github.com/albertogcatalan) continued working on it as [Quaver](https://github.com/MilloLab/quaver) under MIT license.
+---
+stack: PHP, Mysql
+---
+type: private
+---
+role: Software Engineer
+---
+slug: pendulum-framework
+---
+url: 
+---
+company: The Prime Tag S.C.

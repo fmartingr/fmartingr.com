@@ -1,13 +1,9 @@
-title: Portfolio
+_discoverable: yes
 ---
-body:
+_hidden: no
+---
+content:
 
-This is a list of the projects:
+You can find more software or experiments I made into my [Github account](https://github.com/fmartingr).
 
-* Project 1
-* Project 2
-* Project 3
----
-_slug: 
----
-_template: portfolio.html
+This is most of the work/personal projects I have been involved in but it may not be complete as I may have forgot to put some of them, didn't have enough information or the owner didn't allow me to announce my role in it.

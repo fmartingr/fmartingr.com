@@ -1,0 +1,9 @@
+name: python-yubikey
+---
+description: Python library to interact with Yubico keys with OTP authentication.
+---
+description_in_list: yes
+---
+url: https://github.com/fmartingr/python-yubikey
+---
+url_in_list: yes

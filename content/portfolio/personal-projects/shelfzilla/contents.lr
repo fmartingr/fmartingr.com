@@ -1,0 +1,22 @@
+name: Shelfzilla
+---
+date: 2014-07-15
+---
+description:
+
+A site for comic collectors where anyone could track their collections, wish lists and read volumes.
+
+The site was shut down on August 6th, 2016 after being online for two years.
+---
+stack: Django, Python, Javascript, PostgreSQL, CSS
+---
+type: personal
+---
+role: Software engineer
+---
+slug: shelfzilla
+---
+url:
+
+https://shelfzilla.com
+    

@@ -1,0 +1,24 @@
+name: A random table
+---
+date: 2013-06-09
+---
+description:
+
+As the site say: 
+
+> The place to find or host game sessions, meet new people through our player-to-player affinity system and discover new exciting games.
+
+Volunteered on the 2013s Summer Piweek.
+---
+stack: Django, Python, Javascript
+---
+type: volunteer
+---
+role: Django developer
+---
+slug: random-table
+---
+url:
+
+http://arandomtable.com/
+    

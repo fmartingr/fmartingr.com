@@ -1,0 +1,26 @@
+name: EWA (Easy Web Administrator)
+---
+date: 2010-01-01
+---
+description:
+
+A custom framework to easily build websites with the big feature for end-users that the contents were easily editable live on top of the site, reviewing the changes of the text/media files on the fly.
+
+Some features:
+- Content revisions.
+- Privilege support.
+- Customizable site modules.
+- Central administration application for all your sites.
+- Branding support.
+---
+stack: PHP, Mysql, Javascript
+---
+type: private
+---
+role: Software Engineer
+---
+slug: ewa-easy-web-administrator
+---
+url: 
+---
+company: The Prime Tag S.C.

@@ -7,7 +7,7 @@ dev:
 
 build:
 	make dev
-	lektor build --output-path ./public
+	lektor build --output-path ./public -f htmlmin
 
 watch:
 	node_modules/gulp/bin/gulp.js sass:watch

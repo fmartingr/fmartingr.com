@@ -1,0 +1,9 @@
+name: HowMuchForThis
+---
+description: Simple API to extract prices from some e-commerce sites.
+---
+description_in_list: yes
+---
+url: https://github.com/fmartingr/howmuchforthis
+---
+url_in_list: yes

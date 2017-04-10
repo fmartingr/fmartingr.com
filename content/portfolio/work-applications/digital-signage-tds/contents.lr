@@ -1,0 +1,25 @@
+name: The Digital Signage (TDS)
+---
+date: 2009-07-15
+---
+description:
+
+A custom digital signage software implementation built in vanilla PHP as the backend and web technologies in the front-end. Built in ~two months as a MVP that allowed me to start my own company with a partner.
+
+Components:
+- Crawler: A news crawler that filled up our database with news from different sources, tagged by source, category and geographic location.
+- Screen Software: Custom scripts built on top of Micro PCs mounted behind the TV screens, allowing the computer to run a browser in "store mode", disabling any using input to show the pre-configured URL attached to this TV/Location.
+- HTTP Public screen URL: The URL that the TV loaded in their browsers, with Javascript, built-in caching and some other goodies for maintenance.
+- Backoffice: The main control panel for all the components where all automated news-list for the clients where generated, allowing multiple sources, configuration of the screens, information about online availability, etc.
+---
+stack: PHP, Mysql, Javascript, IT
+---
+type: private
+---
+role: Software/Hardware Engineer
+---
+slug: digital-signage-tds
+---
+url: 
+---
+company: The Prime Tag S.C.

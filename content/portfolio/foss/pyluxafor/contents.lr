@@ -1,0 +1,11 @@
+name: pyluxafor
+---
+description: Python library and CLI to interact with Luxafor USB Leds.
+---
+description_in_list: yes
+---
+slug: pyluxafor
+---
+url: https://github.com/fmartingr/pyluxafor
+---
+url_in_list: yes

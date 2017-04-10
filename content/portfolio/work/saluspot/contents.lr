@@ -1,0 +1,20 @@
+name: Saluspot
+---
+date: 2014-09-16
+---
+description: An interactive health community formed by doctors and patients, dedicated to improve wellness. Search and find answers about health, ask privately to doctors specialized in the subject you need.
+---
+stack: Python, Django, PostgreSQL, Redis, Sphinx, Memcached, Celery, RabbitMQ, Javascript, AngularJS, Ionic
+---
+type: work
+---
+role: Software Engineer / OPs / CTO
+---
+slug: saluspot
+---
+url:
+
+https://www.saluspot.com/
+    
+---
+company: Freelance job / HealthCommunity S.L. / Saluspot Spain S.L.
