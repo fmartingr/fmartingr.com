@@ -7,6 +7,9 @@ description:
 A site for user to show and keep track of the Nintendo collectible figures called _Amiibo_, with also background jobs to fetch prices from configured shops.
 
 Mostly an experiment to build something bigger.
+
+[Open sourced on github](https://github.com/fmartingr/amiibofindr)
+
 ---
 stack: Django, REST, CSS3, SemanticUI
 ---
@@ -19,4 +22,3 @@ slug: amiibofindr
 url:
 
 http://amiibofindr.com
-    
