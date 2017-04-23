@@ -13,6 +13,10 @@
         {{ post.body }}
       {% endif %}
     </div>
+    {% if not from_index and post.edit_comment %}
+    <h3>Edits</h3>
+    {{ post.edit_comment }}
+    {% endif %}
     <hr class="light">
   </article>
 {% endmacro %}
