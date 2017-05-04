@@ -23,14 +23,19 @@
                 "url": "https://github.com/fmartingr"
             },
             {
-                "network": "Twitter",
-                "username": "fmartingr",
-                "url": "https://twitter.com/fmaringr"
-            },
-            {
                 "network": "Telegram",
                 "username": "fmartingr",
                 "url": "https://telegram.me/fmartingr"
+            },
+            {
+                "network": "OStatus",
+                "username": "fmartingr@mastodon.social",
+                "url": "https://mastodon.social/@fmartingr"
+            },
+            {
+                "network": "Twitter",
+                "username": "fmartingr",
+                "url": "https://twitter.com/fmaringr"
             }
         ]
     },
@@ -38,24 +43,36 @@
         {
             "company": "Saluspot Spain S.L.",
             "position": "CTO",
-            "website": "",
+            "website": "https://www.saluspot.com",
             "startDate": "2015-10-01",
-            "summary": "- Team manager: tasks estimation and asignation, user story reviewing from product/UX, team happiness fighter, brownie dispatcher, ...\n- Continuous Integration for unit and e2e testing using jenkins, docker, pylint, pyflakes, radon and selenium via python and bash scripting. Tools or services used: CircleCI, Codacy,\n- Code Quality auto review control with jenkins and pyflakes.\n- Automation of the translation workflow of the international site and the mobile app.\n- Error and logging control using sentry.\n- Backend developer with python, django, postgresql, redis, memcached, rabbitmq, celery and sphinxsearch.\n- Frontend developer with vanilla javascript, jquery, angularjs and some other minor libraries.\n- IT manager used to work with GNU/Linux environments. Currently using Ubuntu servers provided by amazon EC2 (along with RDS and ElasticCache services).\n- Server provisioning using Ansible, Fabric and bash scripts. Vagrant for local development.",
-            "highlights": []
+            "endDate": "current",
+            "summary": "Backend developer and team manager. Stack: Python, Django, Flask, Celery, RabbitMQ, Memcached, Redis, Sphinxsearch, Sphinx, Mkdocs, Javascript, AWS, Jenkins, NewRelic, Docker, Docker-Compose, CircleCI, Git, Github, Gitlab.",
+            "highlights": [
+                "Team manager: tasks estimation and asignation, user story reviewing from product/UX, team happiness fighter, brownie dispatcher, ...",
+                "Continuous Integration for unit and e2e testing using jenkins, docker, pylint, pyflakes, radon and selenium via python and bash scripting and services like CircleCI, Drone and Gitlab/Github.",
+                "Code Quality auto review control with jenkins, flake8 and danger.",
+                "Automation of the translation workflow of the international site and the mobile app.",
+                "Error and logging control using sentry.",
+                "IT manager used to work with GNU/Linux environments.",
+                "Server provisioning using Ansible, Fabric and bash scripts. Vagrant for local development."
+            ]
         },
         {
             "company": "Saluspot Spain S.L.",
             "position": "Backend Engineer",
-            "website": "",
+            "website": "https://www.saluspot.com",
             "startDate": "2015-01-01",
-            "summary": "- Backend engineer of a Django based service.\n- Design and implementation and automated testing of the REST service of the application using django-rest-framework.\n- Maintenance and new developments for the application\nStack: Python, Django, RabbitMQ, Celery, Postgresql, Redis, Sphinxsearch, Javascript, jQuery\nIT: AWS, Serverdensity, Jenkins, Sentry",
-            "highlights": [],
+            "summary": "Backend engineer of a Django based service. Stack: Python, Django, RabbitMQ, Celery, Postgresql, Redis, Sphinxsearch, Javascript, jQuery, AWS, Serverdensity, Jenkins, Sentry",
+            "highlights": [
+                "Design, implementation and automated testing of the REST service of the application using django-rest-framework.",
+                "Maintenance and new developments for the application."
+            ],
             "endDate": "2015-10-01"
         },
         {
             "company": "Saluspot Spain S.L.",
             "position": "Freelance Developer",
-            "website": "",
+            "website": "https://www.saluspot.com",
             "startDate": "2014-09-01",
             "summary": "- Backend engineer of a Django based service.\n- Design and implementation and automated testing of the REST service of the application using django-rest-framework.\n- AngularJS support development for a mobile application built with ionic framework.",
             "highlights": [],
@@ -73,7 +90,7 @@
         {
             "company": "Bytepix S.L.",
             "position": "Founder and CTO",
-            "website": "",
+            "website": "https://www.bytepix.com",
             "startDate": "2012-06-01",
             "summary": "Full time Python developer, layout designer and I.T. administrator.\n- Learning and integrating tools like CVS (svn, git, mercurial), task managers, solutions for clients and project management.\n- Adapting new programming languages and frameworks like django, flask, sqlalchemy, as well as template engines like jinja2 and twig.\n- New collaboration tools like codebase, bugzilla, daylite and google apps for bussiness.\n- System improvements for automation: use of puppet and fabric for provisioning and deployment.  System monitorization using third-party tools like Geckoboard and ServerDensity.\n- Task automation (like deploy pipelines, testing and backup jobs) with Jenkins.\n- Creation and implementation of REST and SOAP APIs.\n- Preprocessors: Coffeescript for javascript, LESS and SASS for CSS and HAML/Jade for HTML.\n- Front-end developing with javascript and coffeescript. Automation tools like Grunt and Gulp.",
             "highlights": [],
@@ -82,7 +99,7 @@
         {
             "company": "The Prime Tag",
             "position": "Chief software engineer",
-            "website": "",
+            "website": "https://www.theprimetag.com",
             "startDate": "2009-06-01",
             "summary": "Worked mainly as a Software Developer looking for new products, also participated on all the web projects of the company using the tools I made for the company. Worth mentioning:\n- Development of a Digital Signage Infrastructure (both backend and frontend) and the full maintenance of its services, with customised content input for every client along with automated news to have the displays always populated.\n- Creation of a PHP framework to create sites with the capability of editing the contents live on the site, with revisions, SEO support and tree of contents.",
             "highlights": [],
@@ -90,8 +107,8 @@
         },
         {
             "company": "Acomoda Solutions",
-            "position": "IT Administrator",
-            "website": "",
+            "position": "IT Administrator / Developer",
+            "website": "http://www.acomoda.com/",
             "startDate": "2009-03-01",
             "summary": "IT administration using windows server and IIS solutions. Remote support for system failures with intranet server management. Helped with the development of an E.R.P. using ASP.NET and Visual Basic.",
             "highlights": [],
