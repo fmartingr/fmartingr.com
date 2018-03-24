@@ -15,4 +15,4 @@ class DeployTestCase(unittest.TestCase):
                                allow_redirects=False)
         self.assertEqual(request.status_code, 301)
         self.assertEqual(request.headers.get('Location'),
-                          'http://fmartingr.com/')
+                          'https://fmartingr.com/')
