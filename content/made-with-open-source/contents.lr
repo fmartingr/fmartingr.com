@@ -12,9 +12,11 @@ Software:
 * [Emacs](https://www.gnu.org/software/emacs/)
 * [Gulp](http://gulpjs.com/)
 * [Lektor](https://getlektor.com)
+* [Visual Studio Code](https://code.visualstudio.com)
 
 Javascript libraries:
 * [Featherlight lightbox](https://github.com/noelboss/featherlight/)
+* [Fork Awesome](https://forkawesome.github.io/Fork-Awesome/)
 * [jQuery](https://jquery.com)
 
 And of course, this site "source code" [is publicly accessible on Github too](https://github.com/fmartingr/fmartingr-lektor).
