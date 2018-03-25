@@ -23,10 +23,10 @@
       <h1>Felipe Martín</h1>
       <h2>Be incomprehensible. If they can't understand, they can't disagree.</h2>
       <nav class="main-menu">
-        <a href="{{ '/'|url }}">/about</a> &nbsp;
-        <a href="{{ '/blog'|url }}">/blog</a> &nbsp;
-        <a href="{{ '/portfolio'|url }}">/portfolio</a> &nbsp;
-        <a href="{{ '/contact'|url }}">/contact</a>
+        <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/about</a> &nbsp;
+        <a {% if this.is_child_of('/blog') %}class="text-bold"{% endif %} href="{{ '/blog'|url }}">/blog</a> &nbsp;
+        <a {% if this.is_child_of('/portfolio') %}class="text-bold"{% endif %} href="{{ '/portfolio'|url }}">/portfolio</a> &nbsp;
+        <a {% if this.is_child_of('/contact') %}class="text-bold"{% endif %} href="{{ '/contact'|url }}">/contact</a>
       </nav>
       <hr class="light">
     </header>
