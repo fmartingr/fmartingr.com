@@ -2,6 +2,8 @@
 
 {% block page_title %}{{ super() }} | {{ this.title }}{% endblock %}
 
+{% block body_class %}{{ this.title|lower }}{% endblock %}
+
 {% block main_content %}
 <div class="center">
   {{ this.body }}
