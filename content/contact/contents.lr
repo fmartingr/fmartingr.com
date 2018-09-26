@@ -12,12 +12,6 @@ body:
         </a>
     </div>
     <div class="col-1-3 text-size-enormous">
-        <a class="no-underline" href="https://github.com/fmartingr">
-            <i class="fa fa-github" aria-hidden="true"></i>
-            <span class="text-size-normal display-block">Github</span>
-        </a>
-    </div>
-    <div class="col-1-3 text-size-enormous">
         <a class="no-underline" href="https://www.linkedin.com/in/fmartingr/">
             <i class="fa fa-linkedin" aria-hidden="true"></i>
             <span class="text-size-normal display-block">LinkedIn</span>

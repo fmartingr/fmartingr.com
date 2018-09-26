@@ -2,13 +2,40 @@ title: Welcome to Felipe Martin!
 ---
 body:
 
-Hi! I'm Felipe, and I am a developer. Whatever that is.
+<div class="text-center">
+    <img src="/static/images/avatar.jpg" class="home-avatar">
+</div>
+
+Hi! I'm Felipe Martin, and I am a developer. Whatever that is.
 
 I have been playing with code for a while now, but I also enjoy geeking around with computers, algorithms and other stuff; the less I know about it, the better! Learning new things every day is my way of life.
 
 I think that developers are like artists, writers and composers... we all make art. But we don't use strokes and colors, words or notes, we make it through code. And I really love it.
 
-If you want to get in touch, [feel free to drop me a line](/contact).
+If you want to get in touch, feel free to drop me a line on:
+
+<div class="text-center">
+    <a class="no-underline" href="mailto:me@fmartingr.com">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+        E-Mail
+    </a>
+    <a class="no-underline" href="https://www.linkedin.com/in/fmartingr/">
+        <i class="fa fa-linkedin" aria-hidden="true"></i>
+        LinkedIn
+    </a>
+    <a class="no-underline" href="https://telegram.me/fmartingr">
+        <i class="fa fa-telegram" aria-hidden="true"></i>
+        Telegram
+    </a>
+    <a class="no-underline" href="https://mastodon.social/@fmartingr">
+        <i class="fa fa-mastodon" aria-hidden="true"></i>
+        Mastodon
+    </a>
+    <a class="no-underline" href="https://twitter.com/fmartingr">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+        Birdsite
+    </a>
+</div>
 
 ---
 _template: home.html

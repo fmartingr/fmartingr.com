@@ -3,7 +3,7 @@
   <head>
     <title>{% block page_title %}Felipe Martin{% endblock %}</title>
     <link href='https://fonts.googleapis.com/css?family=Antic+Slab' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ '/static/css/style.css'|asseturl }}">
+    <link rel="stylesheet" href="{{ '/static/css/style.css'|url }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.0.11/css/fork-awesome.min.css" integrity="sha256-MGU/JUq/40CFrfxjXb5pZjpoZmxiP2KuICN5ElLFNd8=" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ get_pygments_stylesheet()|url }}">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
@@ -19,9 +19,10 @@
     {% block endhead %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
+    {% if this.path != '/' %}
     <header class="center">
       <h1>Felipe Martín</h1>
-      <h2>Be incomprehensible. If they can't understand, they can't disagree.</h2>
+
       <nav class="main-menu">
         <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/about</a> &nbsp;
         <a {% if this.is_child_of('/blog') %}class="text-bold"{% endif %} href="{{ '/blog'|url }}">/blog</a> &nbsp;
@@ -30,13 +31,16 @@
       </nav>
       <hr class="light">
     </header>
+    {% endif %}
     {% block main_content %}{% endblock %}
+    {% if this.path != '/' %}
     <footer class="center text-center">
       <hr class="light">
       <div class="center text-center">
         <a href="{{ "/made-with-open-source"|url }}">Made with Open Source tools</a> | <a href="{{ '/contact'|url }}">Contact</a>
       </div>
     </footer>
+    {% endif %}
     <script type="text/javascript" src="{{ '/static/js/app-min.js'|url }}"></script>
     {% block endbody %}{% endblock %}
     <script>
