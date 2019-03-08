@@ -3,8 +3,13 @@
 {% block page_title %}{{ super() }} | {{ this.title }}{% endblock %}
 
 {% block main_content %}
-  <div class="home-content grid center vertical-center">
-    {{ this.body }}
+  <div class="grid center">
+    <div class="col-1-3">
+      <img src="{{ 'static/images/avatar.jpg'|url }}">
+    </div>
+    <div class="col-2-3">
+      {{ this.body }}
+    </div>
   </div>
 {% endblock %}
 
