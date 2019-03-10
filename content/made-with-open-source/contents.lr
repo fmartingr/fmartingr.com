@@ -7,7 +7,6 @@ Even for a small site like this, is important to use the appropriate tools!
 Some of the open source tools used to make this site are:
 
 Software:
-* [Atom](https://atom.io)
 * [Bower](https://bower.io/)
 * [Emacs](https://www.gnu.org/software/emacs/)
 * [Gulp](http://gulpjs.com/)
@@ -18,6 +17,8 @@ Javascript libraries:
 * [Featherlight lightbox](https://github.com/noelboss/featherlight/)
 * [Fork Awesome](https://forkawesome.github.io/Fork-Awesome/)
 * [jQuery](https://jquery.com)
+
+<a href="https://neocities.org"><img src="https://files.fmartingr.dev/neocities.png" /></a>
 
 And of course, this site "source code" [is publicly accessible on Github too](https://github.com/fmartingr/fmartingr-lektor).
 
