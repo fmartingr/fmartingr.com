@@ -14,7 +14,6 @@ watch:
 
 deploy:
 	make build
-	node_modules/firebase-tools/bin/firebase deploy
 
 deploy_tests:
 	bash tests/run.sh
