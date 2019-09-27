@@ -15,9 +15,9 @@ var minify = require('gulp-minify');
 gulp.task('sass', function() {
     var sassStream = gulp.src('./assets/static/sass/style.sass')
         .pipe(sass().on('error', sass.logError));
-    var bowerStream = gulp.src([]);
+    // var bowerStream = gulp.src([]);
 
-    return merge(bowerStream, sassStream)
+    return merge(sassStream)
         .pipe(concatCss("style.css"))
         .pipe(minifyCss())
         .pipe(gulp.dest('./assets/static/css'))
