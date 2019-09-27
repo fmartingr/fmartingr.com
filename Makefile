@@ -15,7 +15,7 @@ watch:
 deploy:
 	make build
 	rm -rf ${PWD}/public/.lektor
-	rsync --progress -avc ${PWD}/public/ ${HOME}/Sites/fmartingr.com/
+	rclone sync ${PWD}/public fastmail:fmarttingr.com
 
 deploy_tests:
 	bash tests/run.sh
