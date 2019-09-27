@@ -24,18 +24,30 @@
       <h1>Felipe Martín</h1>
       <h2>Be incomprehensible. If they can't understand, they can't disagree.</h2>
       <nav class="main-menu">
-        <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/about</a> &nbsp;
-        <a {% if this.is_child_of('/blog') %}class="text-bold"{% endif %} href="{{ '/blog'|url }}">/blog</a> &nbsp;
-        <a {% if this.is_child_of('/portfolio') %}class="text-bold"{% endif %} href="{{ '/portfolio'|url }}">/portfolio</a> &nbsp;
-        <a {% if this.is_child_of('/contact') %}class="text-bold"{% endif %} href="{{ '/contact'|url }}">/contact</a>
+        <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/home</a> &nbsp;
+        {% for section in site.get('/').children %}
+          <a{% if this.is_child_of(section) %} class="text-bold"{% endif
+            %} href="{{ section|url }}">{{ section.path }}</a> {% if not loop.last %}&nbsp;{% endif %}
+        {% endfor %}
       </nav>
       <hr class="light">
     </header>
     {% block main_content %}{% endblock %}
     <footer class="center text-center">
       <hr class="light">
-      <div class="center text-center">
-        <a href="{{ "/made-with-open-source"|url }}">Made with Open Source tools</a> | <a href="{{ '/contact'|url }}">Contact</a>
+      <div>
+        Powered by <a href="https://www.getlektor.com/" target="_blank">Lektor</a>.
+      </div>
+      <div>
+        <a target="_blank" href="mailto:me@fmartingr.com">E-Mail</a>
+        |
+        <a target="_blank" href="https://github.com/fmartingr">Github</a>
+        |
+        <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">LinkedIn</a>
+        |
+        <a target="_blank" href="https://telegram.me/fmartingr">Telegram</a>
+        |
+        <a target="_blank" rel="me" href="https://mastodon.social/@fmartingr">Mastodon</a>
       </div>
     </footer>
     <script type="text/javascript" src="{{ '/static/js/app-min.js'|url }}"></script>
