@@ -14,9 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta http-equiv="cleartype" content="on">
 
-    <script type="text/javascript">
-    var disqus_shortname = 'fmartingr';
-    </script>
     {% block endhead %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
@@ -50,6 +47,8 @@
         <a target="_blank" rel="me" href="https://mastodon.social/@fmartingr">Mastodon</a>
       </div>
     </footer>
+    <script src="https://cdn.commento.io/js/commento.js"></script>
+    <script src="https://cdn.commento.io/js/count.js"></script>
     <script type="text/javascript" src="{{ '/static/js/app-min.js'|url }}"></script>
     {% block endbody %}{% endblock %}
     <script>
