@@ -14,10 +14,5 @@ build:
 watch:
 	node_modules/gulp/bin/gulp.js sass:watch
 
-deploy:
-	make build
-	rm -rf ${PWD}/public/.lektor
-	rclone sync --progress --create-empty-src-dirs ${PWD}/public fastmail:fmartingr.com
-
 deploy_tests:
 	bash tests/run.sh

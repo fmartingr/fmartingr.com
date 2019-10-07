@@ -1,9 +1,8 @@
 import unittest
-
 import requests
 
 
-class DeployTestCase(unittest.TestCase):
+class PagesTestCase(unittest.TestCase):
     def test_http_redirect_to_https(self):
         result = requests.get('http://fmartingr.com', allow_redirects=False)
         self.assertEqual(result.status_code, 301)

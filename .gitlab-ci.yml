@@ -1,0 +1,36 @@
+image: archlinux/base:latest
+
+variables:
+  POETRY_CACHE_DIR: "$CI_PROJECT_DIR/.cache/poetry"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+before_script:
+- pacman -Syu python-pip nodejs npm make --noconfirm
+
+cache:
+  paths:
+  - .cache/pip
+  - .cache/poetry
+
+stages:
+- deploy
+
+pages:
+  stage: deploy
+  script:
+    - pip install -r requirements.txt
+    - npm install
+    - make build
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+
+pages_test:
+  stage: deploy
+  script:
+    - pip install requests
+    - python -m unittest tests.tests_deploy
+  only:
+    - master
