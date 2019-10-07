@@ -1,6 +1,6 @@
 # python
 __pycache__
-.virtualenv
+.venv
 
 # node/bower
 node_modules
