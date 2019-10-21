@@ -1,17 +1,19 @@
+from urllib.parse import urlsplit
 import unittest
 import requests
 
 
 class PagesTestCase(unittest.TestCase):
     def test_http_redirect_to_https(self):
-        result = requests.get('http://fmartingr.com', allow_redirects=False)
-        self.assertEqual(result.status_code, 301)
-        self.assertEqual(result.headers.get('Location'),
-                          'https://fmartingr.com/')
+        response = requests.get('http://fmartingr.com', allow_redirects=False)
+        scheme, host, *_ = urlsplit(response.headers.get("Location"))
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(scheme, 'https')
+        self.assertEquals(host, "fmartingr.com")
 
     def test_www_redirects_to_non_www(self):
-        request = requests.get('https://www.fmartingr.com',
-                               allow_redirects=False)
-        self.assertEqual(request.status_code, 301)
-        self.assertEqual(request.headers.get('Location'),
-                          'https://fmartingr.com/')
+        response = requests.get('https://www.fmartingr.com', allow_redirects=False)
+        scheme, host, *_ = urlsplit(response.headers.get("Location"))
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(scheme, 'https')
+        self.assertEquals(host, "fmartingr.com")
