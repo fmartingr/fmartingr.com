@@ -10,7 +10,7 @@ _template: blog/post.html
 ---
 body:
 
-<img alt="A gathering of shadows cover" src="a-gathering-of-shadows.jpg" width="256" />
+![A gathering of shadows cover](./a-gathering-of-shadows.jpg)
 
 | | |
 | --- | --- |
