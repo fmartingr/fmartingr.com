@@ -5,7 +5,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 before_script:
-- pacman -Syu python-pip nodejs npm make --noconfirm
+- pacman -Syu python-pip nodejs npm python2 make --noconfirm
 
 cache:
   paths:
