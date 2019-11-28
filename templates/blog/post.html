@@ -7,15 +7,9 @@
 
 {% block main_content %}
   {{ render_blog_post(this) }}
-  {% if this.comments_enabled %}
-    <div class="comments center block">
-      <div id="commento"></div>
-    </div>
-  {% else %}
-    <div class="center block-info">
-      Comments have been disabled in this post, if you want to contact me please <a href="{{ '/contact'|url }}">go ahead</a>!
-    </div>
-  {% endif %}
+  <div class="center block-info">
+    Comments have been disabled in this blog, if you want to contact me directly please <a href="{{ '/contact'|url }}">go ahead</a>!
+  </div>
 {% endblock %}
 
 {% block endbody %}
