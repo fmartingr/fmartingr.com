@@ -1,5 +1,5 @@
 {% extends "blog/_base.html" %}
-{% from "macros/blog.html" import render_blog_post %}
+{% from "macros/blog.html" import render_blog_post, render_gallery %}
 
 {% block body_class %}blog post{% endblock %}
 
@@ -7,8 +7,11 @@
 
 {% block main_content %}
   {{ render_blog_post(this) }}
+  {% if this.children.get("gallery") %}
+  {{ render_gallery(this) }}
+  {% endif %}
   <div class="center block-info">
-    Comments have been disabled in this blog, if you want to contact me directly please <a href="{{ '/contact'|url }}">go ahead</a>!
+    Comments have been disabled in this blog. If you want to contact me directly please use the information in the bottom of the page.
   </div>
 {% endblock %}
 

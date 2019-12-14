@@ -20,3 +20,17 @@
     <hr class="light">
   </article>
 {% endmacro %}
+
+{% macro render_gallery(post) %}
+<div class="center">
+  <h2>Gallery</h2>
+  <div style="display: flex; justify-content: center; flex-flow: row wrap; ">
+  {% for attachment in post.children.get("gallery").attachments.order_by("_id") %}
+    <a href="/blog/{{post._slug}}/gallery/{{attachment._id}}" style="width: 30%">
+      <img src="/blog/{{post._slug}}/gallery/{{attachment._id}}">
+    </a>
+  {% endfor %}
+  </div>
+  <hr class="light">
+</div>
+{% endmacro %}
