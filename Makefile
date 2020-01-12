@@ -1,7 +1,5 @@
 setup:
-	python3 -m venv .venv
-	source .venv/bin/activate && pip install -r requirements.txt
-	npm install
+	poetry install
 
 dev:
 	node_modules/gulp/bin/gulp.js sass
