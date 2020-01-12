@@ -4,14 +4,12 @@ __pycache__
 
 # node/bower
 node_modules
-bower_components
 
 # emacs
 *~
 
 # static js
-assets/static/js/app-min.js
-assets/static/js/app.js
+assets/static/js
 assets/static/css
 
 # Tests
@@ -19,3 +17,6 @@ tests/venv
 
 # Build
 public
+
+# Lektor
+.lektor

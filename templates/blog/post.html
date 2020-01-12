@@ -3,15 +3,15 @@
 
 {% block body_class %}blog post{% endblock %}
 
-{% block page_title %}{{ super() }} | {{ this.title }}{% endblock %}
+{% block page_title %}{{ this.title }} | {{ super() }}{% endblock %}
 
 {% block main_content %}
   {{ render_blog_post(this) }}
-  {% if this.children.get("gallery") %}
-  {{ render_gallery(this) }}
-  {% endif %}
   <div class="center block-info">
-    Comments have been disabled in this blog. If you want to contact me directly please use the information at the bottom of the page.
+    In order to make a public comment on this entry please use
+    <a href="mailto:~fmartingr/fmartingr.com@lists.sr.ht?subject=Re: {{ this.title }}">the mailing list</a>
+    and if you want to approach me directly use the most appropriate channel from
+    <a href="{{ '/about'|url }}">the about page</a>.
   </div>
 {% endblock %}
 

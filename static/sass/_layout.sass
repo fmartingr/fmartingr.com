@@ -1,0 +1,103 @@
+body
+  font-family: $font-family
+  font-size: $font-size-base
+  line-height: 1.5em
+
+.center
+  margin: 0 auto
+  max-width: 920px
+
+a
+  text-decoration: underilne
+  color: $highlight-color
+
+  &.no-underline
+    text-decoration: none
+
+hr.light
+  border: 0px
+  margin: 1em 0 1em 0
+  border-top: #CCC 1px solid
+
+p:first-child
+  margin-top: 0
+
+.text-left
+  text-align: left
+
+.text-center
+  text-align: center
+
+.text-right
+  text-align: right
+
+.text-bold
+  font-weight: bold
+
+.text-size-small
+  font-size: $font-size-small
+
+.text-size-normal
+  font-size: $font-size-normal
+
+.text-size-enormous
+  font-size: $font-size-enormous
+
+.float-right
+  float: right
+
+.float-left
+  float: left
+
+.clearfloat
+  clear: both
+
+.display-block
+  display: block
+
+.block-info
+  background-color: lighten($highlight-color, 40%)
+  padding: 12px
+
+// New
+.page-content
+  display: flex
+  margin: 0 auto
+  flex-direction: row
+  max-width: 980px
+
+  @media ($tablet)
+    display: block
+    width: 100%
+
+  header
+    width: 25%
+    text-align: center
+
+    @media ($tablet)
+      width: 100%
+      .avatar
+        max-width: 125px
+
+    h1
+      font-size: 1.3em
+
+    .avatar
+      width: 70%
+      margin: 0 auto
+      border-radius: 12%
+
+    nav
+      a
+        display: block
+
+    .social
+      list-style: none
+      padding: 0
+
+  .main-content
+    @media ($tablet)
+      width: 100%
+
+    width: 75%
+    padding-right: 16px

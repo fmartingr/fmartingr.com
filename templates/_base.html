@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.0.11/css/fork-awesome.min.css" integrity="sha256-MGU/JUq/40CFrfxjXb5pZjpoZmxiP2KuICN5ElLFNd8=" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ get_pygments_stylesheet()|url }}">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
     <!-- Mobile -->
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -17,40 +18,58 @@
     {% block endhead %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
-    <header class="center">
-      <h1>Felipe Martín</h1>
-      <h2>Be incomprehensible. If they can't understand, they can't disagree.</h2>
-      <nav class="main-menu">
-        <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/home</a> &nbsp;
-        {% for section in site.get('/').children %}
-          <a{% if this.is_child_of(section) %} class="text-bold"{% endif
-            %} href="{{ section|url }}">{{ section.path }}</a> {% if not loop.last %}&nbsp;{% endif %}
-        {% endfor %}
-      </nav>
-      <hr class="light">
-    </header>
-    {% block main_content %}{% endblock %}
-    <footer class="center text-center">
-      <hr class="light">
-      <div>
-        Powered by <a href="https://www.getlektor.com/" target="_blank">Lektor</a> and <a href="https://about.gitlab.com/product/pages/">Gitlab Pages</a>.
-      </div>
-      <div>
-        <a target="_blank" href="mailto:me@fmartingr.com">E-Mail</a>
-        |
-        <a target="_blank" href="https://gitlab.com/fmartingr">Gitlab</a>
-        |
-        <a target="_blank" href="https://github.com/fmartingr">Github</a>
-        |
-        <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">LinkedIn</a>
-        |
-        <a target="_blank" href="https://telegram.me/fmartingr">Telegram</a>
-        |
-        <a target="_blank" rel="me" href="https://fosstodon.org/@fmartingr">Mastodon</a>
-      </div>
-    </footer>
-    <script src="https://cdn.commento.io/js/commento.js"></script>
-    <script src="https://cdn.commento.io/js/count.js"></script>
+    <div class="page-content">
+      <section class="main-content">
+        {% block main_content %}asd{% endblock %}
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="{{ '/static/images/avatar.jpg'|asseturl }}">
+        <hr class="light" />
+        <nav>
+          <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/home</a>
+          {% for section in site.get('/').children %}
+            <a {% if this.is_child_of(section) %}class="text-bold"{% endif %} href="{{ section|url }}">{{ section.path }}</a>
+          {% endfor %}
+        </nav>
+        <hr class="light" />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Sourcehut</span>
+          <a target="_blank" href="https://git.sr.ht/~fmartingr">~fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Mastodon</span>
+            <a target="_blank" rel="me" href="https://fosstodon.org/@fmartingr">fmartingr@fosstodon.org</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="{{ '/about'|url }}">[+ more]</a>
+          </li>
+        </ul>
+        <hr class="light" />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+          <li>
+            <span class="title">Published using</span>
+            <a target="_blank" href="https://sites.town">sites.town</a>
+          </li>
+        </ul>
+      </header>
+    </div>
     <script type="text/javascript" src="{{ '/static/js/app-min.js'|url }}"></script>
     {% block endbody %}{% endblock %}
   </body>
