@@ -58,8 +58,6 @@ edit_comment:
 
 **2017/04/23**: Stroked the link to the pre-order items since I deleted that page.
 ---
-comments_enabled: yes
----
 pub_date: 2017-01-31
 ---
 _template: blog/post.html
