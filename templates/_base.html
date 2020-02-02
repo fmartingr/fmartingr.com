@@ -23,14 +23,14 @@
       <header>
         <h1>Felipe Martín</h1>
         <img class="avatar" src="{{ '/static/images/avatar.jpg'|asseturl }}">
-        <hr class="light" />
+        <hr />
         <nav>
           <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/home</a>
           {% for section in site.get('/').children %}
             <a {% if this.is_child_of(section) %}class="text-bold"{% endif %} href="{{ section|url }}">{{ section.path }}</a>
           {% endfor %}
         </nav>
-        <hr class="light" />
+        <hr />
         <ul class="social text-size-small">
           <li>
             <span class="title">E-mail</span>
@@ -55,7 +55,7 @@
             <a href="{{ '/about'|url }}">[+ more]</a>
           </li>
         </ul>
-        <hr class="light" />
+        <hr />
         <ul class="social text-size-small">
           <li>
             <span class="title">Site created using</span>
