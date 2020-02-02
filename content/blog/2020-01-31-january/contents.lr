@@ -1,0 +1,86 @@
+title: January
+---
+pub_date: 2020-01-31
+---
+_template: blog/post.html
+---
+body:
+
+![Munich in January](./munich.jpg)
+
+I didn't have much time for anything on January since I have spent more
+time traveling than anything else: Being on my homecity for christmas,
+traveling for work two times and then another conference just because.
+
+At least the planes gave me some time to read and finish some pending
+things, though I hope next month is more relaxed.
+
+## Conferences
+- DevConf, Brno [^link devconf.cz]
+
+  Not much to comment apart from feeling a complete newbie about
+  everything, but more on that on another post in the near future.
+
+## TV Shows/Movies
+
+- Watched The Witcher S01 [^link the witcher]
+
+  I'm not sure if coming to the TV Show without having read the books
+  or played the games was good or bad, but I enjoyed it. Not sure why
+  some of the hate out there. It may be a bit difficult to put
+  everything together if you're not focusing on it (as it happened to
+  me), but it's a good fantasy show and I'm glad they renewed for a
+  second season.
+
+## Books
+
+- Stopped reading Prince of Thorns[^link prince of thorns]
+
+  I didn't get involved with the story, the characters and so on. Only
+  read a few chapters but there are tons of books to read to stop on
+  one I wasn't enjoying. I may try again in the future.
+
+- Started reading The last wish[^link the last wish]
+
+  This was obvious, having watched the series it seems like an awesome
+  fanstasy world to explore and so far so good. Looking forward to the
+  game too.
+
+## Games
+
+- I started and dropped Pokemon Shield[^link pokemon] on record time.
+  Got some hype from a friend and from a recent announcement but it's
+  just the same as always and it bored me going through. Made to the
+  second or third gym and I just didn't want to turn on the Switch to
+  play, so...
+
+## Articles
+
+Some stuff I've read over the month. Since I don't store a proper
+history this is just what came to mind, but I'm going to try keeping a
+record for the coming months. Also I'm going to use this as a pressure
+point to read some more pending articles, at least to the point that
+I read more than I add to my pocket account.
+
+- There's No Such Thing as Knowing Your Computer 'All the Way to the
+  Bottom' [^article1]
+- You should have a personal website [^article2]
+- The boring technology behind a one person internet company [^article3]
+- From 15,000 database connections to under 100: DigitalOcean's tale of
+  tech debt [^article4]
+- What happens when you push to git.sr.ht, and why was it so slow?
+  [^article5]
+- How SSH port became 22 [^article6]
+
+
+[^article1]: https://codefol.io/posts/no-such-thing-as-knowing-coding-all-the-way-to-the-bottom/
+[^article2]: https://writing.markchristian.org/2019/04/29/personal-web-sites/?c=1
+[^article3]: https://broadcast.listennotes.com/the-boring-technology-behind-listen-notes-56697c2e347b
+[^article4]: https://blog.digitalocean.com/from-15-000-database-connections-to-under-100-digitaloceans-tale-of-tech-debt/
+[^article5]: https://sourcehut.org/blog/2019-11-22-what-happens-on-git-push/
+[^article6]: https://www.ssh.com/ssh/port#how-ssh-port-became-22
+[^link devconf.cz]: https://www.devconf.info/cz/
+[^link the witcher]: https://www.tvtime.com/en/show/362696
+[^link prince of thorns]: https://www.goodreads.com/book/show/9579634-prince-of-thorns
+[^link the last wish]: https://www.goodreads.com/book/show/40603587-the-last-wish
+[^link pokemon]: https://www.nintendo.es/Juegos/Nintendo-Switch/Pokemon-Escudo-1522110.html
