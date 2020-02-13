@@ -4,12 +4,13 @@ body:
 
 <h3>I'm currently reading...</h3>
 <ul>
-    <li><a href="https://www.goodreads.com/book/show/40603587-the-last-wish" target="_blank">The last wish (The Witcher 0.5)</a> by <i>Andrzej Sapkowski</i></li>
+    <li><a href="https://www.goodreads.com/book/show/28249.The_Magicians_Guild" target="_blank">The Magicians' Guild</a> by <i>Trudi Canavan</i></li>
 </ul>
 
 <h3>I'm currently playing...</h3>
 <ul>
-    <li><a href="https://backloggery.com/fmartingr" target="_blank">Final Fantasy IX</a> on PC</li>
+    <li><a href="#">Assasin's Creed: Origins</a> on <i>PC</i></li>
+    <li><a href="#">Final Fantasy IX</a> on <i>PC</i></li>
 </ul>
 ---
 _template: home.html
