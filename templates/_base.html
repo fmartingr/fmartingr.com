@@ -26,7 +26,7 @@
         <hr />
         <nav>
           <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/home</a>
-          {% for section in site.get('/').children %}
+          {% for section in site.get('/').children.order_by("title") %}
             <a {% if this.is_child_of(section) %}class="text-bold"{% endif %} href="{{ section|url }}">{{ section.path }}</a>
           {% endfor %}
         </nav>
