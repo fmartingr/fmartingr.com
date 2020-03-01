@@ -1,0 +1,168 @@
+title: February
+---
+pub_date: 2020-03-01
+---
+_template: blog/post.html
+---
+body:
+
+After lots of flights and traveling around came the calm. A month to get
+everything in order, sort my routine and start gettings things done.
+
+![The beach after a walk](./image.jpg)
+
+<!-- readmore -->
+
+## Conferences
+
+- Fosdem 2020 [^link fosdem 2020]
+
+  We were nearby for DevConf so we just went a few days here. I forgot
+  how packed and difficult going to some tracks is... but we managed
+  to attend some interesting talks and meet with some friends there,
+  which is always a plus.
+
+## TVShows/Movies
+
+- Finished watching Friends, again. It was so my player 2 and I had a
+  20m episode series to watch at lunch/dinner. It still make me laugh.
+
+- Finished watching The Good Place [^show2]
+
+  Interesting show. The first season is what I liked the most, and
+  the show is a good overall to watch while eating or something,
+  short episodes (~20m), comical and with good actors. The show
+  mocks humanity in every way possible, the sad part is that most
+  of that is totally true! The ending kinda surprised me and made
+  me think a little bit.
+
+- Started watching Money Heist [^show3]
+
+  We flew through the entire first season in a flash, and we're now on
+  the second (which it doesn't seem as good as the first). I liked the
+  first one a lot, even if there were some stuff that didn't make much
+  sense. Totally recommended.
+
+## Books
+
+- Finished reading The last wish [^book1] by _Andrzej Sapkowski_
+
+  As many people I started reading this after watching the TV Show (but
+  haven't played the game yet).
+
+  I was scared that it would be too similar to I was already seen but to
+  my surprise, even though some of the events tell the "same story" (on
+  a sense) are different enough from what I saw on TV.
+
+  I did enjoy it though it was short in length, but in exchange you
+  don't necessarily need to continue reading the rest of the books if
+  you don't want to (right away) because it contains a tale per chapter
+  that even if they are a full story when read in full it doesn't put
+  the reader in a position where it needs to read the rest.
+
+  I recommend it if you like the fantasy genre, is a light read, short
+  and self-contained.
+
+- Started reading The Magicians' Guild [^book2] by _Trudi Canavan_
+
+## Videogames
+
+- Started and quickly dropped (and refunded) Warcraft 3: Reforged
+  [^game1]
+
+  I didn't manage to finish the "classic" Warcraft 3 back in the day, so
+  even after the critics and so on I decided to give it a go. Huge
+  mistake. The game is not prepared for wide-screens, it doesn't help
+  that the UI covers most of the screen either, my units keep getting
+  stuck on trees around and the game crashed on me a few times (and I
+  only played the tutorial and one scenario). My first though was...
+  well, since I have the classic one on my account let's just play
+  that... but no, the classic version now download the Reforged game
+  with the classic graphic pack. Even if you are a HUGE Warcraft fan,
+  you shouldn't pay for this. Luckily Blizzard knows and they do instant
+  refunds for the game.
+
+  Blizzard, please release classic Warcraft III on Good Old Games as
+  you've done with the two previous entries. [^gog-war1-2-bundle] I just
+  bought and downloaded them just in case you decide to _Reforge_
+  everything. [^gog-petition-w3]
+
+- Started and dropped Assasin's Creed Origins [^game2]
+
+  I was in the mood of playing some of these open world games, and I had
+  this in my uPlay account already waiting as a gift for purchasing an
+  nvidia graphics card. The game looked good but it seems it was
+  horribly optimized since I had constant frame drops and AI glitches.
+  I tried some stuff to make it better but nothing worked. It killed the
+  inmersion so much that I just uninstalled it.
+
+- Started playing Wolcen [^game3]
+
+  To play with some friends (though I've played mainly by myself because
+  of schedule issues). It's an action RPG that aims to be good, but
+  has still some bugs (it released this month).
+
+- Played some Clash Royale [^game4] and Animal Crossing: Pocket Camp
+  [^game5] on mobile.
+
+  The first one just because, the other because of the hype of the next
+  Animal Crossing game releasing soon for the Switch.
+
+## Articles
+- Google Maps Hacks (incl. video) [^article1]
+
+  On how the virtual world affects the physical world.
+
+- Why Discord is switching from Go to Rust [^article2]
+
+  Article from Discord Engineering on how they switched a specific piece
+  of their infrastructure to Rust.
+
+- **[VIDEO]** OVER-TOURISM - Is sustainable tourism possible? - 観光公害
+  [^article3]
+
+  An interesting video about how tourism has evolved in Japan over the
+  last years.
+
+- Fucking laptops [^article4]
+
+  The honest state of the laptop industry. It reminded me when I wanted
+  to switch my laptop and no option seemed good enough even in the
+  highest price ranges.
+
+- The World We Leave Our Children: How I became a free software
+  extremist [^article5]
+
+- The boss who put everyone on $70k [^article6]
+
+- **[VIDEO]** How Crash Bandicoot Hacked The Original Playstation
+  [^article7]
+
+  I love this kind of war stories (as the series name) of what tricks
+  developers used to do to accomodate to old hardware. Really
+  interesting.
+
+
+[^link fosdem 2020]: https://fosdem.org/2020/
+
+[^show2]: https://www.tvtime.com/en/show/311711
+[^show3]: https://www.tvtime.com/en/show/327417
+
+[^book1]: https://www.goodreads.com/book/show/40603587-the-last-wish
+[^book2]: https://www.goodreads.com/book/show/28249.The_Magicians_Guild
+
+[^game1]: https://warcraft3refunded.com/
+[^game2]: https://www.origin.com/esp/en-us/store/assassins-creed/assassins-creed-origins
+[^gog-war1-2-bundle]: https://www.gog.com/game/warcraft_bundle
+[^gog-petition-w3]: https://www.gog.com/wishlist/games/warcraft_iii_frozen_throne
+[^game3]: https://store.steampowered.com/app/424370/Wolcen_Lords_of_Mayhem/
+[^game4]: https://clashroyale.com/
+[^game5]: https://ac-pocketcamp.com/es-ES/site
+
+[^article1]: http://www.simonweckert.com/googlemapshacks.html
+[^article2]: https://blog.discordapp.com/why-discord-is-switching-from-go-to-rust-a190bbca2b1f
+[^article3]: https://www.youtube.com/watch?v=qSqHp0DLRJc
+[^article4]: https://drewdevault.com/rants/2020/02/18/Fucking-laptops.html
+[^article5]: https://lunduke.com/posts/2020-02-19/
+[^article6]: https://www.bbc.com/news/stories-51332811
+[^article7]: https://www.youtube.com/watch?v=izxXGuVL21o
