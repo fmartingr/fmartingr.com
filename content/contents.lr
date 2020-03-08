@@ -9,7 +9,7 @@ body:
 
 <h3>I'm currently playing...</h3>
 <ul>
-    <li><a href="#">Final Fantasy IX</a> on <i>PC</i></li>
+    <li><a href="#">The legend of Zelda: A link to the past</a> on <i>Switch</i></li>
 </ul>
 ---
 _template: home.html
