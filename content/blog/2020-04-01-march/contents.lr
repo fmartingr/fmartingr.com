@@ -1,0 +1,124 @@
+title: March 2020
+---
+pub_date: 2020-04-01
+---
+_template: blog/post.html
+---
+body:
+
+**#StayAtHome #StopTheCurve**
+
+As everybody know (unless you live under a rock) this month the COVID-19
+hit hard on some European's countries, including mine. I have spent half
+of the month staying inside in quarantine.
+
+It's a weird sensation that gives you perspective even to the point that
+going out to take the trash is a special (but dangerous, since people
+here aren't taking this seriously) thing to do.
+
+The good thing is that I had some time to move some thing out of my
+backlog and I have no excuse to study some things now.
+
+> Since most pictures are taken from my living room window these days is
+> better to share how I spend time with friends. This is a screenshot of
+> Tabletop Simulator [^game4] while I play Zombiecide [^game5] [^game6]
+> with my friends.
+
+[![Playing Zombiecide with some friends online](./image.jpg)](./image-original.jpg)
+
+<!-- readmore -->
+
+## TVShows/Movies
+
+- Up to date with Money Heist [^show1]
+
+  The third part (first half of the second season?) is worst overall
+  compared to the previous heist, but good enough to have enough will
+  to watch it to the end.
+
+- Watched The Boys Season 1 [^show2]
+
+  A good show about what could happen if super heroes where controlled
+  by a corporation.
+
+- Rewatch: Rick and Morty Seasons 1 to 3 [^show3]
+
+- Started wathing Dragon Ball [^show4]
+
+  The first series, watched so long ago I don't even remember the story,
+  is a good show to watch while I cook as episodes are short.
+
+- Started watching Gravity Falls [^show5]
+
+  Recommended by a friend, to watch while we have lunch/dinner.
+
+## Books
+
+- Continued reading The Magicians' Guild [^book1] by _Trudi Canavan_
+
+  Haven't read much this month though. :(
+
+## Videogames
+
+- Started playing The Legend of Zelda: A link to the past [^game1]
+
+  Don't kill me, but this is my first time playing it.
+
+- Started playing Animal Crossing: New Horizons [^game2]
+
+  I have been waiting for this for a **long** time.
+
+- Played a bit of Guild Wars 2. Nostalgia. [^game3]
+
+## Articles
+
+- **[VIDEO]** Nintendo NES Famicom Creator Interview [^article1]
+- Working from Home: Lessons Learned Over 20 Years & a Shopping List
+  [^article2]
+- Before the DNS: How yours truly upstaged The NIC's Official
+  HOSTS.TXT [^article3]
+- Decentralised SMTP is for the greater good [^article4]
+- **[VIDEO]** NLNOG 2019 - DNS over HTTPS considerations - Bert
+  Hubert [^article5]
+- **[VIDEO]** Spyro Had One of the Coolest Anti-Piracy Measures Ever
+  [^article6]
+- **[VIDEO]** Clever Anti Piracy on the Super Nintendo [^article7]
+- The reckless, infinite scope of web browsers [^article8]
+- **[VIDEO]** How the Nintendo GameCube Security was defeated
+  [^article9]
+- The mysterious origins of an uncrackable video game [^article10]
+- Where do all the bytes come from? [^article11]
+- Debunking "You should not run your mail server because mail is hard."
+  [^article12]
+- UpNext: eInk display for future events #diy [^article13]
+- A short thread on a few Celeste game-feel things [^article14]
+
+[^show1]: https://www.thetvdb.com/series/la-casa-de-papel
+[^show2]: https://www.thetvdb.com/series/the-boys
+[^show3]: https://www.thetvdb.com/series/rick-and-morty
+[^show4]: https://www.thetvdb.com/series/dragon-ball
+[^show5]: https://www.thetvdb.com/series/gravity-falls
+
+[^book1]: https://www.goodreads.com/book/show/28249.The_Magicians_Guild
+
+[^game1]: https://www.nintendo.es/Juegos/Super-Nintendo/The-Legend-of-Zelda-A-Link-to-the-Past-841179.html
+[^game2]: https://www.nintendo.es/Juegos/Nintendo-Switch/Animal-Crossing-New-Horizons-1438623.html
+[^game3]: https://www.guildwars2.com/en/
+[^game4]: https://www.tabletopsimulator.com/
+[^game5]: https://store.steampowered.com/app/468726/Tabletop_Simulator__Zombicide/
+[^game6]: https://www.zombicide.com/en/
+
+[^article1]: https://www.youtube.com/watch?v=EbL9OFlxwV8
+[^article2]: https://blog.dustinkirkland.com/2020/03/working-from-home.html
+[^article3]: https://iconia.com/before_the_dns.txt
+[^article4]: https://poolp.org/posts/2019-12-15/decentralised-smtp-is-for-the-greater-good/
+[^article5]: https://www.youtube.com/watch?v=pjin3nv8jAo
+[^article6]: https://www.youtube.com/watch?v=4GYSeXLr5sY
+[^article7]: https://www.youtube.com/watch?v=KLyK1FMwc8Q
+[^article8]: https://drewdevault.com/2020/03/18/Reckless-limitless-scope.html
+[^article9]: https://youtu.be/Uxjl_kD3imQ
+[^article10]: http://www.bbc.com/future/story/20190919-the-maze-puzzle-hidden-within-an-early-video-game
+[^article11]: https://www.freecodecamp.org/news/where-do-all-the-bytes-come-from-f51586690fd0/
+[^article12]: https://poolp.org/posts/2019-08-30/you-should-not-run-your-mail-server-because-mail-is-hard/
+[^article13]: http://brettcvz.com/projects/6-upnext
+[^article14]: https://twitter.com/MattThorson/status/1238338574220546049
