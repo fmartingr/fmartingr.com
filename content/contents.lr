@@ -4,13 +4,14 @@ body:
 
 <h3>I'm currently reading...</h3>
 <ul>
-    <li><a href="https://www.goodreads.com/book/show/28249.The_Magicians_Guild" target="_blank">The Magicians' Guild</a> by <i>Trudi Canavan</i></li>
+    <li><a href="https://www.webtoons.com/en/fantasy/dice/list?title_no=64&page=1" target="_blank">DICE</a></li>
+    <li><a href="https://www.webtoons.com/en/action/the-gamer/list?title_no=88" target="_blank">The Gamer</a></li>
 </ul>
 
 <h3>I'm currently playing...</h3>
 <ul>
-    <li><a href="#">Animal Crossing: New Horizons</a> on <i>Nintendo Switch</i></li>
-    <li><a href="#">The legend of Zelda: A link to the past</a> on <i>Nintendo Switch</i></li>
+    <li><a href="https://animal-crossing.com/new-horizons/" target="_blank">Animal Crossing: New Horizons</a> on <i>Nintendo Switch</i></li>
+    <li><a href="https://store.playstation.com/es-es/product/EP0082-CUSA07187_00-FFVIIREMAKE00000" target="_blank">Final Fantasy VII: Remake</a> on <i>PlayStation 4</i></li>
 </ul>
 ---
 _template: home.html

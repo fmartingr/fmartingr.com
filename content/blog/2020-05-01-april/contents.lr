@@ -1,0 +1,145 @@
+title: April 2020
+---
+pub_date: 2020-05-01
+---
+_template: blog/post.html
+---
+body:
+
+Weird month. It seems that quarantine finally caught up with me (and my
+sleep schedule!). Since I cannot go to sleep when I want, I'm trying a
+different approach... reading something at bed and waking up later. So
+far so good.
+
+This month I didn't read many articles/books (in fact, any book) but in
+return I came back to reading some Manwha I had in my backlog. And I
+have also invested some time in a few projects I'm currently
+_incubating_.
+
+I'm also on my way to self-host my own stuff, trying out software and
+servers architectures so I can _dog-food_ some of the stuff I use at
+work, hopefully.
+
+
+[![Screenshot of Final Fantasy VII: Remake main menu screen](./image-1024.jpg)](./image.jpg)
+
+<!-- readmore -->
+
+## TVShows/Movies
+
+- **Money Heist** (up to date)
+
+  This last season way less interesting than the others for my taste,
+  and they are extending this heist too much. It should had already
+  ended. But oh well...
+
+- **Mandalorian** (ongoing)
+
+  Started watching this on Disney+, of course I had to! I'm just a few
+  episodes in and so far I'm loving it. Star Wars universe for the win.
+
+- **Gravity Falls** (finished)
+
+  I only watched this because a friend told me that it would diverge
+  into some Rick-and-Morty-like _shirt_. And it didn't. I'm dissapointed
+  at my friends now.
+
+- **Dragon Ball** (ongoing)
+
+  I'm slowly going through this one since I only watch it while I cook.
+
+- **The Lion King (2019)**
+
+  Same old, same old. Why not? Environments are amazing.
+
+## Books & Manwha
+
+- **The Magicians' Guild** (_Trudi Canavan_)
+
+  Put on hold. Even though the book  was interesting enough I didn't
+  bring myself to continue reading it. In exchange...
+
+- [**DICE**](https://www.webtoons.com/en/fantasy/dice/list?title_no=64&page=1) (ongoing)
+
+  I started _DICE_ a long time ago, and it has been on my backlog for
+  the same period. Since I have a bit of IQ left at night, I gave it a
+  shot, and oh man, this one is **good**.
+
+- [**The Gamer**](https://www.webtoons.com/en/action/the-gamer/list?title_no=88) (ongoing)
+
+  This is esentially the **exact same** comment as above.
+
+## Projects
+
+There's no repository for this projects at the moment, I'm trying to
+make projects public once I have something somewhat usable first,
+so my accounts are not poluted with unfinished stuff. I will have my own
+server for that soon:tm:.
+
+- **Butter Robot**
+
+  On my current employeer we had the need of having some information
+  automatically posted in our channel reacting to different events. At
+  the beginning this was a simple python script reacting to a webhook
+  but as everything it has evolved. I'm making a simple bot framework
+  (Slack app & telegram) to generate bots, trying to make it easily
+  extensible via plugins which are just python classes than can be
+  exposed to the main package using entry points.
+
+- **Jeeves**
+
+  I started this some months ago, is an automated task manager via
+  configuration files. You define tasks on a pipeline and can execute
+  it via CLI/Server. There's few code and it does near to nothing (can
+  execute scripts and call docker containers), but I have plans to have
+  a server so triggers can be set, flows to execute several pipelines,
+  etc. This has been on my head for years, so glad it's finally taking
+  shape.
+
+- **Unnamed photo collection viewer**
+
+  I have been thinking about this for a while. There's no photo/video
+  management software that suit my needs right now, and even if there's
+  free/cheap alternatives out there I always have a copy of all my
+  collection just in case (you never know what could happen). So making
+  a viewer for all my collection should be the way to go, it wouldn't
+  have nice features (like automatic videos and all that stuff everyone
+  do nowadays) but I want a simple viewer, with a timeline, groups, that
+   *do not edit* my files without my explicit permissio (because
+   somtimes a wrong timezone or DST flag _fork_ up a timeline).
+
+## Videogames
+
+- [**Animal Crossing: New Horizons**](https://animal-crossing.com/new-horizons)
+
+  My daily fix. I'm just doing some daily stuff, events and all little
+  by little. The 3DS version made me a hardcore player, so I'm taking
+  this one with more _zen_. It's really impressive how have they
+  improved this game.
+
+- [**Valorant**](https://beta.playvalorant.com) and **[Tabletop Simulator](https://store.steampowered.com/app/286160/Tabletop_Simulator/) ([Zombicide DLC](https://store.steampowered.com/app/468726/Tabletop_Simulator__Zombicide/))**
+
+  These two has been my social distancing vaccine for the month. We
+  continued with the Zombiecide campaigns and my friends and I managed
+  to get a Valorant beta from Twitch drops so I'm fragging like the
+  newbie I am.
+
+- [**Final Fantasy VII: Remake**](https://store.playstation.com/es-es/product/EP0082-CUSA07187_00-FFVIIREMAKE00000)
+
+  Ow yes... How couldn't I see this coming. With this _#StayAtHome_
+  thingy my hype for this came back until I finally bought it. With
+  the system and all. I'm just a few days in and so far is awesome!
+  Just keep in mind that there are DLC blocking some summons and all
+  that, but going through the story again, with new graphics, 2020
+  cutscenes and characters have way more deep than in the vanilla
+  version... Right now I recommend it, but let's see what happens when
+  I finish it (or at least one third on the entire story...? Since this
+  is **not** the entire vanilla story)
+
+## Articles
+
+- [Why PlayStation 1 Graphics Warped and Wobbled so much](https://www.youtube.com/watch?v=x8TO-nrUtSI) **(video)**
+- [How Raft consenssus works](http://thesecretlivesofdata.com/raft/)
+- [Open Source cloud gaming with WebRTC](https://webrtchacks.com/open-source-cloud-gaming-with-webrtc/)
+- [How Nintendo killed the best version of Tetris](http://www.nintendolife.com/news/2020/04/feature_how_nintendo_killed_the_best_version_of_tetris)
+- [You need to stop using HTML email](https://jrswab.com/blog/you-need-to-stop-using-html-email)
