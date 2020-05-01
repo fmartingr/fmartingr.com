@@ -4,6 +4,7 @@ packages:
   - nodejs
   - npm
   - rsync
+  - imagemagick
 sources:
   - https://git.sr.ht/~fmartingr/fmartingr.com
 secrets:
