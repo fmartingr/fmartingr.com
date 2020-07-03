@@ -1,0 +1,72 @@
+title: June 2020
+---
+pub_date: 2020-06-02
+---
+_template: blog/post.html
+---
+body:
+
+We can travel now! Quarantine restrictions have been raised here, and we can go visit family. It's weird
+seeing people with masks, cleaning its hands and so on (though not everyone eveytone). It gives me some Japan 
+nostalgia.
+
+It hasn't been a productive month, and I don'tknow where time went. And that made me realize that I can't
+do everything I want to do... I have to start dropping tasks from all kinds of hobbies and organize myself
+**way** better. That is my homework for this summer.
+
+[![On the road, finally](./image-1024.jpg)](./image.jpg)
+
+<!-- readmore -->
+
+## Projects
+
+Sad times here. The shock when you finally discover that time is not infinite.
+
+Both the _photo manager_ and the _pseudo-CI/CD tool_ were fun, but I'm going to stop working of them for
+the foreseable future. Both were monoliths that I can't schedule on my life right now.
+
+**Butterrobot** I'm happy to continue with since we're going to _dog-food_ it at work. Happy to say
+that the app is now fully modular and you can install that and your own package with plugins and make
+it work easily. Hopefully releasing it this month.
+
+Infra has evolved too, I've simplified a lot of my services, turned down some things I wasn't using and
+trying to save time on this as well. If there's a good alternative out there I'm probably using it.
+
+And on that matter, I'm going to start moving all my repos to Github. I have them spread around github,
+gitlab and sourcehut and it's causing me headaches. I will have my own gitea instance to mirror my repos
+in case something happen with the cloud service and also to put there all tests and concepts (like the
+two discontinued above) before making it available to the public (though they will be accessible, just not
+so easy to find) so my github account isn't filled with unfinished stuff.
+
+## Games
+
+- [**Animal Crossing: New Horizons**](https://animal-crossing.com/new-horizons)
+  
+  Still play ocasionally, finally burn-out got to me. I only turn on the game to get some of the collectibles and check some daily stuff, just a few minutes and definitely not daily as before.
+
+- [**Terraria**](https://store.steampowered.com/app/105600/Terraria/)
+
+  Still on-going and very happy with it. I'm still shocked on the number of features included with this game, number
+  of items, progress, bosses and all for the price, after a lot of years.
+
+- [**Final Fantasy VII: Remake**](https://store.playstation.com/es-es/product/EP0082-CUSA07187_00-FFVIIREMAKE00000)
+
+  Didn't play much, almost to the end, time constraints and sharing the TV as main issues, but I'm very eager to get
+  to the end to see if anything non-trivial changed from the original.
+
+- [**Reventure**](https://store.steampowered.com/app/900270/Reventure/)
+   
+   Started playing this on my GPD WIN 2, it's awesome for quick runs and is funny so far, trying to discover
+   what crazy stuff to do in order to unlock the over one hundred endings this game has.
+
+- [**Minecraft Dungeons**](https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Minecraft-Dungeons-1749059.html):
+
+   Dropped for the obvious reasons [I said last month](/blog/2020/06/01/may/).
+
+## Articles
+
+- [Dwarf Fortress Creator Explains its Complexity & Origins | Noclip Interview](https://www.youtube.com/watch?v=VAhHkJQ3KgY)
+- [Linux Sucks 2020](https://lbry.tv/@Lunduke:e/LinuxSucks2020:b)
+- [The Untold Story Behind Astroneer's Difficult Development](https://www.youtube.com/watch?v=tfUjl4owxTQ)
+- [Raspberry Pi 4 - a viable mini desktop?](https://www.dedoimedo.com/computers/raspberry-pi-4-viable-desktop.html)
+- [After 3 Years of Work, Chrome Killed My Extension and Won’t Tell Me Why](https://medium.com/@miko_89964/after-3-years-of-work-chrome-killed-my-extension-and-wont-tell-me-why-83a3f8d65cbc)
