@@ -5,7 +5,7 @@ setup:
 build:
 	node_modules/gulp/bin/gulp.js sass
 	node_modules/gulp/bin/gulp.js js
-	lektor build --prune --output-path ${PWD}/public --buildstate-path ${PWD}/.lektor
+	poetry run lektor build --prune --output-path ${PWD}/public --buildstate-path ${PWD}/.lektor
 
 watch:
 	node_modules/gulp/bin/gulp.js sass:watch
