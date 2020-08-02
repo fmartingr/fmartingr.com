@@ -21,5 +21,7 @@ public
 # Lektor
 .lektor
 
+packages/**/*.egg-info
+
 # macOS
 .DS_Store
