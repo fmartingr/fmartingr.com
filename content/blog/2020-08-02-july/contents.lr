@@ -11,35 +11,64 @@ Summer is here!
 Even without restrictions or quarantine is has been a weird month. Cases here are going up and down,
 I don't want to go back to the gym (and I think I won't until next year), some restaurants and cafe
 have closed permanently and the ones that are still standing are usually full (which is good). We're
-just trying to go back to normal, step by step.
+just trying to go back to normal, step by step, and having some friends stay at home a few days 
+helped a lot.
 
 [![A picture of myself from behind walking through a port](./image-1024.jpg)](./image-1024.jpg)
 
 <!-- readmore -->
 
-## Personal side
+This month I have focused on getting more organized. As I said [last month](/blog/2020/06/02/june/) 
+I badly needed it.
 
-This month I have focused on getting more organized. As I said [last month](/blog/2020/06/02/june/) I
-badly needed it.
+I have managed to move almost everything into my [notion.so](https://notion.so/) workspace. 
+I had some boards and notes here and there but Notion is so powerful and comfortable to use that I 
+just went all in. There's some cleanup to do, but my main points of interes are already there. I have
+a board with my personal tasks and some metadata about them, and secondary boards for my hobbies 
+(Games, Books, TVShows, etc), Blog related posts, ... I may go into more detail in the future.
 
-I have managed to move everything into my [notion.so](https://notion.so/). I had some boards and notes
-here and there but Notion is so powerful and comfortable to use that I just went all in. There's some
-cleanup to do, but my main points of interes are already there, I have a board with my personal tasks
-and some metadata about them, and secondary boards for my hobbies (Games, Books, TVShows, etc). I may
-go into more detail in the future.
+<div class="grid">
+  <div class="col-1-2">
+    <a href="./notion-tasks.png">
+      <img src="./notion-tasks-320.png" />
+    </a>
+  </div>
+  <div class="col-1-2">
+    <a href="./notion-games.png">
+      <img src="./notion-games-320.png" />
+    </a>
+  </div>
+</div>
 
+Related to this I'm also starting to cleanup every last drawer at home. I got a bit tired of not
+knowing how much stuff I have so I'm making a full inventory of _everything_. It all started 
+reviewing how many of my clothers would still fit me after quarantine, and it snapped on me. I
+don't know how much I own, and I think it happens to all of us at different levels.
 
-![](./notion-games-320.png) ![](./notion-tasks-320.png)
+With tech this is gonna be very difficult, I have managed to stash a lot (**a lot**) of cables
+during the years. Just imagine how many HDMI and USB cables the average tech guy can get a hold
+of... Arduinos, Raspberries... etc. 
 
-- Tasks
-- Inventory
-- Order
-- Tech cleanup
+This will take time, but I'm very happy with the progress I already had and all the things I've
+already donated or sold.
 
 ## Projects
 
-- Butterrobot
-- Home Assistant
+- My **local infra** is mostly done at this point. I just need to secure everything a bit more
+  but has been working fine (with some hiccups) for the past months. I may need to check some
+  networking alternatives and move all SSL negotiation to the main node (avoiding re-encrypting 
+  traffic on a non-controlled node).
+
+- **Butterrobot** got some love this month. I'm _slowly_ setting up an automated CI/CD system to
+  deploy the application in my local infra, but I need to setup some other details as well. Source
+  code is already on Github though repository is private while I made last minute changes. I'm
+  hoping to release it this month.
+
+- I'm also cleaning up my **Home Assistant** node. What that really means that I'm re-deploying a
+  new instance on a more powerful Raspberry Pi. I have been playing with this software for years
+  and my current pi is a bit underpowered and messy, so the plan is start from scratch trying to
+  make the connected devices local trying to avoid third-party clouds as much as possible and
+  document everything in some blog posts. Let see how that goes.
 
 ## TV Shows
 
