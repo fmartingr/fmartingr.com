@@ -20,3 +20,6 @@ public
 
 # Lektor
 .lektor
+
+# macOS
+.DS_Store
