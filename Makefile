@@ -9,7 +9,3 @@ build:
 
 watch:
 	node_modules/gulp/bin/gulp.js sass:watch
-
-deploy:
-	make build
-	rsync -e ssh --info=progress2 -r ${PWD}/public/ pages.sites.town:~/public_html/fmartingr.com/
