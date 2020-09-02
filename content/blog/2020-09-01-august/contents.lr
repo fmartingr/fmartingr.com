@@ -1,0 +1,65 @@
+title: August 2020
+---
+pub_date: 2020-09-02
+---
+_template: blog/post.html
+---
+body:
+
+Slowly going back to routine, this month has been well spent going out when possible and spending
+time with friends and family, a thing that we couldn't do properly for some time now. Not much
+"progress" on anything else for that matter.
+
+[![A picture of the beach](./image-1024.jpg)](./image-1024.jpg)
+
+<!-- readmore -->
+
+## Projects
+
+Didn't have much time to play around with projects this time, but in simple terms I've managed to
+release the code for [butterrobot](https://github.com/fmartingr/butterrobot) for anyone to see
+and shame my code and prepared the slack application for my team to use. I'll admit that is a bit
+of a pain to play with several repositories at the same time, and github doesn't make this easy on
+itself requiring authentication for the container registry... but well, so far it's working and
+it's good to have room for improvement.
+
+I've also received my [Firewalla Gold](https://firewalla.com/) and finally finished tidying up
+my network infrastructure a bit, though it will require a bit more tuning but at least I can now
+focus on what I've been eager to do: setup my home assistant for all the devices and automations
+on my home, yay!
+
+## Books
+
+- Started reading [**The Ballad of Songbirds and Snakes**](https://www.goodreads.com/book/show/51901147-the-ballad-of-songbirds-and-snakes).
+
+  Prequel to the Hunger Games, seems like a short enough book to get back with my reading habits again.
+
+## Games
+
+- [**Assemble with care**](https://www.assemblegame.com): Played this on my phone and it was a short but 
+  wonderful playthrough. It's a story-driven puzzle game, though puzzles are very easy since they are 
+  secondary. Full voice acting makes this a calm and relaxing experience to do while on the move (or at
+  the beach!)
+
+- Some more [**Reventure**](https://store.steampowered.com/app/900270/Reventure/)
+
+## Articles
+
+Mostly videos this time around, since I'm used to put something off-screen while I'm working. Some interesing stuff in
+there, mostly videogame related.
+
+- [The lightning digital AV adapter surprise](https://panic.com/blog/the-lightning-digital-av-adapter-surprise/)
+- [Snormal: a wonderfully normal social network](https://tinyprojects.dev/projects/snormal)
+- [How Stardew Valley Was Made by Only One Person](https://www.youtube.com/watch?v=4-k6j9g5Hzk)
+- [New York's 1040 Street View](https://1940s.nyc/)
+- [Cuba's Underground Gaming Network](https://youtu.be/lEplzHraw3c)
+- [NYC IS DEAD FOREVER. HERE'S WHY](https://www.linkedin.com/pulse/nyc-dead-forever-heres-why-james-altucher/)
+- I think I watched **all** videos from [The Gaming Historian Youtube channel](https://www.youtube.com/user/mcfrosticles)
+- [The NODE nano server V2](https://www.youtube.com/watch?v=dLfLEYs7N3Y)
+- [How the Sony PS1 Security was defeated](https://www.youtube.com/watch?v=7HOBQ7HifLE)
+- Deciphering Japan series
+  - [Why is Japan's gender gap so wide?](https://www.youtube.com/watch?v=5dsD6FWfZHE)
+  - [What's the cost of being the hardest workers in the world?](https://www.youtube.com/watch?v=2ajH2Id5FY4)
+  - [Coping With A Super-Ageing Nation](https://www.youtube.com/watch?v=HQU-NeP_spU)
+  - [What does it means to be Japanese?](https://www.youtube.com/watch?v=BdDjmc8QbVg)
+
