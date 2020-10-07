@@ -1,4 +1,6 @@
 setup:
+	pip install --user setuptools
+	pip install --user poetry
 	poetry install
 	npm install
 
