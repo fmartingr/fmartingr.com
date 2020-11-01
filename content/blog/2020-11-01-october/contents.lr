@@ -6,15 +6,11 @@ _template: blog/post.html
 ---
 body:
 
-
+And another month went by.
 
 [![](./image-1024.jpg)](./image-1024.jpg)
 
 <!-- readmore -->
-
-## Personal
-
-We have a pseudo gym at home now!
 
 ## Projects
 
@@ -23,14 +19,52 @@ with a lot of tabs open but it was the most fun I have had for a while! If you'r
 [gurl repository](https://github.com/fmartingr/gurl), it's not complete (or useful) by any means, but I want to
 expand it with new _features_ while I learn some more.
 
+In my spare time I've been working on a simple program to manage my game's screenshots, I've a lot over several
+computers/operating systems and I want to organize them better to publish them on an online gallery. I'm starting
+to enjoy Go quite a bit the more I do with it, even if it's only minor stuff.
+
 ## Books
 
+- [**The Magicians' Guild**](https://www.goodreads.com/book/show/28249.The_Magicians_Guild) (_Trudi Canavan_)
+
+  Started again from the beginning, I just need to fit the reading habit into my schedule.
+
+## TVShows and Movies
+
+- [**The social dilemma**](https://www.netflix.com/title/81254224)
+
+  An interesting movie/documental about how social networks are not our friends. They didn't provide me with
+  anything I didn't know, but should be interesting for less _techy_ people to watch and understand they are
+  the product.
+
+- [**Star Wars: The Phantom Menace**](https://www.disneyplus.com/movies/star-wars-the-phantom-menace-episode-i/2ezYynkgW1AH)
+- [**Star Wars: Attack of the clones**](https://www.disneyplus.com/movies/star-wars-attack-of-the-clones-episode-ii/mgpYHGnzZW6N)
+- [**Star Wars: The Clone Wars (animated movie)**](https://www.disneyplus.com/series/star-wars-the-clone-wars/1wYXzjabXGVZ)
+- [**Star Wars: The Clone Wars (animated series)**](https://www.disneyplus.com/series/star-wars-the-clone-wars/1wYXzjabXGVZ)
+- [**Star Wars: Revenge of the Sith**](https://www.disneyplus.com/movies/star-wars-revenge-of-the-sith-episode-iii/4WvbqLFumNvi)
+- [**Solo: A Star Wars story**](https://www.disneyplus.com/movies/solo-a-star-wars-story/7ks3IYr1eU2P)
+- [**Star wars: Rebels**](https://www.disneyplus.com/series/star-wars-rebels/64MCZgAzY0Zw)
+
+  Star Wars Marathon!
+
+- [**Bones**](https://www.primevideo.com/detail/0HBVL22LMA40B0XBY30RUOC9EH/)
+
+  Our new show for lunch/dinner/offtime. My Player 2 totally loves this and was very happy to know we could watch
+  it in order, since on the TV Channels they emit this one here episodes seems to be randomized for some reason,
+  so you could watch an episode of the second season followed by another from the last one.
 
 ## Games
 
+- [**Final Fantasy VII: Remake**](https://store.playstation.com/es-es/product/EP0082-CUSA07187_00-FFVIIREMAKE00000)
+
+   I finally put an end to it. [My review in a separate post](/blog/2020/10/15/final-fantasy-vii-remake-my-review/)
+
 - [**A Short Hike**](https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/A-Short-Hike-1821799.html)
 
-  I got 
+  A short (as the name implies) adventure of the path to hike a mountain and all the people you met in between. Love the art style and the simplicity of the game.
+  Liked the idea of having the achievements directly on the switch too, in-game, miss that from Steam when playing
+  on the go.
+  I'm a fan of this kind of games you can enjoy and put an end to them in a few hours.
 
 - [**Terraria**](https://store.steampowered.com/app/105600/Terraria/)
 
@@ -38,14 +72,30 @@ expand it with new _features_ while I learn some more.
   
   We managed to **complete it**. Which in our case meant getting al achievements for the game. It was a really fun 
   ride! This game is easily one of my favourites and for the price you can get it is completely a must, you get
-  an incredible 
+  an incredible amount of content and entertainment, better played with friends!
   
+- [**Starbound**](https://store.steampowered.com/app/211820/Starbound/)
+
+  Terraria, but in **space**! And I have a MECH!
+
+  ![My mech in Starbound](./starbound.jpg)
+
 - [**Graveyard Keeper**](https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Graveyard-Keeper-1579157.html)
 
-  
+  Got this for the Switch because it was supposed to be more linear and light than Stardew Valley, but upon 
+  starting I got tons of things to do so it got a bit overwhelming for me right now, wanted something more
+  lightweight to play at the moment. I will put this on hold for now.
 
-- [**Final Fantasy VII: Remake**](https://store.playstation.com/es-es/product/EP0082-CUSA07187_00-FFVIIREMAKE00000)
+- [**10 mg :)**](https://store.steampowered.com/app/1425380)
 
-   I finally put an end to it. [My review in a separate post](/blog/2020/10/15/final-fantasy-vii-remake-my-review/)
+  This is a really small game (10mg stands for 10 minute games) as a tribute to the arcade classic with some kind of twist.
+  I got near 20 minutes of gameplay from this and it was fun to go through it :)
 
 ## [Articles](https://t.me/fmartingr_articles)
+
+- [Why most Hacktoberfest PRs are from India](https://pulkitsharma07.github.io/2020/10/02/hacktoberfest-india/)
+- [PinePhone Camera pt4](https://blog.brixit.nl/pinephone-camera-pt4/)
+- [The Reason Some Say New York City Is Dead Forever](https://www.youtube.com/watch?v=EMs07SPo5rk)
+- [How does Base64 works](https://www.pixelstech.net/article/1457585550-How-does-Base64-work)
+- [How I built an IPFS crawler with libp2p](https://adlrocha.substack.com/p/adlrocha-how-i-built-an-ipfs-crawler)
+- [How DAT works](https://datprotocol.github.io/how-dat-works/)
