@@ -1,0 +1,65 @@
+_template: blog/post.html
+---
+pub_date: 2020-11-08
+---
+title: Setting up TP-Link's Archer C5400 in AP mode
+---
+body:
+
+I recently bought a firewall router for home to improve our general stability (ISP provided routers kinda suck) and
+improve security at home. The more smart devices connected to the network the more concerned I become of this kind
+of stuff.
+
+In this case my problem was very simple: I have the firewall router and the access point router. My access point
+router (TP-Link's Archer C5400) exposes it's own DHCP server over it's own LAN segment. For my firewall router to
+work properly it has to recognise all devices on the network and with the access point creating it's own LAN,
+everything connected via Wifi was showing up in the firewall as one device (the access point router).
+
+![Archer C5400](./c5400.jpg)
+
+<!-- readmore -->
+
+The router's interface didn't allow me to set up AP mode, thus only letting me use it as a router. I contacted support
+and they told me that the version the router I had (V1) didn't support AP mode only the newest version (V2, from 2017)
+supported it, or some other latest devices.
+
+I didn't want to gave up on my router because it improved my wireless performance at home significantly from the ISP
+router and even some Unifi's I tried in the past but in the end I got an AX6000 to try it out (which was the newer
+version of the one I have so I expected it to perform similarly).
+We tested it for some days and wireless performance wasn't as good as with the C5400 and some of our devices lost
+connectivity from time to time so I ended up returning it and keeping the one I had.
+
+After thinking for a while and even considering looking for a C5400-V2 I tested to manually set it up on my access
+point before wasting more money on devices, after all, I was very happy with this one. And to my surprise I could
+enable AP mode on the router very easily.
+
+## Instructions
+
+1. Connect to your C5400 via Wifi (Ethernet should work as well)
+
+2. Disconnect the WAN cable from the router (you will lose internet connection but you can access the C5400's web
+  interface)
+
+  ![Internet](./internet.png)
+
+3. Disable DHCP. You will retain your lease until you reconnect again.
+
+  ![DHCP](./dhcp.png)
+
+4. Give the router a free IP address from the range your router is exposing on it's LAN segment.
+
+  ![LAN](./lan.png)
+
+  In this case the LAN segment is `192.168.1.0/24` and the DCHP esposes from the `192.168.1.150`-`200`,
+  in order to have the IP easily accesible I gave it the `192.168.1.2` while the router is the `192.168.1.1`.
+
+5. Connect an ethernet cable coming from the router to a LAN port (**not WAN**).
+
+6. Reboot your router.
+
+After your access point has finished rebooting it should have the IP address you set on the LAN settings and
+all devices connected to the access point should have their IP Addresses allocated by the router, successfuly
+making the C5400 a proper access point.
+
+I'm unsure if this works in other models as well, but I belive it should and if you came here looking for a
+change give it a try and let me know if it worked for your model as well so I can update the post accordingly.
