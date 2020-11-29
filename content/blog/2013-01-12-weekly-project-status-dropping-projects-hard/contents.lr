@@ -115,4 +115,4 @@ tweet, mail or shout at me!
 ---
 pub_date: 2013-01-12
 ---
-_template: blog/post.html
+_template: blog-post.html

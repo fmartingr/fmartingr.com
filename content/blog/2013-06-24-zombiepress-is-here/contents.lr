@@ -17,4 +17,4 @@ easy to use (in my oppinion):
 ---
 pub_date: 2013-06-24
 ---
-_template: blog/post.html
+_template: blog-post.html

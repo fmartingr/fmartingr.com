@@ -1,3 +1,4 @@
 _model: blog
 ---
-_template: blog/list.html
+_template: blog-list.html
+

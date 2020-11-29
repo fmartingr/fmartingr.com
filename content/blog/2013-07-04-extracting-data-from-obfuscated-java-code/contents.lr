@@ -210,4 +210,4 @@ github.
 ---
 pub_date: 2013-07-04
 ---
-_template: blog/post.html
+_template: blog-post.html

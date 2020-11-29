@@ -63,4 +63,4 @@ achievement! :D
 ---
 pub_date: 2013-01-14
 ---
-_template: blog/post.html
+_template: blog-post.html

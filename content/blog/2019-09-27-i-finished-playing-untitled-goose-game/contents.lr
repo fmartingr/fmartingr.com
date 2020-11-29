@@ -4,7 +4,7 @@ pub_date: 2019-09-27
 ---
 tags: nintendo switch, game
 ---
-_template: blog/post.html
+_template: blog-post.html
 ---
 body:
 

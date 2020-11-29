@@ -42,7 +42,7 @@ Swap pane | `Meta`+`o`
 Kill pane | `Meta`+`x`
 Toggle focus on current pane | `Meta`+`z`
 Show pane numbers | `Meta`+`q`
-Press a the number of the pane you want to focus when shown. | 
+Press a the number of the pane you want to focus when shown. |
 Break pane into window | `Meta`+`+`
 Restore window to pane | `Meta`+`-`
 Change pane layout | `Meta`+`spacebar`
@@ -63,4 +63,4 @@ Find window | `Meta`+`f`
 ---
 pub_date: 2015-08-04
 ---
-_template: blog/post.html
+_template: blog-post.html

@@ -31,4 +31,4 @@ Also, my UI now looks _more or less_ like this:
 ---
 pub_date: 2015-07-23
 ---
-_template: blog/post.html
+_template: blog-post.html

@@ -91,4 +91,4 @@ _Post pictures by
 ---
 pub_date: 2015-07-18
 ---
-_template: blog/post.html
+_template: blog-post.html

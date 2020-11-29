@@ -30,4 +30,4 @@ recommendation!
 ---
 pub_date: 2013-01-20
 ---
-_template: blog/post.html
+_template: blog-post.html

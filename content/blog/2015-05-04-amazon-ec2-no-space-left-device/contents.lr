@@ -64,4 +64,4 @@ havok.
 ---
 pub_date: 2015-05-04
 ---
-_template: blog/post.html
+_template: blog-post.html

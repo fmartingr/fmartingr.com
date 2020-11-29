@@ -26,4 +26,4 @@ new bad guys to challenge!
 ---
 pub_date: 2015-07-22
 ---
-_template: blog/post.html
+_template: blog-post.html

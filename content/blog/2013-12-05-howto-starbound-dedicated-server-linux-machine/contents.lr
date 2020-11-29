@@ -62,4 +62,4 @@ Happy gaming!
 ---
 pub_date: 2013-12-05
 ---
-_template: blog/post.html
+_template: blog-post.html

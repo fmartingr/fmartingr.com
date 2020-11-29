@@ -42,4 +42,4 @@ Hope this helps.
 ---
 pub_date: 2012-11-23
 ---
-_template: blog/post.html
+_template: blog-post.html

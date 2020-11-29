@@ -188,24 +188,24 @@ uint16 | Mode | File mode:
   * 0x4000: Directory
   * 0x8000: File
 
-|  
-uint64 | inode number |   |  
-uint32 | User ID |   |  
-uint32 | Group ID |   |  
-uint32 | Last modified time | EPOCH |  
-uint32 | Last accesed time | EPOCH |  
-uint32 | Created time | EPOCH |  
-uint64 | File size |   | 0x0...0  
-uint8 | Flag | 0x1 to 0xB |  
+|
+uint64 | inode number |   |
+uint32 | User ID |   |
+uint32 | Group ID |   |
+uint32 | Last modified time | EPOCH |
+uint32 | Last accesed time | EPOCH |
+uint32 | Created time | EPOCH |
+uint64 | File size |   | 0x0...0
+uint8 | Flag | 0x1 to 0xB |
 uint8 | Properties number | Number of properties to follow with this record |
-0x00  
-property[0...n] | Property objects | Each property object -if any- | _nothing_  
-\-- | File name | SHA1(domain + path) |  
-  
+0x00
+property[0...n] | Property objects | Each property object -if any- | _nothing_
+\-- | File name | SHA1(domain + path) |
+
 **More info: ** [The iPhone Wiki](http://theiphonewiki.com/wiki/ITunes_Backup#Manifest.mbdb) | [This image I found](http://nagareshwar.securityxploded.com/wp-content/uploads/2012/09/mbdb-record.jpg)
 
 
 ---
 pub_date: 2013-11-29
 ---
-_template: blog/post.html
+_template: blog-post.html

@@ -4,7 +4,7 @@ pub_date: 2020-01-01
 ---
 tags: year
 ---
-_template: blog/post.html
+_template: blog-post.html
 ---
 body:
 This is a brief summary of my last year in random order:

@@ -268,4 +268,4 @@ See ya in two weeks!
 ---
 pub_date: 2016-04-27
 ---
-_template: blog/post.html
+_template: blog-post.html

@@ -300,4 +300,4 @@ More info on [WowWiki](http://www.wowwiki.com/Story_guide).
 ---
 pub_date: 2013-02-23
 ---
-_template: blog/post.html
+_template: blog-post.html

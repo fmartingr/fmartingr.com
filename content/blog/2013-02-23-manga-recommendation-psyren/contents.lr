@@ -22,4 +22,4 @@ save the world from becoming Psyren.
 ---
 pub_date: 2013-02-23
 ---
-_template: blog/post.html
+_template: blog-post.html

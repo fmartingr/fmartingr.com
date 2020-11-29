@@ -58,7 +58,7 @@ We need to tweak some things before we can play, here's what I did:
   * Go to set screen options and set windowed. Since I have a 16:9 screen and the game runs at 4:3, everything is streched. Maybe there's a 16:9 patch around the net.
   * I customized the icon with [this one](http://icons.iconarchive.com/icons/3xhumed/mega-games-pack-36/256/Warcraft-3-Reign-of-Chaos-5-icon.png). You need to convert it to ICNS for using it with wineskin (you can use [this online tool](http://iconverticons.com/online/)). Copy it into the package and select on the advanced options in the wineskin executable.
   * If you want to play with the frozen throne expansion, change the Windows EXE on the advanced settings panel to "Frozen Throne.exe".
-  * Since wine can't play the cinematics, you can safely remove/rename the movies folder under the warcraft installation folder. (Default: `drive_c/Program Files/Warcraft III`) 
+  * Since wine can't play the cinematics, you can safely remove/rename the movies folder under the warcraft installation folder. (Default: `drive_c/Program Files/Warcraft III`)
   * Delete the game installers if you stored them into the wineskin package to keep the .app file size to a minimum.
 
 ## Enjoy!
@@ -77,4 +77,4 @@ the process if you delete the game.
 ---
 pub_date: 2013-08-10
 ---
-_template: blog/post.html
+_template: blog-post.html

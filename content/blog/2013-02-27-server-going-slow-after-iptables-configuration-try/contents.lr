@@ -28,4 +28,4 @@ Hope this solves your issue as it did with mine.
 ---
 pub_date: 2013-02-27
 ---
-_template: blog/post.html
+_template: blog-post.html

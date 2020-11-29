@@ -1,6 +1,6 @@
 title: New site
 ---
-_template: blog/post.html
+_template: blog-post.html
 ---
 pub_date: 2016-12-21
 ---

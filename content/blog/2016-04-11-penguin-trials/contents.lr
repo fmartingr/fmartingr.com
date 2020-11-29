@@ -43,4 +43,4 @@ Let's see how it goes!
 ---
 pub_date: 2016-04-11
 ---
-_template: blog/post.html
+_template: blog-post.html

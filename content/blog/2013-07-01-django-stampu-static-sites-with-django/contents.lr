@@ -43,4 +43,4 @@ github](https://github.com/fmartingr/django-stampu).
 ---
 pub_date: 2013-07-01
 ---
-_template: blog/post.html
+_template: blog-post.html

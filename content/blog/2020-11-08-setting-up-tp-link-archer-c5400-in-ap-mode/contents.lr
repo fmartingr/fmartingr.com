@@ -1,4 +1,4 @@
-_template: blog/post.html
+_template: blog-post.html
 ---
 pub_date: 2020-11-08
 ---

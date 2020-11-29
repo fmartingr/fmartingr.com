@@ -60,4 +60,4 @@ edit_comment:
 ---
 pub_date: 2017-01-31
 ---
-_template: blog/post.html
+_template: blog-post.html
