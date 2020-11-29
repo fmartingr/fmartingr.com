@@ -1,0 +1,155 @@
+title: November 2020
+---
+pub_date: 2020-12-01
+---
+_template: blog/post.html
+---
+body:
+
+Checking my images it seems this month I didn't have anything from the outside so... I just
+wanted to share that this month I have given myself some very nice meals and I improved the
+Katsu Curry recipe quite a bit. I'm not good at cooking by any means, but the relax you get
+from listening to music while cooking some healthy food is pretty good.
+
+[![This month I've made myself a lot of nice meals](./image-360.jpg)](./image-1024.jpg)
+
+<!-- readmore -->
+
+## Projects
+
+- [**Switch games json**](https://github.com/fmartingr/switch-games-json)
+
+  I made a simple script to parse and expose the Nintendo Switch game list in JSON including the encrypted title ID
+  field that is used on the screenshots on the system. The JSON list is generated every day from the Switchbrew wiki
+  and exposed via Github pages.
+
+  The main problem here is that not every game is present on Switchbrew, so I'm unsure how to automate this without
+  asking people to pull request missing games or doing that myself (for the ones missing). I need to check if the same
+  title ID filed that is required to get the proper encrypted field is present on the eShop's API. If that's the case
+  it would be possible to get the list for all games _easily_.
+
+- [**Games Screenshot Manager**](https://github.com/fmartingr/games-screenshot-manager)
+
+  Related to the one above, an application to fetch and sort all screenshots found from several providers and games.
+  Currently working for Steam, Nintendo Switch and some games on several operating systems. I'm starting to like this
+  _golang_ thing. :D
+
+- [**Butterrobot**](https://github.com/fmartingr/butterrobot)
+
+  I've been making slow progress with the admin interface. I'm trying to keep it as simple as possible: a way to
+  check which channels and plugins there are available and an option to enable plugins with channels allowing a
+  JSON configuration to be used with them, since the same plugin on a different channel would require a different
+  output. I hope to have something useful on December if my time allows.
+
+- I've also spent some time playing with:
+  - **My Raspberries**: Playing with different OSs, booting from USB, setting up Home Assistant properly, ...
+  - **Firewalla**: Setting up my network devices, assigning IPs and understanding it's inner workflows a bit. I've
+    also setup Pi-Hole inside it as main DNS server replacing the one they use.
+  - **Alpine Linux**: On the Pis and containers to understand the difference with other OSs.
+  - **Arch Linux**: I'm currently starting from scratch my Dell XPS 13 using Arch Linux base, and while it's more work
+    than a _Next, next, next, finish_ install I'm enjoying it quite a lot since the result you get is a minimal install.
+
+
+- I'm working on blog posts for the Arch Linux installation, Alpine on Raspberry and self-hosting my smart devices
+  using Home Assistant so the blog have more content than the monthly updates. Another mini-posts for the tools I
+  self-host myself will
+
+- Infra side it seems that my docker services via an VPS as door from the internet through an SDN to my home server
+  keep achieving 100% uptime from some months now, only going down if I test something on a dev service.
+
+  Problem is that even if it _works_, the containerized setup with two load balancers, SDN and so on seems both
+  complex from my use case and useful if something goes wrong.
+
+  I'm considering either moving to a simpler approach (non-containerized) or go all-in containerd and use something
+  like [k3s](https://k3s.io) to orchestrate the server at home. I would have an excuse to add some Pis and clusterize
+  everything properly.
+
+  I still don't know the path I'm going to take with this.
+
+## Books
+
+- [**The Magicians' Guild**](https://www.goodreads.com/book/show/28249.The_Magicians_Guild) (_Trudi Canavan_)
+
+  Ongoing. I try to read a chapter a day if time or focus allows. I'm actually enjoying the story so far, even if
+  reading anything magic related after Mistborn seems dull.
+
+## TVShows and Movies
+
+- [**Star wars: Rebels**](https://www.disneyplus.com/series/star-wars-rebels/64MCZgAzY0Zw)
+- [**Rogue One: A star-wars Story**](https://www.disneyplus.com/movies/rogue-one-a-star-wars-story/14CV6eSbygOA)
+- [**Star Wars: A new hope**](https://www.disneyplus.com/movies/star-wars-a-new-hope-episode-iv/12fVeZxD2fWJ)
+- [**Star Wars: The empire strikes back**](https://www.disneyplus.com/movies/star-wars-the-empire-strikes-back-episode-v/iqtDTZAewwYl)
+
+  Star Wars Marathon continues!
+
+- [**Bones**](https://www.primevideo.com/detail/0HBVL22LMA40B0XBY30RUOC9EH/)
+
+  Slowly and steady our _joker_ when we don't know what to put on TV over meals.
+
+- [**Mandalorian**](https://www.disneyplus.com/series/the-mandalorian/3jLIGMDYINqD)
+
+  It's back! This is why I look forward to Fridays now.
+
+- [**The Blacklist**](https://www.netflix.com/title/70281312)
+
+  I discovered this randomly because the trailer poped up on my Netflix feed. The premise seemed interesting
+  and James Spader is such a great actor... Not sure how I managed to convince the Player 2 to watch this, but
+  she's enjoying it too. Kinda different from what we usually watch together, but welcome nevertheless.
+
+
+## Games
+
+- [**Forager**](https://store.steampowered.com/app/751780/Forager/)
+
+  I completed all the achievements a while ago, but the author decided to add more... so I just fire this up
+  from time to time to maintain Forager on my Steam Perfect Games list.
+
+- [**Minecraft**](https://minecraft.net)
+
+  Oh my, this again? It seems so. Some friends wanted to get on the _blocky_ train again. I have been out of
+  Minecraft for a good while (years!) and it seems interesting to come back after all this time. There are
+  some new things to explore and since I didn't really "finish" the game back in the day... let's see how
+  this goes.
+
+- [**Pyramida**](https://store.steampowered.com/app/1390010/pyramida/)
+
+  From Sokpop, the creators of Simmiland. A simple village builder game that seems minimalistic and fun in
+  the same way their other games are. I rarely play this (since a play session can last a while) but I want
+  to finish it too.
+
+- [**The legend of Zelda: Age of Calamity**](https://www.nintendo.es/Juegos/Nintendo-Switch/Hyrule-Warriors-La-era-del-cataclismo-1838129.html)
+
+  The Nintendo game for this month, already going strong on my Switch. I wasn't really sure if I would enjoy a
+  _musou_ game even if it was Nintendo related, but so far is looking really good. I didn't though that cutting
+  through hordes of moblins would be so satisfactory and fun! I'm still not sure if the lore is "_canon_" or if
+  it truly precedes Breath of the Wild as <span class="spoiler">it seems to happen on a parallel timeline created
+  by a time traveler</span>, but I'm eager to know how it ends, even if the finale is the same as the sequel.
+
+- [**Magic: The gathering (physical)**](https://magic.wizards.com/en)
+
+  This refers to the physical version of the game. We bought a starter kit and play against each other from
+  time to time. It's new for both of us so this is an interesting learning curve to share.
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- [What is this Gemini thing anyway, and why am I excited about it?](https://drewdevault.com/2020/11/01/What-is-Gemini-anyway.html)
+- [Raspberry Pi 400: Teardown and Review](https://www.jeffgeerling.com/blog/2020/raspberry-pi-400-teardown-and-review)
+- [(podcast) Self-Hosted Show](https://podcasts.google.com/?feed=aHR0cHM6Ly9zZWxmaG9zdGVkLnNob3cvcnNz)
+- [Why Arcades Are Still Thriving In Japan](https://www.youtube.com/watch?v=LWyAtbOhW2w)
+- [Your computer isn't yours](https://sneak.berlin/20201112/your-computer-isnt-yours/)
+  - [Does Apple really log every app you run? A technical look – Jacopo Jannone - blog](https://blog.jacopo.io/en/post/apple-ocsp/)
+  - [Response from Apple](https://social.wildeboer.net/@jwildeboer/105219402213708346)
+- [We can do better than DuckDuckGo](https://drewdevault.com/2020/11/17/Better-than-DuckDuckGo.html)
+- [No, "Open Source" does not mean "Includes Free Support"](https://raccoon.onyxbits.de/blog/bugreport-free-support/)
+- [random(7)](https://man7.org/linux/man-pages/man7/random.7.html)
+  - [GETRANDOM syscall](https://security.stackexchange.com/questions/162507/getrandom-syscalls-relation-to-kernel-entropy-pool-state/175771#175771)
+- [Even faster bash startup](https://work.lisk.in/2020/11/20/even-faster-bash-startup.html)
+- (Spanish) [La Revolución Mandaloriana que va a cambiar el cine](https://youtu.be/FOxUAMuBtMM)
+- [Booting from a vinyl record](http://boginjr.com/it/sw/dev/vinyl-boot/)
+- [When too much concurrency slows you down (golang)](https://medium.com/@_orcaman/when-too-much-concurrency-slows-you-down-golang-9c144ca305a)
+- [TIL: eBPF is awesome](https://filipnikolovski.com/posts/ebpf/)
+- [SQLite as a document database](https://dgl.cx/2020/06/sqlite-json-support)
+- [Blogging vs. blog setups](https://rakhim.org/honestly-undefined/19/)
+
+---
+_discoverable: no
