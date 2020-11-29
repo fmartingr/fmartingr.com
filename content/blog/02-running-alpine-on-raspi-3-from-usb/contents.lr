@@ -2,9 +2,11 @@ title: Running Alpine Linux from USB on the Raspberry Pi 3
 ---
 pub_date: 2021-12-31
 ---
+_discoverable: no
+---
 body:
 
-``` sh
+``` bash
 # Tested on Raspberry Pi 3
 # Create a Raspberry pi OS SD card
 sudo apt update
