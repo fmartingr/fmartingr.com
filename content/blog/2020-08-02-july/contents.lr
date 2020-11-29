@@ -11,20 +11,20 @@ Summer is here!
 Even without restrictions or quarantine is has been a weird month. Cases here are going up and down,
 I don't want to go back to the gym (and I think I won't until next year), some restaurants and cafe
 have closed permanently and the ones that are still standing are usually full (which is good). We're
-just trying to go back to normal, step by step, and having some friends stay at home a few days 
+just trying to go back to normal, step by step, and having some friends stay at home a few days
 helped a lot.
 
-[![A picture of myself from behind walking through a port](./image-1024.jpg)](./image-1024.jpg)
+[![A picture of myself from behind walking through a port](./image-360.jpg)](./image-1024.jpg)
 
 <!-- readmore -->
 
-This month I have focused on getting more organized. As I said [last month](/blog/2020/06/02/june/) 
+This month I have focused on getting more organized. As I said [last month](/blog/2020/06/02/june/)
 I badly needed it.
 
-I have managed to move almost everything into my [notion.so](https://notion.so/) workspace. 
-I had some boards and notes here and there but Notion is so powerful and comfortable to use that I 
+I have managed to move almost everything into my [notion.so](https://notion.so/) workspace.
+I had some boards and notes here and there but Notion is so powerful and comfortable to use that I
 just went all in. There's some cleanup to do, but my main points of interes are already there. I have
-a board with my personal tasks and some metadata about them, and secondary boards for my hobbies 
+a board with my personal tasks and some metadata about them, and secondary boards for my hobbies
 (Games, Books, TVShows, etc), Blog related posts, ... I may go into more detail in the future.
 
 <div class="grid">
@@ -41,13 +41,13 @@ a board with my personal tasks and some metadata about them, and secondary board
 </div>
 
 Related to this I'm also starting to cleanup every last drawer at home. I got a bit tired of not
-knowing how much stuff I have so I'm making a full inventory of _everything_. It all started 
+knowing how much stuff I have so I'm making a full inventory of _everything_. It all started
 reviewing how many of my clothers would still fit me after quarantine, and it snapped on me. I
 don't know how much I own, and I think it happens to all of us at different levels.
 
 With tech this is gonna be very difficult, I have managed to stash a lot (**a lot**) of cables
 during the years. Just imagine how many HDMI and USB cables the average tech guy can get a hold
-of... Arduinos, Raspberries... etc. 
+of... Arduinos, Raspberries... etc.
 
 This will take time, but I'm very happy with the progress I already had and all the things I've
 already donated or sold.
@@ -56,7 +56,7 @@ already donated or sold.
 
 - My **local infra** is mostly done at this point. I just need to secure everything a bit more
   but has been working fine (with some hiccups) for the past months. I may need to check some
-  networking alternatives and move all SSL negotiation to the main node (avoiding re-encrypting 
+  networking alternatives and move all SSL negotiation to the main node (avoiding re-encrypting
   traffic on a non-controlled node).
 
 - **Butterrobot** got some love this month. I'm _slowly_ setting up an automated CI/CD system to
@@ -97,7 +97,7 @@ I watched something!
   another five years for the next chapter...?
 
 - [**Reventure**](https://store.steampowered.com/app/900270/Reventure/)
-   
+
   Quick play sessions are quick. Oh my god this game has soooo many endings...
 
 - [**Carrion**](https://www.xbox.com/en-US/games/carrion)
@@ -105,7 +105,7 @@ I watched something!
   This has been on my radar for quite some time. It's a shame is so short! Finished in a few hours, but that didn't mean
   is not great, because it is. Being the monster trapped wanted to go out instead of the _"Hero"_ killing monsters is
   a really appreciated change of perspective. The mechanics were amazing and the graphics gorgeous, it was very fun while it
-  lasted. 
+  lasted.
 
 - [**Rick and Morty: Virtual Rick-ality**](https://store.steampowered.com/app/469610/Rick_and_Morty_Virtual_Rickality/)
 
