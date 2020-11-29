@@ -1,0 +1,155 @@
+title: Arch Linux on my Dell XPS
+---
+pub_date: 2021-12-31
+---
+body:
+
+## Create install media
+## Install
+- Follow the wiki
+
+``` sh
+# Connect to the internet, the moment we do relector will update the mirrorlist
+iwctl station wlan0 connect <bssid>
+
+# Set up date and time
+timedatectl set-ntp true
+timedatectl set-timezone Europe/Madrid
+
+# Prepare the disk, the setup I used:
+# Disk #0: 512MB, Boot partition, UEFI type
+# Disk #1: 16384MB, SWAP, swap type
+# Disk #2: Rest of the disk, btrfs type
+# fdisk ...
+
+# Prepare the filesystems and the luks encryption
+mkfs.vfat -F32 /dev/nmve0n1p0
+mkswap /dev/nmve0n1p1
+cryptsetup luksFormat /dev/nvme0n1p2 # Password here
+cryptsetup open /dev/nvme0n1p2 luks
+mkfs.btrfs -L btrfs /dev/mapper/luks
+
+# Prepare the btrfs partition
+mkdir /mnt/luks
+mount -t btrfs /dev/mapper/luks /mnt/luks
+btrfs subvolume create root
+btrfs subvolume create home
+btrfs subvolume create snapshots
+
+# Mount everything under /mnt
+mkdir /mnt/{home,boot}
+mount -o subvol=root,compress=lzo /dev/mapper/luks /mnt
+mount -o subvol=home,compress=lzo /dev/mapper/luks /mnt/home
+mount /dev/nvme0n1p0 /mnt/boot
+
+# Run pacstrap with several base packages:
+pacstrap /mnt \
+base \
+linux-lts linux-firmware \
+intel-ucode \
+terminus-font \ # Fonts in vconsole
+man-db man-pages \ # Man pages
+iwd sudo vim # Utilities
+
+# Generate the /etc/fstab file
+genfstab -L /mnt >> /mnt/etc/fstab
+
+# Check everything is correct, use noatime and discard flags to
+# make flash drive last longer
+vim /mnt/etc/fstab
+
+# Enter into the system
+arch-chroot /mnt
+
+# Setup timedate
+timedatectl set-timezone Europe/Madrid
+
+# Sync the RTC from the system time (useful if dual booting)
+hwclock --systohc
+
+# Set the en_US.UTF-8 locale (uncomment)
+vim /etc/locale.gen
+locale-gen
+
+# Setup default locale
+echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+
+# Setup keymap and font
+echo 'KEYMAP=us\nFONT=ter-232n' > /etc/vconsole.conf
+
+# Setup the computer hostname
+echo 'deru' > /etc/hostname
+
+# Setup the hosts file
+echo '127.0.0.1 localhost\n::1 localhost\n127.0.1.1 deru.localdomain deru' > /etc/hosts
+
+# Set root password
+passwd
+
+# Setup init hooks to use systemd
+vim /etc/mkinitcpio.conf
+# Remove udev and add systemd, sd-vconsole and sd-encrypt
+
+# Regenerate initrd
+mkinitcpio -p linux-lts
+
+# Setup systemd-boot
+bootctl --path=/boot install
+
+# Create the bootloader entry for Arch
+LUKS_UUID=$(cryptsetup luksUUID /dev/nvme0n1p2)
+cat >/etc/loader/entries/arch.conf <<EOL
+title  Arch Linux (LTS)
+linux  /vmlinuz-linux-lts
+initrd /intel-ucode.img
+initrd /initramfs-linux-lts.img
+options rw luks.uuid=${LUKS_UUID} luks.name=${LUKS_UUID}=luks root=/dev/mapper/luks rootflags=subvol=root
+EOL
+
+# Setup bootloader
+echo 'default arch.conf' > /boot/loader/loader.conf
+
+# System ready!
+exit
+reboot
+
+# Login as root
+
+# Setup IWD to use it's own DHCP
+cat >/etc/iwd/main.con <<EOL
+[General]
+EnableNetworkConfiguration=true
+
+[Network]
+NameResolvingService=systemd
+EOL
+
+# Setup your wireless network
+iwctl station wlan0 connect <BSSID>
+echo 'AutoConnect=true' >> /var/lib/iwd/<BSSID>.pks
+
+# Start and enable iwd and systemd-resolved services
+systemctl enable --now iwd
+systemctl enable --now systemd-resolved
+
+# Setup hibernate
+# Get the swap disk UUID (double check this is the correct disk)
+sudo blkid | grep swap | sed -rn 's/^.*UUID=\"([a-z0-9\-]+)\".*$/\1/p'
+
+# Add the resume boot parameter
+vim /boot/loader/entries/arch.conf
+# Under options:
+# resume=UUID=<uuid>
+# Systemd should check automatically for the swap partition on GPT tables [1]
+
+# Setup suspend-then-hibernate
+vim /etc/systemd/login.conf
+# Find HandleLidSwitch and set `suspend-then-hibernate`.
+vim /etc/systemd/sleep.conf
+# Find HibernateDelaySec and set to 5min
+# All these will be into effect in next boot
+```
+
+- [ ] IDLE toggle
+- [ ] Docked toggle
+- [ ] VConsole auto lock

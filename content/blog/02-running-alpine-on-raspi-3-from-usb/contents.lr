@@ -1,0 +1,62 @@
+title: Running Alpine Linux from USB on the Raspberry Pi 3
+---
+pub_date: 2021-12-31
+---
+body:
+
+``` sh
+# Tested on Raspberry Pi 3
+# Create a Raspberry pi OS SD card
+sudo apt update
+sudo apt upgrade
+sudo rpi-update
+echo program_usb_boot_mode=1 | sudo tee -a /boot/config.txt
+reboot
+
+# At this point the boot flag is enabled
+# Prepare the USB
+
+# Install Alpine to USB Drive
+# Format USB
+# Create two partitions:
+# - boot fat16
+# - root ext4
+tar xzvf ~/Downloads/alpine-rpi-3.12.1-armhf.tar.gz
+
+# boot/usercfg.txt:
+enable_uart=1 # Not sure I need this
+gpu_mem=32 # The minimal memory for the bootloader
+
+setup-alpine
+apk update
+apk add cfdisk e2fsprogs
+mkfs.ext4 /dev/sda2
+
+# Setup proper TZ
+apk add tzdata
+cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+echo "Europe/Madrid" >  /etc/timezone
+apk del tzdata
+
+mount /dev/sda2 /mnt
+setup-disk -m sys /mnt
+mount -o remount,rw /media/sda1
+
+rm -f /media/sda1/boot/*
+cd /mnt
+rm boot/boot # Remove symlink
+
+mv boot/* /media/sda1/boot/
+rm -rf boot
+mkdir media/sda1
+
+ln -s media/sda1/boot boot
+
+# /mnt/etc/fstab
+# Remove cdrom
+# Add:
+/dev/sda1 /media/sda1 vfat default 0 0
+
+# Edit boot cmdline to boot from the ext partition
+# /mnt
+```
