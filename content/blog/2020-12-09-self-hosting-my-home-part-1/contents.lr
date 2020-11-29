@@ -1,0 +1,19 @@
+title: Self hosting my home (part 1)
+---
+_template: blog/post.html
+---
+pub_date: 2020-12-09
+---
+body:
+
+- Move installation to USB / Install directly to USB?
+  - Since I already have the base ready, I would just move it.
+- add persons, devices and picutres
+- Install file editor
+- Mysql
+- modify commit and prune days
+- backups
+- Chromecast
+- Weather
+---
+_discoverable: no
