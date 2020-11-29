@@ -60,5 +60,20 @@ ln -s media/sda1/boot boot
 /dev/sda1 /media/sda1 vfat default 0 0
 
 # Edit boot cmdline to boot from the ext partition
-# /mnt
+# Add root=/dev/sda2
+
+# Reboot
+
+# After install
+
+# Set swclock (pi doesn't have a hwclock)
+rc-update add swclock boot
+rc-update del hwclock boot
+service hwclock stop
+service swclock start
+
+apk update
+apk upgrade
+
+
 ```
