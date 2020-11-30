@@ -5,7 +5,7 @@ body:
 I can go out now. In those rare days with good weather here I can
 take pictures like this.
 
-![A picture from the beach](./image.jpg)
+[![A picture from the beach](./image-360.jpg)](./image.jpg)
 
 <!-- readmore -->
 
