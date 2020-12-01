@@ -6,7 +6,7 @@ _template: blog-post.html
 ---
 body:
 
-Checking my images it seems this month I didn't have anything from the outside so... I just
+Checking my images it seems this month I didn't have anything remarkable from the outside so... I just
 wanted to share that this month I have given myself some very nice meals and I improved the
 Katsu Curry recipe quite a bit. I'm not good at cooking by any means, but the relax you get
 from listening to music while cooking some healthy food is pretty good.
@@ -93,16 +93,15 @@ from listening to music while cooking some healthy food is pretty good.
 - [**The Blacklist**](https://www.netflix.com/title/70281312)
 
   I discovered this randomly because the trailer poped up on my Netflix feed. The premise seemed interesting
-  and James Spader is such a great actor... Not sure how I managed to convince the Player 2 to watch this, but
-  she's enjoying it too. Kinda different from what we usually watch together, but welcome nevertheless.
-
+  and James Spader is such a great actor... Not sure how I managed to convince the Player 2 to watch this but
+  it seems she's enjoying it too. Kinda different from what we usually watch together, but welcome nevertheless.
 
 ## Games
 
 - [**Forager**](https://store.steampowered.com/app/751780/Forager/)
 
   I completed all the achievements a while ago, but the author decided to add more... so I just fire this up
-  from time to time to maintain Forager on my Steam Perfect Games list.
+  from time to time to try and maintain Forager on my Steam Perfect Games list.
 
 - [**Minecraft**](https://minecraft.net)
 
@@ -111,17 +110,19 @@ from listening to music while cooking some healthy food is pretty good.
   some new things to explore and since I didn't really "finish" the game back in the day... let's see how
   this goes.
 
+  Spoiler alert: We spent more time constructing stuff rather than _progressing_ through the game.
+
 - [**Pyramida**](https://store.steampowered.com/app/1390010/pyramida/)
 
   From Sokpop, the creators of Simmiland. A simple village builder game that seems minimalistic and fun in
-  the same way their other games are. I rarely play this (since a play session can last a while) but I want
-  to finish it too.
+  the same way their other games are. I don't play this often since a play session can last a while (as it happened
+  with Simmiland) but let's see if I manage to get every achievement.
 
 - [**The legend of Zelda: Age of Calamity**](https://www.nintendo.es/Juegos/Nintendo-Switch/Hyrule-Warriors-La-era-del-cataclismo-1838129.html)
 
   The Nintendo game for this month, already going strong on my Switch. I wasn't really sure if I would enjoy a
   _musou_ game even if it was Nintendo related, but so far is looking really good. I didn't though that cutting
-  through hordes of moblins would be so satisfactory and fun! I'm still not sure if the lore is "_canon_" or if
+  through hordes of bokoblins would be so satisfactory and fun! I'm still not sure if the lore is "_canon_" or if
   it truly precedes Breath of the Wild as <span class="spoiler">it seems to happen on a parallel timeline created
   by a time traveler</span>, but I'm eager to know how it ends, even if the finale is the same as the sequel.
 
@@ -150,6 +151,3 @@ from listening to music while cooking some healthy food is pretty good.
 - [TIL: eBPF is awesome](https://filipnikolovski.com/posts/ebpf/)
 - [SQLite as a document database](https://dgl.cx/2020/06/sqlite-json-support)
 - [Blogging vs. blog setups](https://rakhim.org/honestly-undefined/19/)
-
----
-_discoverable: no
