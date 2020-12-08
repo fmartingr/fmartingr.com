@@ -1,0 +1,102 @@
+title: Self-hosting my home: Grafana, InfluxDB, ESPHome
+---
+_discoverable: no
+---
+pub_date: 2021-12-31
+---
+body:
+
+## InfluxDB
+
+``` sql
+GRANT ALL ON "homeassistant" TO "homeassistant";
+```
+
+## Grafana
+
+...
+
+## ESP Home
+
+...
+
+### Temperature and Humidity Monitors
+
+...
+
+### Mi Flora
+
+- Get MAC Address for the Mi flora
+
+    ```
+    $ bluetoothctl scan on | grep -i flo
+    [NEW] Device XX:XX:XX:XX:XX:XX Flower care
+    ```
+
+
+- Create a new ESP Home integration to track the sensor:
+
+  I name my sensors with numbers so I can write the number on them and identify them easily. You only need to assign sensors to rooms to have them easily available when looking for them on dashboards.
+
+    ``` yaml
+    [...]
+    # Sensors
+    esp32_ble_tracker: # Required for BLE scanning
+
+    sensor:
+    - platform: xiaomi_hhccjcy01
+        mac_address: 'XX:XX:XX:XX:XX:XX'
+        temperature:
+        name: "Flora 1 Temperature"
+        moisture:
+        name: "Flora 1 Moisture"
+        illuminance:
+        name: "Flora 1 Illuminance"
+        conductivity:
+        name: "Flora 1 Soil Conductivity"
+        battery_level:
+        name: "Flora 1 Battery Level"
+    ```
+
+
+- Validate and upload the configuration to your ESP device.
+
+- With that, you could already create a card with the sensors provided by the integration, but for better visual information a [`plant`](https://www.home-assistant.io/integrations/plant/) object can be created with aproppriate values. Information comes from the Mi Flora App, but someone dumped the database and it's available also [on github](https://github.com/khronimo/MiFloraDB).
+
+  From the spreadsheet:
+  - Moisture: `min_soil_moist`/`max_soil_moist`
+  - Temperature: `min_temp`/`max_temp`
+  - Conductivity: `min_soil_ec`/`max_soil_ec`
+  - Brightness: `min_light_lux`/`max_light_lux`
+
+
+- Create a `plant` monitor on the `configuration.yaml` file:
+
+    ``` yaml
+    plant:
+      parsley:
+        sensors:
+          moisture: sensor.flora_1_moisture
+          battery: sensor.flora_1_battery
+          temperature: sensor.flora_1_temperature
+          conductivity: sensor.flora_1_soil_conductivity
+          brightness: sensor.flora_1_illuminance
+        min_moisture: 28
+        max_moisture: 75
+        min_battery: 20
+        min_conductivity: 100
+        max_conductivity: 2000
+        min_temperature: 5
+        max_temperature: 35
+        min_brightness: 2500
+        max_brightness: 55000
+        check_days: 3
+    ```
+
+- Restart Home Assistant for the changes to take effect.
+
+- Add a [Plant Status Card](https://www.home-assistant.io/lovelace/plant-status/) to your dashboard and select the plant you just created.
+
+  ![My parsley plant status card](./plant-status-card.png)
+---
+_discoverable: no
