@@ -10,6 +10,10 @@ body:
 
 Summary
 
+<!--readmore-->
+
+<!--toc-->
+
 I wanted to install this on a USB Drive, but apparently that's still not supported for _Home Assistant OS_, so I'm stuck with an SD Card for now. The latest development version (as of writting) does support it but I'd rather go with the stable release.
 
 ## Base Home Assistant OS using an SD Card
@@ -42,7 +46,7 @@ The default database backend is SQLite, and that has it's limitations, so let's 
 4. Under the Info tab start the MariaDB Service and enable the Watchdog service
 5. Go to the file editor interface and edit the `configuration.yaml` file.
 6. Add the configuration for the [`recorder`](https://www.home-assistant.io/integrations/recorder/) integration:
-  ``` yaml
+  ```yaml
   recorder:
     db_url: mysql://homeassistant:<password>@core-mariadb/homeassistant?charset=utf8
     commit_interval: 5
@@ -81,6 +85,8 @@ action:
       name: 'weekly_{{ now().strftime(''%Y-%m-%d'') }}'
 ```
 
+TODO: Copy contents elsewhere!
+
 ## Setting up accounts and users that will use the system
 
 This used to be more complex a while ago, now you only need to go to **Configuration > People** and add the users you need.
@@ -106,8 +112,10 @@ Nginx addon
 ```
 openssl genrsa -out homeassistant.key 2048
 openssl req -new -key homeassistant.key -out homeassistant.csr
-openssl x509 -req -in homeassistant.csr -CA ../CA.pem -CAkey ../CA.key -CAcreateserial -out homeassistant.crt -days 1825 -sha256
+openssl x509 -req -in homeassistant.csr -CA CA.pem -CAkey CA.key -CAcreateserial -out homeassistant.crt -days 825 -sha256
 ```
+
+> Note: certificate was generated with a 825 days validity for iOS to work correctly, since their certificate requisistes [are pretty specific](https://support.apple.com/en-us/HT210176)
 
 ## Getting the Home Assistant Companion
 
@@ -116,6 +124,45 @@ Download the application from your phone's store and after logging in you can se
 Apart from using the app to control your home devices, the sensors will be useful to generate automations in the future.
 
 Another useful thing to setup here is the local (LAN) address to use when the phone is connected to Wifi at home, using an external hostname when connecting via VPN/RemoteControl.
+
+## The first automation: tell me about updates
+
+Script to send notification to everyone
+
+``` yaml
+alias: Send Notifications
+sequence:
+  - service: notify.mobile_app_oneplus6
+    data:
+      title: '{{ title }}'
+      message: '{{ message }}'
+# Insert more notifcations into sequence
+mode: single
+variables:
+  title: null
+  message: null
+```
+
+Automation to send notifications once new updates are available:
+
+``` yaml
+alias: Update notification
+description: ''
+trigger:
+  - platform: state
+    entity_id: binary_sensor.updater
+    from: 'off'
+    to: 'on'
+condition: []
+action:
+  - service: script.send_notifications
+    data:
+      title: New Home Assistant Release
+      message: >-
+        Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version')
+        }}  is now available.
+mode: single
+```
 
 ## Add system sensors
 
@@ -224,6 +271,7 @@ This is one of the dependencies I have that I'm most eager to get rid off, but f
 
 To setup, you need to enter your username, password and country code for the integration to communicate with the Tuya API, so your devices will require internet connection.
 
-The plan is to replace the plugs (and the water sensor which is not Home Assistant compatible) with ZigBee devices.
+The plan is to try and flash the plugs with Tasmota to free them from the _cloud_, and any new ones I'm getting will be Zigbee compatbile.
+
 ---
 _discoverable: no

@@ -8,7 +8,15 @@ body:
 
 ## DeCONZ + Phoscon
 
+- Install deconz addon
+- Add deconz integration
+    - Host: core_deconz
+
 ## Pairing everything
+- Pair smart plug (show as light)
+- Pair motion sensor
+- Pair window/door sensors
+- Pair light detector
 
 ---
 _discoverable: no
