@@ -6,19 +6,28 @@ _discoverable: no
 ---
 body:
 
-Summary
+Oh boy, here we go again. Christmas season is with us one more time.
+
+For anyone that doesn't know me even a little: I don't like Christmas. It is the most consumerist period of the year, everything is packed with people (even in 2020, how's that even possible!). The only good thing it had is meeting with friends and family since most people can at this time and even that was stole from us this year.
 
 [![image alt](./image-360.jpg)](./image.jpg)
 
-<!--readmore-->
+<!-- readmore -->
 
 ## Projects
+
+- [**Butterrobot**](https://github.com/fmartingr/butterrobot) has gone some improvements and it can be shipped now. The admin interface is now useable and the basic features are bundled in. I had to work a bit on how I abstracted _queries_ and _objects_ internally since it was a bit of a mess but I think it's way easier to understand now. I love [`dataclasses`](https://docs.python.org/3/library/dataclasses.html).
+
+  There's still a lot of work to do on the testing a documentation department.
+
+- Slow progress on the [**Games Screenshot Manager**](https://github.com/fmartingr/games-screenshot-manager). Don't get me wrong, it already work and I use it to manage my screenshots gallery but I need to automate some processes, add tests and get path cleaning to work properly. Also I'm missing some games that I'll need to fill out.
 
 ## Books
 
 - Finished reading [**The Magicians' Guild**](https://www.goodreads.com/book/show/28249.The_Magicians_Guild) (_Trudi Canavan_)
 
-  I liked it, it's nothing super impressive but enjoyable for fantasy lovers, and I'm glad my reading habit came back, I already have enough backlog as it is. I'm continuing with the trilogy with the next one now:
+  I liked it, it's nothing super impressive but enjoyable for fantasy lovers, and I'm glad my reading habit came back,
+  I already have enough backlog as it is. I'm continuing with the trilogy with the next one now:
 
 - Started reading [**The Novice**](https://www.goodreads.com/book/show/28250.The_Novice) (_Trudi Canavan_)
 
@@ -28,13 +37,35 @@ Summary
 
   Star Wars Marathon continues!
 
+  Tried to watch **Star Wars: Resistance** but it just wasn't my kind of show, only watched three episodes. I hope I don't miss anything interesting in there. Should I at least watch the latest season?
+
+- [**Mandalorian**](https://www.disneyplus.com/series/the-mandalorian/3jLIGMDYINqD)
+
+  It's over now :(
+
+   A **very good** season, looking forward to all the new TV Shows and movies announced for Disney+ in the future (both from Star Wars and the Marvel Cinematic Universe).
+
+  <p class="spoiler">While I love the series the Luke Skywalker reveal of the end killed it a bit for me (since I was expecting Ezra Bridger to show up). I don't understand the reasoning behind using CGI faces for these actors... if you're going to play with the character again just get a new actor with some resemblance the way you did it with Solo.</p>
+
+  <p class="spoiler">I still don't understand on which position this leaves the last trilogy, the future seasons for Mandalorian and every other spin-off that Disney will launch, but well. They are doing a really good job with this, can't wait for the Ashoka show to air and whatever that final mention of Boba Fett was, it was about time this character was portrayed as he deserved.</p>
+
+- [**The Blacklist**](https://www.netflix.com/title/70281312)
+
+  We're hooked.
+
 ## Games
 
 - [**Minecraft**](https://minecraft.net)
-  
+
   Our adventure continues. :)
 
-  [![image alt](./minecraft-360.png)](./minecraft.png)
+- [**The legend of Zelda: Age of Calamity**](https://www.nintendo.es/Juegos/Nintendo-Switch/Hyrule-Warriors-La-era-del-cataclismo-1838129.html)
+
+- [**Star Wars: The old republic**](https://swtor.com)
+
+  I was hoping to get on Fallen Order this month but [Microsoft delayed the release of EA Play for Xbox Game Pass for PC](https://news.xbox.com/en-us/2020/12/15/update-on-ea-play-xbox-game-pass-for-pc-2021/) until sometime next year, so to get rid of my latest Star Wars hype I started a new character on the MMORPG.
+
+  TODO: Screenshot
 
 ## [Articles](https://t.me/fmartingr_articles)
 
