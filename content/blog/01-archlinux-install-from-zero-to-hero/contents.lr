@@ -78,6 +78,7 @@ echo 'LANG=en_US.UTF-8' > /etc/locale.conf
 
 # Setup keymap and font
 echo 'KEYMAP=us\nFONT=ter-232n' > /etc/vconsole.conf
+pacman -S physlock # To allow locking the computer when in VConsole
 
 # Setup the computer hostname
 echo 'deru' > /etc/hostname
@@ -152,6 +153,17 @@ vim /etc/systemd/sleep.conf
 # All these will be into effect in next boot
 ```
 
-- [ ] IDLE toggle
+- [ ] Boot in 1080p mode
 - [ ] Docked toggle
-- [ ] VConsole auto lock
+- [ ] VConsole auto lock?
+    - [ ] IDLE toggle in VConsole?
+- [ ] Bluetooth
+- [ ] Audio
+- [ ] Hardware acceleration
+
+## Userspace
+
+```
+useradd fmartingr
+pacman -S sway dmenu xorg-xwayland alacritty qutebrowser
+```
