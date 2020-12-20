@@ -1,20 +1,20 @@
-
-
-title: Self-hosting my home: Installation and configuration, plug and play integrations
+title: Self-hosting my home with Home Assistant (part 1)
 ---
-_discoverable: no
+pub_date: 2020-12-20
 ---
-pub_date: 2021-12-31
+_discoverable: yes
 ---
 body:
 
-Summary
+Even if I've been a Home Assistant's user for quite some time I have never dedicated myself to have a truly stable and dedicated service at home. I always treated it more like a pet project than anything else, but this is changing now.
 
-<!--readmore-->
+I have a fair amount of _Smart Devices_ around the house and just as you come to expect they come from different companies, protocols and sizes. Each day it passes I'm more and more concerned about my privacy and the value of the hardware I do not truly own.
 
-<!--toc-->
+With this in mind I have started **the journey of self-hosting!** Which to put it simply is... every device that is in my home (with a few exceptions that you'll see later) will be controlled by this Home Assistance instance.
 
-I wanted to install this on a USB Drive, but apparently that's still not supported for _Home Assistant OS_, so I'm stuck with an SD Card for now. The latest development version (as of writting) does support it but I'd rather go with the stable release.
+<!-- readmore -->
+
+> Note: I wanted to install this on a USB Drive, but apparently that's still not supported for _Home Assistant OS_, so I'm stuck with an SD Card for now. Some time after starting working on this I heard about [`datactl`](https://www.home-assistant.io/blog/2020/12/13/home-assistant-os-release-5/#external-data-disk) but I will setup that sometime later.
 
 ## Base Home Assistant OS using an SD Card
 
@@ -26,7 +26,7 @@ Put the SD Card on your Pi, turn it on and let's get started.
 
 After booting, you will be welcome with a wizard installation. Just follow the basic instructions to generate the main user/account, and the name and location for your home assistant.
 
-Bonus: Use some website [like this](https://www.freemaptools.com/elevation-finder.htm) to get your elevenation if you're feeling picky.
+Bonus: Use some website [like this](https://www.freemaptools.com/elevation-finder.htm) to get your elevation if you're feeling picky.
 
 After that, you will be greeted by something similar to this:
 
@@ -66,7 +66,7 @@ Now another if not the most important of them all, automatic snapshots in case s
 
 Go to **Configuration > Automations > Add automation**, and in top-right hamburger menu press **Edit as YAML**.
 
-This configuration will perform a Weekly Snapshot every Monday at 3.00 AM. It is a sensible default once Home Assistant is running, but if you're going to play with it you may need to consider more frequency on the execution.
+This configuration will perform a Weekly Snapshot every Monday at 3.00 AM. It is a sensible default once Home Assistant is running, but if you're going to play with it you may need to consider more frequent backups.
 
 ``` yaml
 alias: Weekly Snapshot
@@ -85,17 +85,17 @@ action:
       name: 'weekly_{{ now().strftime(''%Y-%m-%d'') }}'
 ```
 
-TODO: Copy contents elsewhere!
+Keep in mind that this snapshots are stored on the `/backup` folder on the Home Assistant instance, you need to create a way of moving that **out** of the system. You can use other automation, SCP from another machine or any compatible tool of your choice.
 
 ## Setting up accounts and users that will use the system
 
 This used to be more complex a while ago, now you only need to go to **Configuration > People** and add the users you need.
 
-Now you can even add the avatar directly from the interface! Back in the day you required to upload the file and fidling with YAMLs.
+Now you can even add the avatar directly from the interface! Back in the day you required to upload the file and fiddling with YAMLs.
 
 Also, for some options and add-ons to display, you need to enable "Advanced mode" on your user profile page.
 
-![Advanced mode enabled on my user](./advanced-mode-360.png)
+![Advanced mode enabled on my user](./advanced_mode-360.png)
 
 ## SSH Access
 
@@ -107,27 +107,35 @@ Just install the **Terminal and SSH** addon, add your ssh key under the configur
 
 ## Enable SSL
 
-Nginx addon
+Even if my home assistant installation is going to be LAN only (using a VPN to have external access) I always setup SSL in all my services and while there are some options when setting this up with Home Assistant, I went the nginx way since that's what I'm more comfortable with.
 
-```
-openssl genrsa -out homeassistant.key 2048
-openssl req -new -key homeassistant.key -out homeassistant.csr
-openssl x509 -req -in homeassistant.csr -CA CA.pem -CAkey CA.key -CAcreateserial -out homeassistant.crt -days 825 -sha256
+Go to **Supervisor > Add-on Store** and install the **NGINX Home Assistant SSL proxy**.
+
+Put your files under `/ssl` connecting to the instance via SSH or using any file editor addon on the store.
+
+Under its **Configuration** tab, set up the domain and path to the certificate and key files.
+
+``` yaml
+domain: homeassistant.local
+certfile: nginx/homeassistant.local/homeassistant.crt # Relative to /ssl
+keyfile: nginx/homeassistant.local/homeassistant.key # Relative to /ssl
 ```
 
-> Note: certificate was generated with a 825 days validity for iOS to work correctly, since their certificate requisistes [are pretty specific](https://support.apple.com/en-us/HT210176)
+There are a number of guides out there to generate self-signed certificates. I have my own Certificate Authority that use to sign certificates for my local services, that way I can just trust my own CA and every dependant certificate will work out of the box.
+
+As a note, for this to work with the companion apps on iOS you need to generate the certificates with [pretty specific requisites](https://support.apple.com/en-us/HT210176). Android worked as a charm.
 
 ## Getting the Home Assistant Companion
 
-Download the application from your phone's store and after logging in you can setup the sensors to be sent to Home Assistant, this will be linked to your account so you could perform automations with them on the server.
+Download the application from your phone's store and after logging in you can setup the sensors to be sent to Home Assistant, this will be linked to your account so you could perform automation with them on the server.
 
-Apart from using the app to control your home devices, the sensors will be useful to generate automations in the future.
+Apart from using the app to control your home devices, the sensors will be useful to generate automation in the future.
 
 Another useful thing to setup here is the local (LAN) address to use when the phone is connected to Wifi at home, using an external hostname when connecting via VPN/RemoteControl.
 
 ## The first automation: tell me about updates
 
-Script to send notification to everyone
+I use an script to send notifications to all devices (persons) on the house, with the `title` and `message` parameter:
 
 ``` yaml
 alias: Send Notifications
@@ -143,11 +151,11 @@ variables:
   message: null
 ```
 
-Automation to send notifications once new updates are available:
+And this automation will check when there are any updates and send a notification using the previous script with the version number that just came in:
 
 ``` yaml
 alias: Update notification
-description: ''
+description: "Notify everyone when there's an update available"
 trigger:
   - platform: state
     entity_id: binary_sensor.updater
@@ -163,6 +171,8 @@ action:
         }}  is now available.
 mode: single
 ```
+
+![Update notification on my phone](./update_notification-360.jpg)
 
 ## Add system sensors
 
@@ -198,40 +208,62 @@ views:
   - title: Overview
     path: overview
     icon: 'mdi:eye'
+    visible:
+      - user: be3b6f5bc71c49ff9be6830d545cb4e0
     badges: []
     cards:
-      - type: gauge
-        entity: sensor.processor_use_percent
-        min: 0
-        max: 100
-        name: Processor
-        severity:
-          green: 50
-          yellow: 75
-          red: 80
-      - type: gauge
-        entity: sensor.memory_use_percent
-        min: 0
-        max: 100
-        severity:
-          green: 50
-          yellow: 65
-          red: 75
-        name: Memory
-      - type: history-graph
-        entities:
-          - entity: sensor.processor_use_percent
-          - entity: sensor.memory_use_percent
-          - entity: sensor.processor_temperature
-        hours_to_show: 24
-        refresh_interval: 0
-      - type: history-graph
-        entities:
-          - sensor.disk_use_percent
-        hours_to_show: 24
-        refresh_interval: 0
+      - type: grid
+        cards:
+          - type: gauge
+            entity: sensor.processor_use_percent
+            min: 0
+            max: 100
+            name: Processor
+            severity:
+              green: 50
+              yellow: 75
+              red: 80
+          - type: gauge
+            entity: sensor.memory_use_percent
+            min: 0
+            max: 100
+            severity:
+              green: 50
+              yellow: 65
+              red: 75
+            name: Memory
+          - type: gauge
+            entity: sensor.disk_use_percent
+            min: 0
+            max: 100
+            name: Disk usage
+            severity:
+              green: 50
+              yellow: 60
+              red: 75
+          - type: gauge
+            entity: sensor.processor_temperature
+            min: 0
+            severity:
+              green: 45
+              yellow: 50
+              red: 55
+            max: 70
+            name: Temperature
+          - type: gauge
+            entity: sensor.load_5m
+            min: 0
+            max: 4
+            severity:
+              green: 1
+              yellow: 2
+              red: 3
 title: System
 ```
+
+And here's a preview:
+
+![Home Assistant simple system monitor lovelace dashboard](./system_monitor-360.png)
 
 ## Adding integrations
 
@@ -245,7 +277,7 @@ So I'm going to setup the base integrations with the server to start controlling
 
 > But you said self-hosted! Yeah, yeah... And I want to, but there's no real alternative to the Cast protocol to self host, the speakers with Chromecast devices are just so convenient...
 
-One of the simplest things to set up, just go to your integrations and add it. It will prompt you to select in which rooms each chromecast device is and that's it.
+One of the simplest things to set up, just go to your integrations and add it. It will prompt you to select in which rooms each Chromecast device is and that's it.
 
 [![Chromecast configuration](./chromecast-360.png)](./chromecast.png)
 
@@ -257,21 +289,28 @@ You just need to [register to the service](https://openweathermap.org/) and enab
 
 > I had to wait for an hour or so until the API Key was valid for the integration to use, it keep saying **Invalid API Key** until I received a confirmation email for my account.
 
-## Phillips Hue
+### Phillips Hue
 
 Linking the Phillips Hue is super easy, you only need to add the Hue integration, select the bridge IP from the dropdown (or input one manually) and press the button on the bridge to confirm.
 
 After selecting in which area the bridge and bulbs are in, you're good to go.
 
-> **BONUS:** Since the comunication is done via LAN with the bridge, the bridge itself doesn't need internet access to work (as I have mine blocked in my firewall).
+> **BONUS:** Since the comunication is done via LAN with the bridge, the bridge itself doesn't need internet access to work (as I have mine blocked in my firewall). Also in my case this is only temporal since I will move every Zigbee device to a cluster controlled by Home Assistant.
 
-## Tuya (Smart Things)
+### Tuya (Smart Things)
 
 This is one of the dependencies I have that I'm most eager to get rid off, but for now there are some smart plugs at home that I need to control.
 
-To setup, you need to enter your username, password and country code for the integration to communicate with the Tuya API, so your devices will require internet connection.
+Going to **Configuration > Integrations > Add** the **Tuya** is on the list; you need to enter your username, password and country code for the integration to communicate with the Tuya API, so your devices will require internet connection.
 
-The plan is to try and flash the plugs with Tasmota to free them from the _cloud_, and any new ones I'm getting will be Zigbee compatbile.
+The plan is to try and flash the plugs with Tasmota to free them from the _cloud_ and any new ones I'm getting will be Zigbee compatbile with the hopes on having only Zigbee smart plugs at home.
 
+## Closing
+
+That was easy!
+
+The folks at Home Assistant have been working on this so good that almost everything can be done from the interface now. I see any _normal_ user working with this mostly plug and play from the UI which is amazing in my opinion.
+
+In future post I will dive into my Zigbee configuration, InfluxDB, ESPHome, Alarms ... there's so much to do!
 ---
 _discoverable: no
