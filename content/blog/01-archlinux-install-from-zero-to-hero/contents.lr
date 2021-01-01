@@ -118,18 +118,15 @@ reboot
 
 # Login as root
 
-# Setup IWD to use it's own DHCP
-cat >/etc/iwd/main.con <<EOL
-[General]
-EnableNetworkConfiguration=true
+# Setup systemd-resolved
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-[Network]
-NameResolvingService=systemd
-EOL
+# Install and start netowrk manager
+pacman -S networkmanager
+systemctl enable --now NetworkManager
 
-# Setup your wireless network
-iwctl station wlan0 connect <BSSID>
-echo 'AutoConnect=true' >> /var/lib/iwd/<BSSID>.pks
+# Connect to wifi
+nmcli d wifi connntect <ssid> password <pass>
 
 # Start and enable iwd and systemd-resolved services
 systemctl enable --now iwd
@@ -157,13 +154,62 @@ vim /etc/systemd/sleep.conf
 - [ ] Docked toggle
 - [ ] VConsole auto lock?
     - [ ] IDLE toggle in VConsole?
-- [ ] Bluetooth
-- [ ] Audio
 - [ ] Hardware acceleration
 
+## Hardware acceleration
+
+```
+pacman -S vulkan-intel
+```
+
+## Power
+
+```
+pacman -S tlp
+
+# Edit tlp configuration link power to prevent corruption on btrfs devices
+# /etc/tlp.conf
+# ...
+SATA_LINKPWR_ON_BAT=max_performance
+# ...
+```
+
+# Enable and start tlp
+systemctl enable --now tlp
+
+## Audio
+
+pacman -S alsa-utils pulseaudio pulseaudio-alsa pavucontrol
+systemctl start --user pulseaudio.socket
+
+## Bluetooth
+
+```
+pacman -S bluez bluez-utils
+modprobe btusb
+systemctl enable --now bluetooth
+bluetoothctl -- power on
+```
+## Brightness control
+
+```
+pacman -S brightnessctl
+```
+## Fonts
+
+```
+pacman -S otf-ipafont # Japanese
+pacman -S ttf-bitstream-vera # Default 
+```
+
 ## Userspace
+
+Enable multilib repos to install steam
 
 ```
 useradd fmartingr
 pacman -S sway dmenu xorg-xwayland alacritty qutebrowser
+pacman -S mako # notifications
+# TODO notification history?
+
 ```
