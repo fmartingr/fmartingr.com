@@ -2,13 +2,13 @@ title: December 2020
 ---
 pub_date: 2021-01-01
 ---
-_discoverable: no
+_discoverable: yes
 ---
 body:
 
 Oh boy, here we go again. Christmas season is with us one more time.
 
-For anyone that doesn't know me even a little: I don't like Christmas. It is the most consumerist period of the year, everything is packed with people (even in 2020, how's that even possible!). The only good thing it had is meeting with friends and family since most people can at this time and even that was stole from us this year.
+For anyone that doesn't know me even a little: I don't like Christmas. It is the most consumerist period of the year, everything is packed with people (even in 2020, how's that even possible!). The only good thing is you can meet with some people even if it is a few meters away in a park freezing yourself.
 
 [![image alt](./image-360.jpg)](./image.jpg)
 
@@ -18,26 +18,38 @@ For anyone that doesn't know me even a little: I don't like Christmas. It is the
 
 - [**Butterrobot**](https://github.com/fmartingr/butterrobot) has gone some improvements and it can be shipped now. The admin interface is now useable and the basic features are bundled in. I had to work a bit on how I abstracted _queries_ and _objects_ internally since it was a bit of a mess but I think it's way easier to understand now. I love [`dataclasses`](https://docs.python.org/3/library/dataclasses.html).
 
-  There's still a lot of work to do on the testing a documentation department.
+  There's still a lot of work to do with testing and documentation.
 
-- Slow progress on the [**Games Screenshot Manager**](https://github.com/fmartingr/games-screenshot-manager). Don't get me wrong, it already work and I use it to manage my screenshots gallery but I need to automate some processes, add tests and get path cleaning to work properly. Also I'm missing some games that I'll need to fill out.
+- Slow progress on the [**Games Screenshot Manager**](https://github.com/fmartingr/games-screenshot-manager). Don't get me wrong, it's functional and I already use it to manage my screenshots gallery but I need to automate some processes, add tests and get path cleaning to work properly. Also I'm missing some games that I'll need to fill out along with improvements on the Nintendo Switch department.
+
+- I've started setting up Home Assistant way more seriously [as you can see in my previous post](/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/). The project has grown a lot since I started playing with it and my journey to self-host is way far from being finished, but I already manage to unplug some chinese _always-on-always-on-internet_ devices that I wasn't feeling super comfortable having on my network. Baby steps.
+
+- We are getting better at 3D printing at home as well. After **a lot** of trial and error we managed to print some decent quality pieces on our Rotrics DexArm. We've had it since August and didn't start doing anything with it until now. Shame on us.
+
+  Hopefully I can get some Pi's cases done this month so I can put one or two cameras to keep an eye on it in case the print get stuck or any other problem we may have. And if this [OctoPrint](https://octoprint.org/) thingy works with our unit it would be awesome to have a Home Assistant panel dedicated to it. My backlog keeps growing and I keep getting older.
+
+- I've set up my laptop from scratch, and since Antergos is gone now I've installed a base Arch Linux without any wrapper. I was very pleased to see that everything was working out of the box pretty easily.
 
 ## Books
 
 - Finished reading [**The Magicians' Guild**](https://www.goodreads.com/book/show/28249.The_Magicians_Guild) (_Trudi Canavan_)
 
   I liked it, it's nothing super impressive but enjoyable for fantasy lovers, and I'm glad my reading habit came back,
-  I already have enough backlog as it is. I'm continuing with the trilogy with the next one now:
+  I already have enough backlog as it is. I'm continuing with the trilogy with the next ones now:
 
-- Started reading [**The Novice**](https://www.goodreads.com/book/show/28250.The_Novice) (_Trudi Canavan_)
+  - Read [**The Novice**](https://www.goodreads.com/book/show/28250.The_Novice) (second part of the trilogy)
+  - And started reading: [**The high lord**](https://www.goodreads.com/book/show/28251.The_High_Lord) (last installment)
+
 
 ## TVShows and Movies
 
 - [**Star Wars: Return of the Jedi**](https://www.disneyplus.com/movies/star-wars-return-of-the-jedi-episode-vi/6QGKo5mjDBS8)
+- [**Star Wars: The force awakens**](https://www.disneyplus.com/movies/star-wars-the-force-awakens-episode-vii/1LEKJPDPeMr7)
+- [**Star Wars: The last jedi**](https://www.disneyplus.com/movies/star-wars-the-last-jedi-episode-viii/1nCWFK1pmAI0)
 
   Star Wars Marathon continues!
 
-  Tried to watch **Star Wars: Resistance** but it just wasn't my kind of show, only watched three episodes. I hope I don't miss anything interesting in there. Should I at least watch the latest season?
+  Tried to watch **Star Wars: Resistance** but it just wasn't my kind of show, only watched three episodes. I hope I don't miss anything interesting in there. Should I at least watch the last season?
 
 - [**Mandalorian**](https://www.disneyplus.com/series/the-mandalorian/3jLIGMDYINqD)
 
@@ -53,19 +65,43 @@ For anyone that doesn't know me even a little: I don't like Christmas. It is the
 
   We're hooked.
 
+- [**Alice in Borderland**]()
+
+  It's seems like a good adaptation of the original manga, though it keep getting worse through the end. I think I will try to read the original, it's been a while I've immersed in a story like this since Kamisama if I recall correctly.
+
 ## Games
 
 - [**Minecraft**](https://minecraft.net)
 
-  Our adventure continues. :)
-
 - [**The legend of Zelda: Age of Calamity**](https://www.nintendo.es/Juegos/Nintendo-Switch/Hyrule-Warriors-La-era-del-cataclismo-1838129.html)
+
+  I'm almost finished (I think!) but the game keep unlocking stuff on the map that I have to complete.
 
 - [**Star Wars: The old republic**](https://swtor.com)
 
   I was hoping to get on Fallen Order this month but [Microsoft delayed the release of EA Play for Xbox Game Pass for PC](https://news.xbox.com/en-us/2020/12/15/update-on-ea-play-xbox-game-pass-for-pc-2021/) until sometime next year, so to get rid of my latest Star Wars hype I started a new character on the MMORPG.
 
-  TODO: Screenshot
+  ![Star Wars The Old Republic launch to lightspeed](./swtor-360.jpg)
+
+- [** Final Fantasy IX**](https://store.steampowered.com/agecheck/app/377840/)
+
+  I started this a good while ago and I have but forgotten the history until the point I'm in. I'm trying to remember and find my way now, since I have a bit extra time to play a "time consuming" game.
+
+  I can't recommend the [Moguri Mod](https://sites.google.com/view/moguri-mod/home) enough to anyone who wants to play this on PC. It's an abbysal difference from the base experience, special mention to the backgrounds and the font.
+
+  [![Final Fantasy IX Screenshot](./ff9-360.jpg)](./ff9.jpg)
 
 ## [Articles](https://t.me/fmartingr_articles)
 
+- [An iOS zero-click radio proximity exploit odyssey](https://googleprojectzero.blogspot.com/2020/12/an-ios-zero-click-radio-proximity.html)
+- [Designing the Raspberry Pi Case Fan](https://www.raspberrypi.org/blog/designing-the-raspberry-pi-case-fan/)
+- [Why Is Apple’s M1 Chip So Fast?](https://debugger.medium.com/why-is-apples-m1-chip-so-fast-3262b158cba2)
+- [These are called opportunities](https://fabiensanglard.net/silicone/)
+- [Apple Silicon M1 Disruption](https://mondaynote.com/apple-silicon-m1-disruption-af11f639103a)
+- [Winning back the internet by building our own](https://roarmag.org/essays/win-back-the-internet/)
+- [Web data render](https://webdatarender.com/)
+- [Do Kyoto's Japanese local want foreigners to return?](https://youtu.be/-qPDLh1Xr-M)
+- [Chrome is Bad](https://chromeisbad.com)?
+- [N-O-D-E Mini server v3](https://n-o-d-e.net/node_mini_server3.html)
+- [Minimal safe Bash script template](https://betterdev.blog/minimal-safe-bash-script-template/)
+- [Life of a Netflix Partner Engineer — The case of the extra 40 ms](https://netflixtechblog.com/life-of-a-netflix-partner-engineer-the-case-of-extra-40-ms-b4c2dd278513)
