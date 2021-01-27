@@ -34,6 +34,7 @@ mkfs.btrfs -L btrfs /dev/mapper/luks
 # Prepare the btrfs partition
 mkdir /mnt/luks
 mount -t btrfs /dev/mapper/luks /mnt/luks
+cd /mnt/luks
 btrfs subvolume create root
 btrfs subvolume create home
 btrfs subvolume create snapshots
@@ -51,12 +52,12 @@ linux-lts linux-firmware \
 intel-ucode \
 terminus-font \ # Fonts in vconsole
 man-db man-pages \ # Man pages
-iwd sudo vim # Utilities
+iwd sudo vim NetworkManager # Utilities
 
 # Generate the /etc/fstab file
 genfstab -L /mnt >> /mnt/etc/fstab
 
-# Check everything is correct, use noatime and discard flags to
+# Check everything is correct, replace realtime with noatime and discard flags to
 # make flash drive last longer
 vim /mnt/etc/fstab
 
@@ -101,7 +102,7 @@ bootctl --path=/boot install
 
 # Create the bootloader entry for Arch
 LUKS_UUID=$(cryptsetup luksUUID /dev/nvme0n1p2)
-cat >/etc/loader/entries/arch.conf <<EOL
+cat >/boot/loader/entries/arch.conf <<EOL
 title  Arch Linux (LTS)
 linux  /vmlinuz-linux-lts
 initrd /intel-ucode.img
@@ -119,22 +120,18 @@ reboot
 # Login as root
 
 # Setup systemd-resolved
+systemctl enable --now systemd-resolved
 ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
 # Install and start netowrk manager
-pacman -S networkmanager
 systemctl enable --now NetworkManager
 
-# Connect to wifi
+# Connect to wifi if required
 nmcli d wifi connntect <ssid> password <pass>
 
-# Start and enable iwd and systemd-resolved services
-systemctl enable --now iwd
-systemctl enable --now systemd-resolved
-
 # Setup hibernate
-# Get the swap disk UUID (double check this is the correct disk)
-sudo blkid | grep swap | sed -rn 's/^.*UUID=\"([a-z0-9\-]+)\".*$/\1/p'
+# Get the swap disk UUID (double check manually)
+sudo blkid | grep swap | sed -rn 's/^.* UUID=\"([a-z0-9\-]+)\".*$/\1/p'
 
 # Add the resume boot parameter
 vim /boot/loader/entries/arch.conf
@@ -144,9 +141,17 @@ vim /boot/loader/entries/arch.conf
 
 # Setup suspend-then-hibernate
 vim /etc/systemd/login.conf
-# Find HandleLidSwitch and set `suspend-then-hibernate`.
+# My enabled options:
+# HandlePowerKey=suspend-then-hibernate
+# HandleLidSwitch=suspend-then-hibernate
+# HandleLidSwitchExternalPower=suspend-then-hibernate
+# HandleLidSwitchDocked=ignore
+# IdleAction=suspend-then-hibernate
+# IdleActionSec=10min
+
 vim /etc/systemd/sleep.conf
 # Find HibernateDelaySec and set to 5min
+
 # All these will be into effect in next boot
 ```
 
