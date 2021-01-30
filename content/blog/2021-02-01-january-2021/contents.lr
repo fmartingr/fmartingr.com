@@ -6,18 +6,69 @@ _discoverable: no
 ---
 body:
 
+[![image alt](./image-360.jpg)](https://www.copernicus.eu/en/media/image-day-gallery/madrid-covered-snow)
 
-[![image alt](./image-360.jpg)](./image.jpg)
+> Image credit: European Union, Copernicus Sentinel-2 imagery
 
 <!-- readmore -->
 
 ## Projects
 
-- Games screenshot manager: new providers
-- Some godot stuff
+- [**Games Screenshot Manager**](https://github.com/fmartingr/games-screenshot-manager.git): I've added a few
+  new providers to get screenshots from, some file naming fixes for Windows and the option to download covers
+  for games to create a nice gallery with them.
+
+  I still need to do some improvements on how options traverse through the CLI to providers to have a more
+  robust system in place, and also to allow some unused options on current providers, for example allow overriding
+  a provider's default `input-path` or anything else, along with custom arguments that providers may need.
+
+- I've uploaded my [gallery of screenshots online](http://gallery.fmartingr.com). I've made that using the above
+  and [thumbsup](https://github.com/thumbsup/thumbsup) along with some scripts to set it all together. I love the 
+  result.
+
+- [**Butterrobot**](https://github.com/fmartingr/butterrobot.git) has gone thorugh some small fixes as well. I'm
+  already using the new version at work and everything seems to be working fine. I need to add some proper testing
+  and review all the _TODO_ coments I have laying around.
+
+- We got a brand new NAS at home and I've been digging through hard drives and computers to start organizing all
+  my digital life in there. It's a work in progress that will take a lot of time.
+
+- Home Assistant have a few improvements in terms of automations, lovelace dashboards and so on. Zigbee configuration
+  has been a bit of a hassle since every motion and door sensor stopped being paired with my zigbee stick so I'm
+  using a different integration to and so far everything seems to be working.
+
+- I've started learning [Godot](https://godotengine.org/). I've always wanted to make and publish a game, and in the
+  past ([when I was very young](https://www.youtube.com/watch?v=tAVVy_x3Erg)) I made some small things using 
+  [DIV Games Studio](https://es.wikipedia.org/wiki/DIV_Games_Studio), 
+  [Dark Basic](https://en.wikipedia.org/wiki/The_Game_Creators#DarkBASIC) and 
+  [BlitzBasic](https://en.wikipedia.org/wiki/Blitz_BASIC)
+  but my career on game development ended abruptly, and there was that. Until today.
+
+  Even though I did some little game using Unity a few years back, Godot seems like a very powerful game development 
+  enviroment, it exports to several platforms, it's easy to understand (though hard to master!) and it's open source.
+
+  Not looking a career on game development but at least to cross out something I've wanted to learn for quite some 
+  time now.
+
+- I'm thinking the best way of handling "guides" for the blog (as I started with the one for Home Assistant). Sometimes
+  I think a post is the better way because I can use as a note while I'm working on something, but lately I've been
+  thinking on setting up a simple wiki that could store the same content but be constantly updated and I can use it as
+  reference as well. I would have to find an easy way of storing the information and building it that is not overly
+  complicated and allows me freedom to have it as a bunch of markdown files on a folder.
 
 ## Books
+
 - [**The high lord**](https://www.goodreads.com/book/show/28251.The_High_Lord) (_Trudi Canavan_)
+
+  Finished the trilogy. I'm sad to say that this was average (at best) for me... the real story starts happening in
+  the last book; pretty condensed for a trilogy while the first two only set ups the characters with nothing
+  interesting happening and to make things worse the ending feels pretty rushed and boring. 
+  
+  I read it through the end though, so it had the necessary components to me to be engaged.
+
+- Started reading [**Masters of Doom**](https://www.goodreads.com/book/show/222146.Masters_of_Doom)
+
+  I couldn't decide for any fantasy series to read now, so I'm going to read something different and see how it goes.
 
 ## TVShows and Movies
 
@@ -27,13 +78,20 @@ body:
 
 - [**The Blacklist**](https://www.netflix.com/title/70281312)
 
-  We continue hooked.
+  Reached Season 5.
+
+  We're debating if continuing with this or not. While I enjoy James Spader a lot on the show the main reason to watch
+  it is the hook they have on us with the parent - daughter - spy mystery situation. It was nice at first but after
+  **five seasons** we still don't have clear answers for anything and when they give us a glimpse of one, on the next
+  episode everyone seems to forget about it. It's frustrating. And the relationship between the to main characters is 
+  annoying with their "Love, now hate, now maybe love?" behavior each episode...
 
 - [**Wanda Vision**](https://www.disneyplus.com/series/bruja-escarlata-y-vision/4arN6lqB6P3K)
 
-  Slow start for the Marvel's Cinematic Univers on TV Shows. The first chapters are too much 50s sitcom and very little or
-  none main history related. I hope this unfolds better in later episodes and that the other series that are yet to come
-  are better than this.
+  Slow start for the Marvel's Cinematic Universe on TV Shows. The first chapters are too much sitcom and very little "real
+  world" related. I hope this unfolds better in later episodes and that the other series that are yet to come are 
+  better than this... I know that the last episode have more "Marvel" stuff, but it was one episode out of four released
+  to date... let's see how it goes on the fifth.
 
 ## Games
 
@@ -55,8 +113,30 @@ body:
 - [**Star Wars: Jedi Fallen Order**](https://store.playstation.com/es-es/product/EP0006-CUSA12529_00-RESPAWNSWBIRDDOG)
 
   Got this as a Christmas present and I'm slowly going through it. There are some bugs here and there, but I wanted to play
-  something Star Wars related and this seems the best thing out there at the moment. BD-1 is pure love.
+  something Star Wars related and this seems the best thing at the moment. I love BD-1.
 
-  TODO: Screenshot?
+  [![Jedi Fallen Order Screenshot](./fallen-order-360.jpg)](./fallen-order.jpg)
+
+- I discovered [RetroAchievements](https://retroachievements.org) thanks to RetroArch, and I'm amazed and how the community
+  put this together for all of us. It works incredibly well (for the few I've tried so far) and you can even set up
+  retroarch to make a screenshot automatically once you unlock an achievement, how amazing is that?
 
 ## [Articles](https://t.me/fmartingr_articles)
+
+- [video] [ACTION BUTTON REVIEWS The Final Fantasy VII Remake](https://youtu.be/Hu4H5ykBP0I)
+- [Rosenzweig – Dissecting the Apple M1 GPU, part I](https://rosenzweig.io/blog/asahi-gpu-part-1.html)
+- [Steam's login method is kinda interesting](https://owlspace.xyz/cybersec/steam-login/)
+- ["Wireguard [sic]: great protocol, but skip the Mac app" blog post](https://lists.zx2c4.com/pipermail/wireguard/2020-December/006226.html)
+- [The values of Emacs, the Neovim revolution and the VSCode gorilla](https://www.murilopereira.com/the-values-of-emacs-the-neovim-revolution-and-the-vscode-gorilla/)
+- [The Embedded YouTube Player Told Me What You Were Watching (and more)](https://bugs.xdavidhu.me/google/2021/01/18/the-embedded-youtube-player-told-me-what-you-were-watching-and-more/)
+- [That’s not how 2FA works](https://shkspr.mobi/blog/2021/01/thats-not-how-2fa-works/)
+- [Project Gemini](https://gemini.circumlunar.space/docs/specification.html)
+- [gemini] [Every commit should be perfect](gemini://drewdevault.com/2021/01/02/2021-01-02-Every-commit-should-be-perfect.gmi)
+- [Reflections on software performance](https://blog.nelhage.com/post/reflections-on-performance/) 
+- [Jumping on the bandwagon here: Newbies, listen to the established wisdom. I spent 7 years trying to make ambitious games to "break in" to the industry. I wish I spent 7 years making achievable games. The only time I tried to make something achievable, it paid off and I got a AAA gig.](https://www.reddit.com/r/gamedev/comments/l1vz6w/jumping_on_the_bandwagon_here_newbies_listen_to/)
+- [Andrea Scarpino - Sway and the Dock station](https://scarpino.dev/posts/sway-and-the-dock-station.html)
+- [NES Creator Reveals The "Shocking" Story Behind That Infamous Flap](https://www.nintendolife.com/news/2020/02/nes_creator_reveals_the_shocking_story_behind_that_infamous_flap)
+- [Firecracker: start a VM in less than a second](https://jvns.ca/blog/2021/01/23/firecracker--start-a-vm-in-less-than-a-second/)
+- [Understanding the fork() system call in UNIX](https://mohit.athwani.net/blog/understanding-the-fork-system-call-in-unix)
+- [node.example.com Is An IP Address](https://tuckersiemens.com/posts/node-example-com-is-an-ip-address/)
+- [Use open platforms — or else](https://drewdevault.com/2021/01/28/Use-open-platforms-or-else.html)
