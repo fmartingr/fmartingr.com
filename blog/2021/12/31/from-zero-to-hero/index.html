@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Arch Linux on my Dell XPS | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content">
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post center">
+    <h1 class="title"><a href="/blog/2021/12/31/from-zero-to-hero/">Arch Linux on my Dell XPS</a></h1>
+    <div class="info">
+      Published on December 31, 2021
+    </div>
+    
+      <div class="content">
+        
+          <h2 id="create-install-media">Create install media</h2><h2 id="install">Install</h2><ul>
+<li>Follow the wiki</li>
+</ul>
+<div class="hll"><pre><span></span><span class="c1"># Connect to the internet, the moment we do relector will update the mirrorlist</span>
+iwctl station wlan0 connect &lt;bssid&gt;
+
+<span class="c1"># Set up date and time</span>
+timedatectl set-ntp <span class="nb">true</span>
+timedatectl set-timezone Europe/Madrid
+
+<span class="c1"># Prepare the disk, the setup I used:</span>
+<span class="c1"># Disk #0: 512MB, Boot partition, UEFI type</span>
+<span class="c1"># Disk #1: 16384MB, SWAP, swap type</span>
+<span class="c1"># Disk #2: Rest of the disk, btrfs type</span>
+<span class="c1"># fdisk ...</span>
+
+<span class="c1"># Prepare the filesystems and the luks encryption</span>
+mkfs.vfat -F32 /dev/nmve0n1p0
+mkswap /dev/nmve0n1p1
+cryptsetup luksFormat /dev/nvme0n1p2 <span class="c1"># Password here</span>
+cryptsetup open /dev/nvme0n1p2 luks
+mkfs.btrfs -L btrfs /dev/mapper/luks
+
+<span class="c1"># Prepare the btrfs partition</span>
+mkdir /mnt/luks
+mount -t btrfs /dev/mapper/luks /mnt/luks
+<span class="nb">cd</span> /mnt/luks
+btrfs subvolume create root
+btrfs subvolume create home
+btrfs subvolume create snapshots
+
+<span class="c1"># Mount everything under /mnt</span>
+mkdir /mnt/<span class="o">{</span>home,boot<span class="o">}</span>
+mount -o <span class="nv">subvol</span><span class="o">=</span>root,compress<span class="o">=</span>lzo /dev/mapper/luks /mnt
+mount -o <span class="nv">subvol</span><span class="o">=</span>home,compress<span class="o">=</span>lzo /dev/mapper/luks /mnt/home
+mount /dev/nvme0n1p0 /mnt/boot
+
+<span class="c1"># Run pacstrap with several base packages:</span>
+pacstrap /mnt <span class="se">\</span>
+base <span class="se">\</span>
+linux-lts linux-firmware <span class="se">\</span>
+intel-ucode <span class="se">\</span>
+terminus-font <span class="se">\ </span><span class="c1"># Fonts in vconsole</span>
+man-db man-pages <span class="se">\ </span><span class="c1"># Man pages</span>
+iwd sudo vim NetworkManager <span class="c1"># Utilities</span>
+
+<span class="c1"># Generate the /etc/fstab file</span>
+genfstab -L /mnt &gt;&gt; /mnt/etc/fstab
+
+<span class="c1"># Check everything is correct, replace realtime with noatime and discard flags to</span>
+<span class="c1"># make flash drive last longer</span>
+vim /mnt/etc/fstab
+
+<span class="c1"># Enter into the system</span>
+arch-chroot /mnt
+
+<span class="c1"># Setup timedate</span>
+timedatectl set-timezone Europe/Madrid
+
+<span class="c1"># Sync the RTC from the system time (useful if dual booting)</span>
+hwclock --systohc
+
+<span class="c1"># Set the en_US.UTF-8 locale (uncomment)</span>
+vim /etc/locale.gen
+locale-gen
+
+<span class="c1"># Setup default locale</span>
+<span class="nb">echo</span> <span class="s1">&#39;LANG=en_US.UTF-8&#39;</span> &gt; /etc/locale.conf
+
+<span class="c1"># Setup keymap and font</span>
+<span class="nb">echo</span> <span class="s1">&#39;KEYMAP=us\nFONT=ter-232n&#39;</span> &gt; /etc/vconsole.conf
+pacman -S physlock <span class="c1"># To allow locking the computer when in VConsole</span>
+
+<span class="c1"># Setup the computer hostname</span>
+<span class="nb">echo</span> <span class="s1">&#39;deru&#39;</span> &gt; /etc/hostname
+
+<span class="c1"># Setup the hosts file</span>
+<span class="nb">echo</span> <span class="s1">&#39;127.0.0.1 localhost\n::1 localhost\n127.0.1.1 deru.localdomain deru&#39;</span> &gt; /etc/hosts
+
+<span class="c1"># Set root password</span>
+passwd
+
+<span class="c1"># Setup init hooks to use systemd</span>
+vim /etc/mkinitcpio.conf
+<span class="c1"># Remove udev and add systemd, sd-vconsole and sd-encrypt</span>
+
+<span class="c1"># Regenerate initrd</span>
+mkinitcpio -p linux-lts
+
+<span class="c1"># Setup systemd-boot</span>
+bootctl --path<span class="o">=</span>/boot install
+
+<span class="c1"># Create the bootloader entry for Arch</span>
+<span class="nv">LUKS_UUID</span><span class="o">=</span><span class="k">$(</span>cryptsetup luksUUID /dev/nvme0n1p2<span class="k">)</span>
+cat &gt;/boot/loader/entries/arch.conf <span class="s">&lt;&lt;EOL</span>
+<span class="s">title  Arch Linux (LTS)</span>
+<span class="s">linux  /vmlinuz-linux-lts</span>
+<span class="s">initrd /intel-ucode.img</span>
+<span class="s">initrd /initramfs-linux-lts.img</span>
+<span class="s">options rw luks.uuid=${LUKS_UUID} luks.name=${LUKS_UUID}=luks root=/dev/mapper/luks rootflags=subvol=root</span>
+<span class="s">EOL</span>
+
+<span class="c1"># Setup bootloader</span>
+<span class="nb">echo</span> <span class="s1">&#39;default arch.conf&#39;</span> &gt; /boot/loader/loader.conf
+
+<span class="c1"># System ready!</span>
+<span class="nb">exit</span>
+reboot
+
+<span class="c1"># Login as root</span>
+
+<span class="c1"># Setup systemd-resolved</span>
+systemctl <span class="nb">enable</span> --now systemd-resolved
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+<span class="c1"># Install and start netowrk manager</span>
+systemctl <span class="nb">enable</span> --now NetworkManager
+
+<span class="c1"># Connect to wifi if required</span>
+nmcli d wifi connntect &lt;ssid&gt; password &lt;pass&gt;
+
+<span class="c1"># Setup hibernate</span>
+<span class="c1"># Get the swap disk UUID (double check manually)</span>
+sudo blkid <span class="p">|</span> grep swap <span class="p">|</span> sed -rn <span class="s1">&#39;s/^.* UUID=\&quot;([a-z0-9\-]+)\&quot;.*$/\1/p&#39;</span>
+
+<span class="c1"># Add the resume boot parameter</span>
+vim /boot/loader/entries/arch.conf
+<span class="c1"># Under options:</span>
+<span class="c1"># resume=UUID=&lt;uuid&gt;</span>
+<span class="c1"># Systemd should check automatically for the swap partition on GPT tables [1]</span>
+
+<span class="c1"># Setup suspend-then-hibernate</span>
+vim /etc/systemd/login.conf
+<span class="c1"># My enabled options:</span>
+<span class="c1"># HandlePowerKey=suspend-then-hibernate</span>
+<span class="c1"># HandleLidSwitch=suspend-then-hibernate</span>
+<span class="c1"># HandleLidSwitchExternalPower=suspend-then-hibernate</span>
+<span class="c1"># HandleLidSwitchDocked=ignore</span>
+<span class="c1"># IdleAction=suspend-then-hibernate</span>
+<span class="c1"># IdleActionSec=10min</span>
+
+vim /etc/systemd/sleep.conf
+<span class="c1"># Find HibernateDelaySec and set to 5min</span>
+
+<span class="c1"># All these will be into effect in next boot</span>
+</pre></div>
+<ul>
+<li>[ ] Boot in 1080p mode</li>
+<li>[ ] Docked toggle</li>
+<li>[ ] VConsole auto lock?<ul>
+<li>[ ] IDLE toggle in VConsole?</li>
+</ul>
+</li>
+<li>[ ] Hardware acceleration</li>
+</ul>
+<h2 id="hardware-acceleration">Hardware acceleration</h2><pre><code>pacman -S vulkan-intel
+</code></pre>
+<h2 id="power">Power</h2><pre><code>pacman -S tlp
+
+# Edit tlp configuration link power to prevent corruption on btrfs devices
+# /etc/tlp.conf
+# ...
+SATA_LINKPWR_ON_BAT=max_performance
+# ...
+</code></pre>
+<h1 id="enable-and-start-tlp">Enable and start tlp</h1><p>systemctl enable --now tlp</p>
+<h2 id="audio">Audio</h2><p>pacman -S alsa-utils pulseaudio pulseaudio-alsa pavucontrol
+systemctl start --user pulseaudio.socket</p>
+<h2 id="bluetooth">Bluetooth</h2><pre><code>pacman -S bluez bluez-utils
+modprobe btusb
+systemctl enable --now bluetooth
+bluetoothctl -- power on
+</code></pre>
+<h2 id="brightness-control">Brightness control</h2><pre><code>pacman -S brightnessctl
+</code></pre>
+<h2 id="fonts">Fonts</h2><pre><code>pacman -S otf-ipafont # Japanese
+pacman -S ttf-bitstream-vera # Default
+</code></pre>
+<h2 id="userspace">Userspace</h2><p>Enable multilib repos to install steam</p>
+<pre><code>useradd fmartingr
+pacman -S sway dmenu xorg-xwayland alacritty qutebrowser
+pacman -S mako # notifications
+# TODO notification history?
+</code></pre>
+
+        
+      </div>
+      
+    
+    <hr />
+  </article>
+
+  <div class="center block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        <hr />
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Github</span>
+          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Twitter</span>
+            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="/about/">[+ more]</a>
+          </li>
+        </ul>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+   
+  
+
+  </body>
+</html>

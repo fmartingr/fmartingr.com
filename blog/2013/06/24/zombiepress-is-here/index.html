@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Zombiepress is here | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content">
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post center">
+    <h1 class="title"><a href="/blog/2013/06/24/zombiepress-is-here/">Zombiepress is here</a></h1>
+    <div class="info">
+      Published on June 24, 2013
+    </div>
+    
+      <div class="content">
+        
+          <p>It finally happened. I got tired of octopress and decided to finish what I
+started: my own blogging CMS.</p>
+<p>It's a really modest thing built with django. I've added some thing to make it
+easy to use (in my oppinion):</p>
+<ul>
+<li>settings.py main preferences (required for running the app) are set on environment variables instead of environment dependant settings files or the not so cool local_settings.py.</li>
+<li>A a key-&gt;value preferences config in the admin (<a href="https://github.com/fmartingr/zombiepress/blob/master/zombiepress/apps/config/models.py#L5">a simple django model with 3 fields</a>) for settings that may be needed to modify in a live environment and would be a shame if it were on the <em>settings.py</em> file. In example, I use it to <a href="https://github.com/fmartingr/zombiepress-fmartingr-theme/blob/master/blog/rss.jinja2#L4-L6">set some RSS preferences</a> and the <a href="https://github.com/fmartingr/zombiepress-fmartingr-theme/blob/master/blog/entry.jinja2#L62-L65">Disqus shortname for the blog comments</a>. To disable blog comments I just need to uncheck the "pass to template" option on the required variable.</li>
+<li>Theming: Not an absolute state of the art, but it's function works: a themes folder and a variable to select one on the settings.py, I just need to create the basic theme.</li>
+<li><strong>(experimental)</strong> Multilanguage support. A friend asked for a easy to use CMS with multilingual support, so I want to give it a shot. Since I never used django with managed multilingual content, it may be easy or it may be not. The code is there, someone has to try it.</li>
+</ul>
+
+        
+      </div>
+      
+    
+    <hr />
+  </article>
+
+  <div class="center block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        <hr />
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Github</span>
+          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Twitter</span>
+            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="/about/">[+ more]</a>
+          </li>
+        </ul>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+   
+  
+
+  </body>
+</html>

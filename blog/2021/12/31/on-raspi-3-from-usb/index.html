@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Running Alpine Linux from USB on the Raspberry Pi 3 | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content">
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post center">
+    <h1 class="title"><a href="/blog/2021/12/31/on-raspi-3-from-usb/">Running Alpine Linux from USB on the Raspberry Pi 3</a></h1>
+    <div class="info">
+      Published on December 31, 2021
+    </div>
+    
+      <div class="content">
+        
+          <div class="hll"><pre><span></span><span class="c1"># Tested on Raspberry Pi 3</span>
+<span class="c1"># Create a Raspberry pi OS SD card</span>
+sudo apt update
+sudo apt upgrade
+sudo rpi-update
+<span class="nb">echo</span> <span class="nv">program_usb_boot_mode</span><span class="o">=</span><span class="m">1</span> <span class="p">|</span> sudo tee -a /boot/config.txt
+reboot
+
+<span class="c1"># At this point the boot flag is enabled</span>
+<span class="c1"># Prepare the USB</span>
+
+<span class="c1"># Install Alpine to USB Drive</span>
+<span class="c1"># Format USB</span>
+<span class="c1"># Create two partitions:</span>
+<span class="c1"># - boot fat16</span>
+<span class="c1"># - root ext4</span>
+tar xzvf ~/Downloads/alpine-rpi-3.12.1-armhf.tar.gz
+
+<span class="c1"># boot/usercfg.txt:</span>
+<span class="nv">enable_uart</span><span class="o">=</span><span class="m">1</span> <span class="c1"># Not sure I need this</span>
+<span class="nv">gpu_mem</span><span class="o">=</span><span class="m">32</span> <span class="c1"># The minimal memory for the bootloader</span>
+
+setup-alpine
+apk update
+apk add cfdisk e2fsprogs
+mkfs.ext4 /dev/sda2
+
+<span class="c1"># Setup proper TZ</span>
+apk add tzdata
+cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+<span class="nb">echo</span> <span class="s2">&quot;Europe/Madrid&quot;</span> &gt;  /etc/timezone
+apk del tzdata
+
+mount /dev/sda2 /mnt
+setup-disk -m sys /mnt
+mount -o remount,rw /media/sda1
+
+rm -f /media/sda1/boot/*
+<span class="nb">cd</span> /mnt
+rm boot/boot <span class="c1"># Remove symlink</span>
+
+mv boot/* /media/sda1/boot/
+rm -rf boot
+mkdir media/sda1
+
+ln -s media/sda1/boot boot
+
+<span class="c1"># /mnt/etc/fstab</span>
+<span class="c1"># Remove cdrom</span>
+<span class="c1"># Add:</span>
+/dev/sda1 /media/sda1 vfat default <span class="m">0</span> <span class="m">0</span>
+
+<span class="c1"># Edit boot cmdline to boot from the ext partition</span>
+<span class="c1"># Add root=/dev/sda2</span>
+
+<span class="c1"># Reboot</span>
+
+<span class="c1"># After install</span>
+
+<span class="c1"># Set swclock (pi doesn&#39;t have a hwclock)</span>
+rc-update add swclock boot
+rc-update del hwclock boot
+service hwclock stop
+service swclock start
+
+apk update
+apk upgrade
+</pre></div>
+
+        
+      </div>
+      
+    
+    <hr />
+  </article>
+
+  <div class="center block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        <hr />
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Github</span>
+          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Twitter</span>
+            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="/about/">[+ more]</a>
+          </li>
+        </ul>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+   
+  
+
+  </body>
+</html>

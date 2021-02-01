@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>New site | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content">
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post center">
+    <h1 class="title"><a href="/blog/2016/12/21/new-site/">New site</a></h1>
+    <div class="info">
+      Published on December 21, 2016
+    </div>
+    
+      <div class="content">
+        
+          <p>After a really long time I finally managed to spend some time redesigning and moving my blog to another platform, everyone already know that <a href="https://gitlab.com/fmartingr/fmartingr.com/blob/master/fmartingrcom/themes/v1/templates/blog/entry.jinja#L67">I tried really hard</a> to create an editor that satisfied me while the answer was simpler.</p>
+<!-- readmore -->
+
+<p>I like to <em>reinvent the wheel</em> (<del>I don't even know if that expression exists or it's said like that in English, let me know!</del> <a href="http://www.urbandictionary.com/define.php?term=reinvent%20the%20wheel">Apparently yes</a>) but this time I got really far... like years far: I stopped writting because I did not find any editor confortable to the point <a href="https://gitlab.com/fmartingr/fmartingr.com">I created my own blog application</a> without success. This madness has to stop, there has to be something already there for me.</p>
+<p>After trying almost every blog and static content generator out there I stumbled upon <a href="/blog/2016/12/21/new-site/Lektor">https://www.getlektor.com</a>, a simple but really powerful static site generator that almost completely fit my needs.</p>
+<p>After trying it a bit, I migrated the new theme I was making <a href="https://gitlab.com/fmartingr/fmartingr.com/tree/v3">in a refactor of my old site to Flask</a> (<em>yikes!</em>) and recreated the same site structure to do a final test.</p>
+<p>I liked it.</p>
+<p><em>But why?</em> you may ask... <em>Lektor's editor is worst that the one you made</em>.</p>
+<p>And you are right, Lektor's editor is just a <code>textarea</code>, but you forget one thing: <strong>all the content are plain text files that I can edit with whatever I want</strong>.</p>
+<p>Having this flexibility is awesome, most of the content of the site <a href="/made-with-open-source">is edited in either Emacs or Atom</a>. Even if it was tricky at first because Lektor creates all the content in the same path <a href="https://github.com/fmartingr/fmartingr-lektor/tree/master/content">I managed a -I'm sure overengineered- way</a> to sort the files the way I wanted. Will improve it in the future when I know more about Lektor's internals.</p>
+<p>The theme also reflects the change I've been noticing in the past year: I want simplicity, so the site is as simple as it gets.</p>
+<p>Just a few colors, no CSS frameworks (only a simple grid) and everything is made up from scratch. It still needs a little enhancements but it wont get much further. Also I'm sure I left a few stuff broken when I migrated all the blog entries but everything will be fixed with time.</p>
+<p>I hope this gives me more time and motivation to keep writing. There are a few old drafts from tools that I'm going to finish up, and... well, more stuff that will be shared with you in future posts. :)</p>
+<p>P.S.: I do not forget that I owe you the conclusion of <a href="/blog/2016/04/11/penguin-trials/">the penguin trials</a> too!</p>
+
+        
+      </div>
+      
+    
+    <hr />
+  </article>
+
+  <div class="center block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        <hr />
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Github</span>
+          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Twitter</span>
+            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="/about/">[+ more]</a>
+          </li>
+        </ul>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+   
+  
+
+  </body>
+</html>

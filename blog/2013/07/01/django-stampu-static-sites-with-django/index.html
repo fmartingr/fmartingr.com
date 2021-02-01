@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>django-stampu: Static sites with django | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content">
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post center">
+    <h1 class="title"><a href="/blog/2013/07/01/django-stampu-static-sites-with-django/">django-stampu: Static sites with django</a></h1>
+    <div class="info">
+      Published on July 01, 2013
+    </div>
+    
+      <div class="content">
+        
+          <p><img src="/blog/2013/07/01/django-stampu-static-sites-with-django/django-stampu.png" alt=""></p>
+<blockquote><p>After finishing zombiepress a friend of mine wanted to use it but asked for
+some kind of conversion to static since he uploads its current blog to github.
+That's how this project was born.</p>
+</blockquote>
+<p>Django as a static site? Of course, it's possible, only if your project it's
+using a simple backend infrastructure, it doesn't let users modify the
+database, and also doesn't have contact forms or that kind of stuff. The
+conversion of a blog into static content was really easy, in about 30 minutes
+I had an alpha working -which is the 0.1.2 version uploaded in github/pypi-.</p>
+<p>django-stampu is basically a crawler. Some people led me to solutions much
+more complicated. (Ex. Running a command and let the computer work.) And I
+didn't like that. I wanted a conversion of the site as I see it when running
+the <code>runserver</code> command, for that purpose you have to follow all the internal
+links of the site and save the items as *.html if the content-type matches. It
+also saves the static files in the site, but I need to look further into that,
+because it can't save files needed by css files yet, it only checks for
+src/href attributes on all tags in html files.</p>
+<p>Want to try it?</p>
+<ol>
+<li>Install django-stampu: <code>pip install django-stampu</code></li>
+<li>Add it to your <code>INSTALLED_APPS</code></li>
+<li>Execute the command: <code>python manage.py stamp</code></li>
+<li>Check the <code>_static</code> folder.</li>
+</ol>
+<p>Easy, right? That's what I want to hear!</p>
+<p>Keep in mind that this is a proof of concept, I need to improve lots of things
+and add some configuration variables for people that want to customize their
+sites.</p>
+<p>If you want to contribute in any way, you can <a href="https://github.com/fmartingr/django-stampu">check the source code at
+github</a>.</p>
+
+        
+      </div>
+      
+    
+    <hr />
+  </article>
+
+  <div class="center block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        <hr />
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Github</span>
+          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Twitter</span>
+            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="/about/">[+ more]</a>
+          </li>
+        </ul>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+   
+  
+
+  </body>
+</html>

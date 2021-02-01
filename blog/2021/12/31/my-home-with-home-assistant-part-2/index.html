@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Self-hosting my home: Grafana, InfluxDB, ESPHome | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content">
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post center">
+    <h1 class="title"><a href="/blog/2021/12/31/my-home-with-home-assistant-part-2/">Self-hosting my home: Grafana, InfluxDB, ESPHome</a></h1>
+    <div class="info">
+      Published on December 31, 2021
+    </div>
+    
+      <div class="content">
+        
+          <h2 id="influxdb">InfluxDB</h2><div class="hll"><pre><span></span><span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="ss">&quot;homeassistant&quot;</span> <span class="k">TO</span> <span class="ss">&quot;homeassistant&quot;</span><span class="p">;</span>
+</pre></div>
+<h2 id="grafana">Grafana</h2><p>...</p>
+<h2 id="esp-home">ESP Home</h2><p>...</p>
+<h3 id="temperature-and-humidity-monitors">Temperature and Humidity Monitors</h3><p>...</p>
+<h3 id="mi-flora">Mi Flora</h3><ul>
+<li><p>Get MAC Address for the Mi flora</p>
+<pre><code>  $ bluetoothctl scan on | grep -i flo
+  [NEW] Device XX:XX:XX:XX:XX:XX Flower care
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>Create a new ESP Home integration to track the sensor:</p>
+<p>I name my sensors with numbers so I can write the number on them and identify them easily. You only need to assign sensors to rooms to have them easily available when looking for them on dashboards.</p>
+<div class="hll"><pre><span></span>  <span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
+  <span class="c1"># Sensors</span>
+  <span class="nt">esp32_ble_tracker</span><span class="p">:</span> <span class="c1"># Required for BLE scanning</span>
+
+  <span class="nt">sensor</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">platform</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xiaomi_hhccjcy01</span>
+      <span class="l l-Scalar l-Scalar-Plain">mac_address</span><span class="p p-Indicator">:</span> <span class="s">&#39;XX:XX:XX:XX:XX:XX&#39;</span>
+      <span class="nt">temperature</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Flora</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">Temperature&quot;</span>
+      <span class="nt">moisture</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Flora</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">Moisture&quot;</span>
+      <span class="nt">illuminance</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Flora</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">Illuminance&quot;</span>
+      <span class="nt">conductivity</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Flora</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">Soil</span><span class="nv"> </span><span class="s">Conductivity&quot;</span>
+      <span class="nt">battery_level</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Flora</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">Battery</span><span class="nv"> </span><span class="s">Level&quot;</span>
+</pre></div>
+</li>
+</ul>
+<ul>
+<li><p>Validate and upload the configuration to your ESP device.</p>
+</li>
+<li><p>With that, you could already create a card with the sensors provided by the integration, but for better visual information a <a href="https://www.home-assistant.io/integrations/plant/"><code>plant</code></a> object can be created with aproppriate values. Information comes from the Mi Flora App, but someone dumped the database and it's available also <a href="https://github.com/khronimo/MiFloraDB">on github</a>.</p>
+<p>From the spreadsheet:</p>
+<ul>
+<li>Moisture: <code>min_soil_moist</code>/<code>max_soil_moist</code></li>
+<li>Temperature: <code>min_temp</code>/<code>max_temp</code></li>
+<li>Conductivity: <code>min_soil_ec</code>/<code>max_soil_ec</code></li>
+<li>Brightness: <code>min_light_lux</code>/<code>max_light_lux</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Create a <code>plant</code> monitor on the <code>configuration.yaml</code> file:</p>
+<div class="hll"><pre><span></span>  <span class="nt">plant</span><span class="p">:</span>
+    <span class="nt">parsley</span><span class="p">:</span>
+      <span class="nt">sensors</span><span class="p">:</span>
+        <span class="nt">moisture</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sensor.flora_1_moisture</span>
+        <span class="nt">battery</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sensor.flora_1_battery</span>
+        <span class="nt">temperature</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sensor.flora_1_temperature</span>
+        <span class="nt">conductivity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sensor.flora_1_soil_conductivity</span>
+        <span class="nt">brightness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sensor.flora_1_illuminance</span>
+      <span class="nt">min_moisture</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">28</span>
+      <span class="nt">max_moisture</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">75</span>
+      <span class="nt">min_battery</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+      <span class="nt">min_conductivity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+      <span class="nt">max_conductivity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2000</span>
+      <span class="nt">min_temperature</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+      <span class="nt">max_temperature</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">35</span>
+      <span class="nt">min_brightness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2500</span>
+      <span class="nt">max_brightness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">55000</span>
+      <span class="nt">check_days</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+</pre></div>
+</li>
+<li><p>Restart Home Assistant for the changes to take effect.</p>
+</li>
+<li><p>Add a <a href="https://www.home-assistant.io/lovelace/plant-status/">Plant Status Card</a> to your dashboard and select the plant you just created.</p>
+<p><img src="/blog/2021/12/31/my-home-with-home-assistant-part-2/plant-status-card.png" alt="My parsley plant status card"></p>
+</li>
+</ul>
+
+        
+      </div>
+      
+    
+    <hr />
+  </article>
+
+  <div class="center block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <header>
+        <h1>Felipe Martín</h1>
+        <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        <hr />
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">E-mail</span>
+            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+          </li>
+          <li>
+            <span class="title">Github</span>
+          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
+          </li>
+          <li>
+            <span class="title">LinkedIn</span>
+            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+          </li>
+          <li>
+            <span class="title">Twitter</span>
+            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
+          </li>
+          <li>
+            <span class="title">PGP</span>
+            <a href="/pubkey.txt">716B C147 715E 716F</a>
+          <li>
+            <a href="/about/">[+ more]</a>
+          </li>
+        </ul>
+        <hr />
+        <ul class="social text-size-small">
+          <li>
+            <span class="title">Site created using</span>
+            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+   
+  
+
+  </body>
+</html>
