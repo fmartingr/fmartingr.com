@@ -15,54 +15,27 @@
     {% block endhead %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
-    <div class="page-content">
-      <section class="main-content">
-        {% block main_content %}asd{% endblock %}
-      </section>
+    <div class="page-content center">
       <header>
+        <div class="avatar">
+          <img class="avatar" src="{{ '/static/images/avatar.jpg'|asseturl }}">
+        </div>
         <h1>Felipe Martín</h1>
-        <img class="avatar" src="{{ '/static/images/avatar.jpg'|asseturl }}">
-        <hr />
         <nav>
           <a {% if this.path == '/' %}class="text-bold"{% endif %} href="{{ '/'|url }}">/home</a>
           {% for section in site.get('/').children.order_by("title") %}
             <a {% if this.is_child_of(section) %}class="text-bold"{% endif %} href="{{ section|url }}">{{ section.path }}</a>
           {% endfor %}
         </nav>
-        <hr />
-        <ul class="social text-size-small">
-          <li>
-            <span class="title">E-mail</span>
-            <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
-          </li>
-          <li>
-            <span class="title">Github</span>
-          <a target="_blank" href="https://github.com/fmartingr">fmartingr</a>
-          </li>
-          <li>
-            <span class="title">LinkedIn</span>
-            <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
-          </li>
-          <li>
-            <span class="title">Twitter</span>
-            <a target="_blank" rel="me" href="https://twitter.com/fmartingr">@fmartingr</a>
-          </li>
-          <li>
-            <span class="title">PGP</span>
-            <a href="/pubkey.txt">716B C147 715E 716F</a>
-          <li>
-            <a href="{{ '/about'|url }}">[+ more]</a>
-          </li>
-        </ul>
-        <hr />
-        <ul class="social text-size-small">
-          <li>
-            <span class="title">Site created using</span>
-            <a target="_blank" href="https://www.getlektor.com/">lektor</a>
-          </li>
-        </ul>
       </header>
-    </div>
-   {% block endbody %}{% endblock %}
+      <hr>
+      <section class="main-content">
+        {% block main_content %}asd{% endblock %}
+      </section>
+      <hr>
+      <footer>
+        Site created using <a target="_blank" href="https://getlektor.com">Lektor</a>. Source code available in <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Github</a>
+      </footer>
+    {% block endbody %}{% endblock %}
   </body>
 </html>

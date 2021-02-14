@@ -1,6 +1,6 @@
 {% macro render_blog_post(post, from_index=false, include_content=true) %}
   {% set summary = post.body.html.split('<!-- readmore -->') %}
-  <article class="blog-post center">
+  <article class="blog-post">
     <h1 class="title"><a href="{{ post|url }}">{{ post.title }}</a></h1>
     <div class="info">
       Published on {{ post.pub_date.strftime("%B %d, %Y") }}

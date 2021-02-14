@@ -6,11 +6,11 @@
 {% block main_content %}
   <h2>Latest blog posts</h2>
   {% for post in site.get('/blog').pagination.for_page(1).pagination.items %}
-  <article class="blog-post center">
+  <article class="blog-post">
     <h3 class="title"><a href="{{ post|url }}">{{ post.title }}</a></h3>
-    <div class="info">{{ post.pub_date.strftime("%B %d, %Y") }}</div>
+    <div class="info text-small">{{ post.pub_date.strftime("%B %d, %Y") }}</div>
   </article>
-  <hr />
+  {% if not loop.last %}<hr />{% endif %}
   {% endfor %}
   {{ this.body }}
 {% endblock %}
