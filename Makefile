@@ -9,4 +9,4 @@ clean:
 
 build:
 	make clean
-	poetry run lektor build --output-path ${PWD}/public --buildstate-path ${PWD}/.lektor
+	poetry run lektor build -f scss --output-path ${PWD}/public --buildstate-path ${PWD}/.lektor
