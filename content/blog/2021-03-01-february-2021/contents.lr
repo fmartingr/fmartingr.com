@@ -1,0 +1,114 @@
+title: February 2021
+---
+pub_date: 2021-03-01
+---
+_discoverable: yes
+---
+body:
+
+A month for changes! A lot of daily grind and planning new stuff for the future.
+
+We still can't move freely around but restrictions are leaving us step by step, let's see how long it lasts here, at least I'm pretty happy that I can go to my favourite coffee shop even if it's for takeaway. After a few reluctant weeks our avocado started to rise! I'm trying to track it's growth with daily pics, but oh man it grows SO fast.
+
+[![image alt](./image-360.jpg)](./image.jpg)
+
+<div class="text-center">Our avocado is blooming nicely :)</div>
+
+<!-- readmore -->
+
+## Projects
+
+- [**go-mangadex**](https://github.com/fmartingr/go-mangadex)
+
+  A small golang library to perform requests to the MangaDex API, mainly as a side project for the one following this.
+
+- [**mangadex2cbz**](https://code.fmartingr.dev/fmartingr/mangadex2cbz)
+
+  A work in progress converter of Mangadex collections to a comic book format readable on mobile devices. Right now it's a bit of a mess in a single function made as a proof of concept, but you can run it and it works. A lot of testing and corner cases need to be cut though, as for example the workflow don't take into account failed downloads and it will just follow and create the volume anyway.
+
+- [**Games Screenshot Manager**](https://github.com/fmartingr/games-screenshot-manager.git)
+
+  I have been using this for a while (as you can check into [my online gallery](http://gallery.fmartingr.com)) and didn't put more thought into it, just minor refactors. I want to make a proper site and announcement though, and keep expanding on the providers. As a side note, I may start a community driven list of Switch games, since Switchbrew's list is not updated very actively and the other community project don't have much maintenance lately.
+
+- [**fmartingr.com**](https://fmartingr.com)
+
+  I simplified the site design, removing the sidebar and using a simple header and footer. I may move from Lektor to Hugo as well, I've been doing some experiments with it for a possible wiki and it may fit. Also, is pretty fast.
+
+- [**Godot Engine**](https://godotengine.org/) learning is still ongoing, doing some lesson games.
+
+- I still have my local infra refactor pending, and I'm constantly switching between starting a k3s cluster or just continue as I am with simple docker containers running and manually setup  
+
+## Books
+
+- Read [**Alice in Borderland**](https://mangadex.org/title/2890/alice-in-borderland)
+
+  I wanted to know what happened after the Netflix's show left us with the cliffhanger, and I ended up discovering that there's more to it than just one storyline.
+
+- Read [**Alice in Borderland Retry**](https://mangadex.org/title/56129/alice-in-borderland-retry)
+
+  A very short sequel to the original with the same protagonist, is not as good as the main history but I liked the twist at the end.
+
+- Reading [**Alice in Border Road**](https://mangadex.org/title/19613/alice-on-border-road)
+
+  Another twist to the same story, a bit boring at the beginning but it starts to grow on you once characters start developing.
+
+## TVShows and Movies
+
+- Re-started watching [**The Blacklist**](https://www.netflix.com/title/70281312)
+
+  The Player 2 wanted to gave it another show, so we're now at season 7...
+
+- [**The Queen's Gambit**](https://www.netflix.com/title/80234304)
+
+  After a lot of people recommended it to us we managed to went through it over a weekend. I loved it, the character development and interaction, and the fact that it is a self-contained history in a few chapters (I'm growing fond of reading/watching only completed stories). I recommend it as well of course, even if you don't know anything about chess.
+
+- [**Wanda Vision**](https://www.disneyplus.com/series/bruja-escarlata-y-vision/4arN6lqB6P3K)
+
+  Almost through the end! As predicted the following chapters were more Marvel than the ones last month, and it has evolved quite nicely. Finale this week.
+
+- [**Futurama**](https://www.disneyplus.com/series/futurama/4B9X20Pjihaf)
+
+  With the addition of Star into Disney+ a bunch of TVShows and Movies where added, and Futurama has been on my backlog for quite too long.
+
+## Games
+
+- [**Super Mario Bros. 3D World**](https://www.nintendo.es/Juegos/Nintendo-Switch/Super-Mario-3D-World-Bowser-s-Fury-1832228.html)
+
+  [![Super Mario 3D World Screenshot](./switch-mario3dworld-360.jpg)](./switch-mario3dworld.jpg)
+
+  Almost finished it already! I'm on the last world (I think!) and have mastered all previous worlds by getting all collectibles and so on. The only letdown I have with this is that a friend told me that I need to complete the game with all available characters to unlock everything, which of course I'm not going to do. Repeating the same thing 4 more times... Nintendo, are you crazy?
+
+- [**Star Wars: Jedi Fallen Order**](https://store.playstation.com/es-es/product/EP0006-CUSA12529_00-RESPAWNSWBIRDDOG)
+
+  I didn't play much this month, mostly because Mario arrived and playing on the switch is way more conveniant than on the Playstation, but I want to try out is using remote play with my phone makes me more eager to sit a play through it.
+
+- [**Overwatch**](https://playoverwatch.com/en-us/)
+
+  I removed the dust from my windows PC some days I just wanted to have some brainless _pewpew_ for 15 minutes or so. I forgot how good this game it is for short play sessions.
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- [Getting better at Linux with 10 mini-projects](https://carltheperson.com/posts/10-things-linux)
+- [Lie vs Lay](https://hynek.me/articles/lie-vs-lay/)
+- [ARCHITECTURE.md](https://matklad.github.io//2021/02/06/ARCHITECTURE.md.html)
+- [PostgreSQL Features You May Not Have Tried But Should](https://pgdash.io/blog/postgres-features.html?h=)
+- [Timeline ofthe far future](https://en.wikipedia.org/wiki/Timeline_of_the_far_future)
+- [Visual guide to SSH tunnels](https://robotmoon.com/ssh-tunnels/)
+- [Adding a pipe operator to Python](https://hackernoon.com/adding-a-pipe-operator-to-python-19a3aa295642)
+- [DNS over TLS](https://sagi.io/2018/09/dns-over-tls---thoughts-and-implementation/)
+- [Supercookie](https://supercookie.me)
+- [Investigate unusual media traffic pattern for AsterNovi-belgii-flower-1mb.jpg on Commons](https://phabricator.wikimedia.org/T273741)
+- [Rust: "Move fast and break things" as a moral imperative](https://drewdevault.com/2021/02/09/Rust-move-fast-and-break-things.html)
+- [Our past mistakes: Taiga 6](https://www.linkedin.com/pulse/our-past-mistakes-slingshot-taiga6-release-pablo-ruiz-m%C3%BAzquiz/)
+- [Experiment, Simplify, Ship - Go](https://blog.golang.org/experiment)
+- **video** [Building a container from scratch in Go](https://www.youtube.com/watch?v=Utf-A4rODH8)
+- [The allure of the terminal](https://popey.com/blog/2021/02/the-allure-of-the-terminal/)
+- [Researching an old laptop](https://twitter.com/Foone/status/1360336044869099522)
+- [Checking a character's case in Go, the long way around](https://ervinbarta.com/2019/08/06/upcase-in-go-the-long-way-around/)
+- [Confessions of a Disk Cracker: the secrets of 4am](https://paleotronic.com/2018/06/15/confessions-of-a-disk-cracker-the-secrets-of-4am/)
+- [Goodbye, clean code](https://overreacted.io/goodbye-clean-code/)
+- [Hardware microphone disconnect in Apple devices](https://support.apple.com/en-ng/guide/security/secbbd20b00b/1/web/1)
+- [How I made hack grid](https://daisygames.wordpress.com/2021/02/20/how-i-made-hack-grid/)
+- [How I heat my home by mining crypto currencies](https://blog.haschek.at/2021/how-i-heat-my-home-by-mining.html)
+- [Encrypted SNI](https://blog.cloudflare.com/encrypted-sni/)
+- [Anime is booming. So why are animators living in poverty?](https://www.nytimes.com/2021/02/24/business/japan-anime.html)
