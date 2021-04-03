@@ -1,0 +1,87 @@
+title: March 2021
+---
+pub_date: 2021-04-03
+---
+_discoverable: yes
+---
+body:
+
+Things are changuing!
+
+[![image alt](./image-360.jpg)](./image.jpg)
+
+<!-- readmore -->
+
+## Personal
+
+I'm switching ships! Next month I will be starting a new position at another company as a Golang Software Engineer. Yay!
+
+Deciding to leave Red Hat has been hard, but it needed to be done. Most people assume I am crazy (and I can't blame them) but you need to be honest with yourself and find out what really makes you happy. Aim for that.
+
+## Projects
+
+Didn't have much time this month to work on personal projects since I spent most of my free time doing some code challenges for several interviews I had. Funny thing that the position I'm going to work starting next month is not one of those.
+
+That doesn't mean that I've not done things, just nothing tangible! I have some ideas here and there that I need to work on, specially for the [games-screenshot-manager](https://github.com/fmartingr/games-screenshot-manager) and [switch-games-json](https://github.com/fmartingr/switch-games-json) but it require a bit of preparation in advance.
+
+## Books
+
+- Read [**Alice in Border Road**](https://mangadex.org/title/19613/alice-on-border-road)
+
+  I liked this one more that Retry, it presents the reader with the same premise but with a different objective/path for the protagonists. Definitely recommended if you liked the first instance.
+
+- Read [**Doctor Aphra (2016 - 2019)**](https://www.marvel.com/comics/series/22719/star_wars_doctor_aphra_2016_-_2019)
+- Started reding [**Doctor Aphra (2020 - present)**](https://www.marvel.com/comics/series/29161/star_wars_doctor_aphra_2020_-_present)
+
+  I'm moving into comics now? I'm moving into comics now! I have been interested in reading some comics for a while, the main issue for me is that it's difficult to decide the start point. I wanted to read something from the Marvel universe but it is so vast that I ended up switching gears to this Star Wars issues that someone recommended me a while ago. And I loved it! My main issue is that the marvel unlimited app is _shirt_ and I need to go and close/reopen the app every issue/several issues because some pages refuse to load... I'm not sure I will re-subscribe for a full year after this first month.
+
+## TVShows and Movies
+
+- Up to date with [**The Blacklist**](https://www.netflix.com/title/70281312)
+
+  We got to the end of Season 7 (the latest available on Netflix). Honestly, I don't want to watch it anymore.
+
+- Started watching [**Suits**](https://www.netflix.com/browse?jbv=70195800)
+
+  Thinking about a series that the Player 2 would like this one came to mind. I put the first episode to check and... we are at season 5 now.
+
+- Finished [**Wanda Vision**](https://www.disneyplus.com/series/bruja-escarlata-y-vision/4arN6lqB6P3K)
+
+  It's over. I'm glad to say that the show got better and better the closest it got to the climax. I loved the ending and how this is going to fit into MCU's next phase.
+
+- Started [**Falcon & The Winter Soldier**](https://www.disneyplus.com/series/the-falcon-and-the-winter-soldier/4gglDBMx8icA)
+
+  Like and old school action movie, at least the beginning. It's good to see that they are focusing different problems in this one compared to Wanda's.
+
+## Games
+
+- [**Super Mario Bros. 3D World**](https://www.nintendo.es/Juegos/Nintendo-Switch/Super-Mario-3D-World-Bowser-s-Fury-1832228.html)
+
+  Almost **almost** finished. I made through all the courses and just two or three are incomplete (missing some star or the golden flag pole). I'm assuming once I do that more things would open up...
+
+- [**Pokemon Sword**](https://www.nintendo.es/Juegos/Nintendo-Switch/Pokemon-Espada-1522111.html) & [*Pokemon GO*](https://pokemongolive.com/en/)
+
+  Player 2 has gotten me into Pokemon again. We're aiming to complete the pokedex this time, and another friend will play along as well. This series seems really easy compared to the last one I played (Pokemon Y), I'm always like 10 levels ahead or so. Maybe the fact that I'm catching all pokemon available in the routes as I go has something to do with it though.
+
+- [**Animal Crossing: New Horizons**](https://www.nintendo.es/Juegos/Nintendo-Switch/Animal-Crossing-New-Horizons-1438623.html)
+
+  Barely connected a bit to get the Super Mario exclusive items and to confirm that my town and house is as dirty as it could be.
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- [How I cut GTA Online loading times by 70%](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)
+- [Things your manager might now know](https://jvns.ca/blog/things-your-manager-might-not-know/)
+- [Using Apple Silicon (M1) as a cloud engineer, two months in](https://blog.earthly.dev/using-apple-silicon-m1-as-a-cloud-engineer-two-months-in/)
+- [The corporate surveillance machine is killing people](https://drewdevault.com/2021/03/06/Corporate-surveillance-murder.html)
+- [Kid Asks Neil Tyson "Can A Black Hole Suck In Another Black Hole?" & Gets His Mind Blown Away!](https://www.youtube.com/watch?v=iLKTZr00xBg)
+- [Kento Bento — How Hong Kong Became a Giant Refrigerator](https://watchnebula.com/videos/kento-bento-how-hong-kong-became-a-giant-refrigerator)
+- [Solid - A Better Web (Simply Explained)](https://www.youtube.com/watch?v=qWVTjMsv7AE)
+- [Reverse Engineering Pokemon Go Plus](https://tinyhack.com/2018/11/21/reverse-engineering-pokemon-go-plus/)
+- Old but gold: [wat](https://www.destroyallsoftware.com/talks/wat)
+- [Twitter thread about Duke Nukem 3D Level Engine](https://twitter.com/Foone/status/1372766463556083715?s=20)
+- [We are building a new systems programming language](https://drewdevault.com/2021/03/19/A-new-systems-language.html)
+- [Do you really want linux phones](https://blog.brixit.nl/do-you-really-want-linux-phones/)
+- [Goroutines: Under the Hood | Vicki Niu](https://youtube.com/watch?v=S-MaTH8WpOM)
+- [Get better at programming by learning how things work](https://jvns.ca/blog/learn-how-things-work/)
+- [How I earn a living selling my open source software](https://www.indiehackers.com/post/how-i-earn-a-living-selling-my-open-source-software-476f6bb07e)
+- [The world's stupidest IRC bot](https://drewdevault.com/2021/03/29/The-worlds-dumbest-IRC-bot.html)
