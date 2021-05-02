@@ -1,0 +1,98 @@
+title: April 2021
+---
+pub_date: 2021-05-01
+---
+_discoverable: no
+---
+body:
+
+[![image alt](./image-360.jpg)](./image.jpg)
+
+<div class="text-center">Finally went to a good enough place to try out my drone filming skills!</div>
+
+<!-- readmore -->
+
+## Personal
+
+Finally flied a bit with my Drone! I bought it cause a good offer came up, but here is usually very windy plus I need to go a bit far away to a flight allowed zone. And well even if it wasn't the perfect weather to film around it was very good to lose the fear to lose the drone around even when I couldn't see it because it was too far away.
+
+Can't wait for better weather though! Videos have a very good quality and the shots are just amazing from up there.
+
+<div class="text-center">
+  <video width="960" height="540" controls preload="none" playsinline poster="./beach-360.jpg">
+    <source src="./beach.mov" type="video/mov">
+    <source src="./beach.mp4" type="video/mp4">
+    <source src="./beach.ogv" type="video/ogg">
+    There's a video here, but your browser doesn't support `video` elements.
+  </video>
+</div>
+
+## Projects
+
+- Preparing a community given approach to [**switch-games-json**](https://github.com/fmartingr/switch-games-json) since the other repository I'm basing it off is not active since last year and PR suggestions are not being merged.
+
+- [**games-screenshot-manager**](https://github.com/fmartingr/games-screenshot-manager) is going under a huge refactor since the proof of concept is working very well on my end (being using it for a few months now) so it's time to make the codebase more decent.
+
+- Trying out [hugo](https://gohugo.io) as a replacement for lektor for this blog. I still need to figure out if the benefits are worth it the time investment.
+
+- After doing Go for a while figured out what a pain in the ass is to deploy/containerize python applications.
+
+## Books
+
+- Started reading [**Doctor Aphra (2020 - present)**](https://www.marvel.com/comics/series/29161/star_wars_doctor_aphra_2020_-_present)
+
+  I like it, but my subscription ended after trying it for a month, and since I haven't seen any improvement to the app and the pages loading I'm not paying it anymore... it's $10/mo of suffering anytime I want to just read for 10 minutes. It's a shame since people made a lot of recommendations to read Marvel related things, but I'm assuming I would just end up buying the tomes physically. Wait... maybe this was Marvel's plan all along?
+
+- Reading [**The Gamer**](https://www.webtoons.com/en/action/the-gamer/list?title_no=88)
+
+  I started this a while ago and I've came back to it. Since I didn't remember where chapter I was in I just started it again. And boy I am glad... I didn't remember a thing!
+
+- Reaading [**DICE**](https://www.webtoons.com/en/fantasy/dice/list?title_no=64)
+
+  Keeping the pace up a bit, I'm still far away from reaching the current episode, but it keeps getting interesting.
+
+## TVShows and Movies
+
+- Still watching [**Suits**](https://www.netflix.com/browse?jbv=70195800)
+
+  We watch it at lunch/dinner time. Not that I'm enjoying it much anymore, but it's still way better than regular TV.
+
+- Finished [**Falcon & The Winter Soldier**](https://www.disneyplus.com/series/the-falcon-and-the-winter-soldier/4gglDBMx8icA)
+
+  Oh man, only six episodes! The show was **amazing**, but I feel like a couple of extra episodes wouldn't have hurt character development. And now the wait until Loki premieres on June... :(
+
+- Watched [**Invincible**](https://www.primevideo.com/detail/0K677J96WQ96K6UY6BL15O70CO/) season 1
+
+  A pleasant surprise on Amazon Prime. I'm up to date and I'm liking it, it's start a bit childish but oh boy you're up to a surprise on the first episode. It seems is based on comics as well, so how knows if I would grow impatient and just read the comics instead of waiting for the next seasons.
+
+## Games
+
+- [**Super Mario Bros. 3D World**](https://www.nintendo.es/Juegos/Nintendo-Switch/Super-Mario-3D-World-Bowser-s-Fury-1832228.html)
+
+  So. What is this madness Nintendo? Are you serious? Not only there's another world with both a crazy hard level to beat and an almost infinite star box, but now I'm supposed to beat every level with every character? 
+
+  ![Super Mario 3D World trying to make me crazy](./super-mario-3d-world-madness-360.jpg)
+
+- [**Rhythm Tengoku (*リズム天国 / Rhythm Heaven*)**](https://rhythmheaven.fandom.com/wiki/Rhythm_Tengoku)
+
+  So I discovered this game on a [friend's stream](https://twitch.tv/vitiman) and I instantly fell in love. Got it second hand complete (with its box, manual and everything!). I have played various rhythm games over the years and let me tell you this one is **hard**. It measures your rhythm at the beginning and oh boy I'm up for a challenge here... 
+
+  <div class="grid">
+  <div class="col-1-2"><img src="./rhythm-tengoku-01-360.jpg"></div>
+  <div class="col-1-2"><img src="./rhythm-tengoku-02-360.jpg"></div>
+  </div>
+
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- [This man thought opening a TXT file is fine, he thought wrong. ](https://www.paulosyibelo.com/2021/04/this-man-thought-opening-txt-file-is.html)
+- [How Runescape catches botters, and why they didn’t catch me](https://secret.club/2021/04/03/runescape-heuristics.html)
+- **(tweet)** [I made a 4 kilobytes procedural image for @revision_party!](https://twitter.com/NuSan_fx/status/1378759959815585795)
+- **(tweet)** [A plane took off 1200kg heavier than the pilot realized due to coded bias [...]](https://twitter.com/tarah/status/1380484339541151746?s=20)
+- **(video)** [Guidance By Railway Tracks](https://www.youtube.com/watch?v=vkzgcJGdUnA&feature=youtu.be)
+- [Docker without docker](https://fly.io/blog/docker-without-docker/)
+- [Why Do Long Options Start with Two Dashes?](https://blog.djmnet.org/2019/08/02/why-do-long-options-start-with/)
+- [The Developer Certificate of Origin is a great alternative to a CLA](https://blog.djmnet.org/2019/08/02/why-do-long-options-start-with/)
+- **(tweet)** [_Germany has opened its first electrified highway for trucks near Frankfurt..._](https://twitter.com/engineers_feed/status/1382351903334486018)
+- [Tour inside Nintendo headquarters in 1970](http://blog.beforemario.com/2018/11/nintendos-office-and-factories-in-1970.html)
+- [CVE-2021-30481: Source engine remote code execution via game invites](https://secret.club/2021/04/20/source-engine-rce-invite.html)
