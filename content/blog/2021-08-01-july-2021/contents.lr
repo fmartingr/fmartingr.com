@@ -1,0 +1,100 @@
+title: July 2021
+---
+pub_date: 2021-08-01
+---
+_discoverable: yes
+---
+body:
+
+[![My birthday cake!](./image-360.jpg)](./image.jpg)
+
+<div class="text-center">On the good days that actually seems like summer we get some beaufiful landscapes like this.</div>
+
+<!-- readmore -->
+
+## Projects
+
+Ever since I ended up on my current job I spend less and less time with the computer in the after-work hours, real life :tm: stuff and my numerous other hobbies tend to maintain me busy, so I've spent very little time with these things:
+
+- [switch-games-json](https://github.com/fmartingr/switch-games-json) I've started work on how people could contribute new entries to it. I have a working proof of concept and I have to import all currently data present on the internets before releasing it publicly.
+
+- [games-screenshot-manager](https://github.com/fmartingr/games-screenshot-manager) Planning a big refactor since I use this very regularly and it [works very well](http://gallery.fmartingr.com) but it can be way faster that it is now.
+
+- **notion-to-ical**: I'm working on a little service to convert a Notion calendar database into an iCal feed.
+
+- 3D Printing. More like 3D calibrating since I didn't manage to find the proper attributes to print some pieces corretly, and since it a bit of trial and error it's taking its time.
+
+## Books
+
+- [**DICE**](https://www.webtoons.com/en/fantasy/dice/list?title_no=64)
+
+- [**One Piece**](https://www.goodreads.com/series/57193-one-piece): Volume 27 and beyond!
+
+- Finished [**Siege and Storm**](https://www.goodreads.com/book/show/14061955-siege-and-storm)
+
+- Started reading [**Ruin and Rising**](https://www.goodreads.com/book/show/14061957-ruin-and-rising)
+
+  The last book of the Ghrisaverse trilogy, series seems a bit average until this point but it manages to keep me wanting to know what will happen next. I just hope this one doesn't end in a cliffhanger or with anything pending so I can start reading other series after that, since I've seen that there are other books based on this world.
+
+## TVShows and Movies
+
+- For lunch and dinner time [**One Piece**](https://www.crunchyroll.com/es-es/one-piece)
+
+- Ongoing with [**Star Wars: The Bad Batch**](https://www.disneyplus.com/series/the-bad-batch/4gMliqFxxqXC)
+
+  This became an off-series, I just let it run in background while I do other things and I manage to keep track easily.
+
+- Finished [**Loki**](https://www.disneyplus.com/series/loki/6pARMvILBGzF)
+
+  What a show, what a show! I loved the ending (though I expected a different character to appear) and their performance was just amazing, can't wait to see how this threads into the films and the next season. The MCU is doing an amazing work in this department.
+
+## Games
+
+- Finished! [**Rhythm Tengoku (*リズム天国 / Rhythm Heaven*)**](https://rhythmheaven.fandom.com/wiki/Rhythm_Tengoku)
+
+  I got all gold medals and beat the final drum minigame, and that's a wrap! I'm not going to put myself through unnecessary pain by doing all the perfect scores. It was ver difficult and a lot of fun, specially since I could play it in short sessions through the months.
+
+  <div class="text-center">
+    <video autoplay loop muted id="background" width="640" height="360">
+      <source src="./rhythm-tengoku.webm" type="video/webm">
+      <source src="./rhythm-tengoku.mp4" type="video/mp4">
+    </video>
+  </div>
+
+- Stopped [**One Piece: WORLD SEEKER**](https://store.playstation.com/es-es/product/EP0700-CUSA14054_00-OPWSK00APPLI0000) ([screenshot  gallery](http://gallery.fmartingr.com/PlayStation-4-ONE-PIECE-WORLD-SEEKER.html))
+
+  I stopped playing this one mostly because I wasn't enjoying it much, but also because I don't know where this is set in the One Piece storyline and I didn't want to spoil myself. I will continue with it once I reach the last One Piece volume.
+
+- Still around with [**Baba is you**](https://store.steampowered.com/app/736260/Baba_Is_You/)
+
+  We still have this on our pipeline, Player 2 seems to enjoy it since loves puzzles.
+
+- Started [**The legend of Zelda: Skyward Sword HD**](https://www.nintendo.es/Juegos/Nintendo-Switch/The-Legend-of-Zelda-Skyward-Sword-HD-1923575.html)
+
+  Of course. I didn't progress much and I totaly hate the sword mechanic until the point that I almost drop it at the beginning... but I want to see it through the end since it's the first in the series, time will tell if I complete it or just finish the story.
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- **Engineering**:
+  - [First go language commit](https://github.com/golang/go/commit/7d7c6a97f8)
+  - [Is GitHub a derivative work of GPL'd software?](https://drewdevault.com/2021/07/04/Is-GitHub-a-derivative-work.html)
+  - [Bencharmks in Go can be surprising](https://leveluppp.ghost.io/benchmarks-in-go-can-be-surprising/)
+  - [25 Gigabit Linux internet router PC build](https://michael.stapelberg.ch/posts/2021-07-10-linux-25gbit-internet-router-pc-build/)
+  - [My wish-list for the next YAML](https://drewdevault.com/2021/07/28/The-next-YAML.html)
+
+- **Videogames**:
+  - [A 23-Year Perfectionist Journey to Localize the Obscure 'Bahamut Lagoon'](https://github.com/golang/go/commit/7d7c6a97f8)
+  - [video] [How the Game Boy almost ruined Nintendo](https://youtu.be/9Ki-kH751_8)
+  - [video] [The ultimate Game Boy Talk (33c3)](https://youtu.be/HyzD8pNlpwI)
+  - [Museum obtains rare demo of id Software's Super Mario Bros 3 PC port](https://arstechnica.com/gaming/2021/07/museum-obtains-rare-demo-of-id-softwares-super-mario-bros-3-pc-port/)
+  - [Collectors are as confused as you are about that $1.56M Super Mario 64 sale](https://arstechnica.com/features/2021/07/collectors-are-as-confused-as-you-are-about-that-1-56m-super-mario-64-sale/)
+  - [Playdate preview: You won’t believe how fun this dorky, $179 game system is](https://arstechnica.com/gaming/2021/07/playdate-preview-you-wont-believe-how-fun-this-dorky-179-game-system-is/)
+
+- **Traveling**:
+  - [video] [Visiting All The Main Tourist Attractions In Kyoto - Completely Empty](https://www.youtube.com/watch?v=4EQ34L05pOw)
+
+- **News**:
+  - [Disney+ success tweet](https://twitter.com/TrungTPhan/status/1414966594179006466)
+  - [Ethan “flibitijibibo” Lee May Retire from Programming Due to Valve’s Proton](https://nuclearmonster.com/2021/07/ethan-flibitijibibo-lee-may-retire-from-programming-due-to-valves-proton/)
+  - [This Isn’t a Heatwave — It’s a Dying Planet](https://eand.co/this-isnt-a-heatwave-it-s-a-dying-planet-ac1c9eb529d1)
+  - [video] [I Get MAD | Blizz's DISGUSTING Anti Customer Behavior EXPOSED](https://youtu.be/9zDrp4pncDs)
