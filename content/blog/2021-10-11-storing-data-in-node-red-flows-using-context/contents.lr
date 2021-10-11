@@ -1,0 +1,64 @@
+title: Storing data in Node-Red flows using contexts
+---
+pub_date: 2021-10-11
+---
+tags: Home Assistant, Node-Red
+---
+body:
+
+I've been adding some automations to my Home Assistant recently so it can inform us of takeaway menu changes for local restaurants. We have a few favourites and they usually offer different options each day so checking for updates and notifying us via our Telegram bot is pretty easy.
+
+<!-- readmore -->
+
+Since I didn't want to use any library or custom program/service to analyze the page I'm relaying this kind of work to the Node-Red service in my Home Assistant instance. It's a server that is always working, easy to set up, work and iterate from, and I already have some integrations in place for notifications and other QoL, so it seemed like a 110% win.
+
+Despite having used Node-Red for various purposes along the years I usually delegated state to different services, databases or the filesystem. Not sure why I didn't check if Node-Red had something built-in-- which of course it had.
+
+Node-Red has this concept of _context_. By default a context is stored in memory only, and you can get/set values from a node or from function nodes very easily:
+
+![Node-Red Change node allows to make changes in contexts](./node-red-change-node-360.png)
+
+> You can also edit contexts programatically from function nodes using:
+>
+> ``` js
+> msg.contentSize = 123 // From another node
+> flow.set("menuContentSize", msg.contentSize)
+> var value = flow.get("menuContentSize")
+> ```
+
+In my case I wanted the data to persist service restarts and Node-Red provides a context store filesystem based which stores changes in memory and persists them to disk every 30 seconds, more than enough for my use case.
+
+To enable it we need to modify the `settings.js` file of the Node-Red installation and add the appropriate `contextStore` parameters:
+
+``` js
+{
+  // ...
+  contextStorage: {
+    state: {
+      module: "localfilesystem",
+      base: "state" // This will store the data in ~/.node-red/state,
+    },
+    default: { module: "memory" }
+  },
+  // ...
+}
+
+```
+
+> In this example I created a new context store called _state_ using the filesystem module I talked before and additionally I set up the storage in a custom directory.
+
+This way I can have two context stores: one in memory (the default) and one to store my custom states. You can create more for your use cases but keep in mind that you need to select a different `dir` for each of them so they wont collide. For more information check [the implementation details](https://nodered.org/docs/api/context/store/localfilesystem#implementation-details).
+
+In order to select an store to use you have a dropdown in the change node:
+
+![Node red change node with dropdown selection](./node-red-change-node-dropdown-360.png)
+
+> Or use the third argument`flow.set(key, value, store)`/`flow.get(key, store)` to select it programatically.
+
+This allows for this very simple state checks in my case but allows for way more complex behaviors right out of the box.
+
+I'm a very big fan of Node-Red. And I can use that so get notified of takaway menu changes now. Talk about a first world problem.
+
+- References:
+  - [Node-Red: Context](https://nodered.org/docs/user-guide/context)
+  - [Node-Red: Local Filesystem context store](https://nodered.org/docs/api/context/store/localfilesystem#options)
