@@ -1,0 +1,49 @@
+title: Home Assistant battery levels at a glance
+---
+pub_date: 2021-11-15
+---
+_discoverable: yes
+---
+tags: Home Assistant
+---
+body:
+
+I was talking recently about how many Zigbee devices are too many and how the most troublesome thing you can have is batteries dieing on you at the same time. If you install several devices at once and have it's batteries dead at the same it it's a bit of a hassle going to each one and replacing it (depending where you have them and how difficult is to replace).
+
+<!-- readmore -->
+
+It came to me that if we could see the battery status of devices easily on a card this can be at least addressed by knowing which batteries are most discharged.
+
+As context, since I'm usually playing with devices I use number as identifiers. For example, my motion sensors are named _Motion Sensor #X_ (where _X_ is an increasing number). This way it's ID is `motion_sensor_1` and it's entities `(entity type).motion_sensor_X_(attribute)`. I use this nomenclature everywhere so I can easily identify entities with the internal search (and because you need to have a method, always!).
+
+So. I can get all entities that represent a battery by searching for `_battery` but I have no real means of translating that search into a card without [a third party component called **Auto entities**](https://github.com/thomasloven/lovelace-auto-entities).
+
+This card allows to _automatically populate lovelace cards with entities matching certain criteria_ which is what I'm looking for, and it's pretty easy to use as well!
+
+I have a card on my dashboard with this configuration to display battery statuses accross my entities:
+
+``` yaml
+type: custom:auto-entities
+card:
+  type: entities
+  title: Battery statusq
+  state_color: true
+  show_header_toggle: true
+filter:
+  include:
+    - entity_id: '*_battery'
+sort:
+  method: state
+  numeric: true
+  reverse: true
+show_empty: true
+unique: entity
+```
+
+And this is how it looks:
+
+![Auto entities displaying the battery levels of the different devices at home](./card-screenshot-640.png)
+
+This card is very powerful, I already have a few other ideas on how to use it.
+
+Check it out: [Auto entities card](https://github.com/thomasloven/lovelace-auto-entities)
