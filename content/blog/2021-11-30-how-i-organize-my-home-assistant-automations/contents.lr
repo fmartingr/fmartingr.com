@@ -1,0 +1,27 @@
+title: How I organize my Home Assistant automations
+---
+pub_date: 2021-11-30
+---
+_discoverable: yes
+---
+tags: Home Assistant
+---
+body:
+
+Automations in Home Assistant are the best thing after the cocoa discovery, I use them a lot for many different things and I'm always wondering how to solve the _first world problem_ of the day. The hassle with it is that apart from a list and the search there are not much more options to filter, and when your automations grow it became a bit of a pain finding what you want.
+
+<!-- readmore -->
+
+So the other day I decided to follow a "path" approarch to my automations. I'm using a subject, an action or element and then a description to name them:
+
+> `(subject) / (action/element) / (short description)`
+
+![](./automations-list-360.png)
+
+This way _Turn on the air purifier at night_ became `air purifier / auto / turn on at night` and I can filter by `air purifier /` to get all the automations related to the air purifier, the specific automatic behaviour by `/ auto` (for this and other subjects), etc:
+
+![](./automations-filtered-360.png)
+
+This is so much convenient than before though I'm sure I will keep iterating on this, at least now my list is ordered and I can easily find anything I want to toggle or edit.
+
+I wonder how other Home Assistant users handle their automations, if you by any reason read this and have a better way, [please let me know!](/about/).
