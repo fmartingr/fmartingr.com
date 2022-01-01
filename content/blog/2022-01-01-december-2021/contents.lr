@@ -1,0 +1,76 @@
+title: December 2021
+---
+pub_date: 2022-01-01
+---
+_discoverable: yes
+---
+body:
+
+![The Elantris book openend in page 610 over my laptop in my parent's house desktop](./image-360.jpg)
+
+<div class="text-center">This is a pretty good summary of the month.</div>
+
+<!-- readmore -->
+
+## Personal projects
+
+- Wrote [nudge](https://github.com/fmartingr/nudge) an evening after internet went down at home. Would be a way of controlling if we have an available internet connection using multiple sources so our Home Assistant instance can reset the router using an smart outlet/ssh connection, since it seems that my [Firewalla Gold](https://firewalla.com/products/firewalla-gold) keep giving me headaches: just last month when my apartment building lost internet the local DNS resolver stopped working just because it didn't have internet, breaking some of my home services... and now after not correctly recovering when my internet connection went down for a few minutes. I just can't recommend this thing.
+
+  - Related to this I need to work on a failover solution for when the internet is down for a very long time and we're not home, maybe a 4G router of some sort? I don't know.
+
+- Now that I'm reading way more in physical editions I'm working on some services to check stock/prices of my personal book wishlist. Following a bit of the mainsteam buzzwords I want it to be event driven hexagonal design, so far I've splitted it into 6 microservices but they would probably be more. I need to start a board of some sort to start working on this.
+
+## Books
+
+- Read [**Elantris**](https://www.goodreads.com/book/show/29242989-elantris)
+
+- Read two short stories from [**Arcanum Unlimited**](https://www.goodreads.com/book/show/40552794-arcanum-ilimitado) related to the Elatris world (The Sel System): **The emperor's soul** and **The hope of Elantris**.
+
+And... I'm all in with comics/manga/manhwa:
+
+- Up to date with [**One Piece**](https://www.goodreads.com/series/57193-one-piece)! What an incredible journey. I've read up to the volume edited here in Spain and to the latest available chapter on the Jump! mangazine app. I can watch memes and everything one piece because I'm not going to spoil myself.
+
+- Ongoing wit [**Hellbound**](https://www.webtoons.com/en/thriller/hellbound/list?title_no=3598). A chapter per week, sticking to the free tier for now so I can consume it slowly.
+
+- Read [**The God's Lie (神様がうそをつく)**](https://www.goodreads.com/book/show/23689723-los-dioses-mienten)
+
+- Read [**Canary Boats (カナリアたちの舟)**](https://www.goodreads.com/book/show/59654559-la-barca-de-los-canarios)
+
+- Started several series:
+  - On volume 2 of [**Gigant**](https://www.goodreads.com/series/249469-gigant) from **Hiroya Oku**, one of my favouirte manga authors. If you like _seinen_, please give [**Gantz**](https://www.goodreads.com/series/77126-gantz) a look.
+  - On volume 2 of [**Platinum's End**](https://www.goodreads.com/series/169755-platinum-end) from **Takeshi Obata** and **Tsugumi Ohba**, authors of other jewels like [**Death Note**](https://www.goodreads.com/series/52807-death-note) and [**Bakuman**](https://www.goodreads.com/series/52005-bakuman) (though I still haven't read that last one).
+  - On volume 1 of [**Atelier of the Witch-Hat**](https://www.goodreads.com/series/212829-tongari-b-shi-no-atelier)
+  - On volume 1 of [**Solo Leveling**](https://www.goodreads.com/series/312408-solo-leveling-manhwa)
+  - On volume 1 of [**Tower of God**](https://www.goodreads.com/series/132470-tower-of-god)
+
+## TVShows and Movies
+
+- Finished [**Hawkeye**](https://www.tvtime.com/en/show/367146). What a fun way to end the year from Disney. If this is the base level for everything coming from the MCU into 2022 I'm all in.
+
+- Tried but Dropped: [**The Magicians**](https://www.tvtime.com/en/show/299139). It was like watching a bunch of high schoolers doing stupid things, hope the books are better that this though I'm not sure if I would ever try.
+
+- Started [**The Witcher: Season 2**](https://www.tvtime.com/en/show/362696). Only the first episode to check if it was a summary of some sort, and I remembered the tale vagely, maybe it is included in [The last wish](https://www.goodreads.com/book/show/40603587-the-last-wish)?
+
+- Started [**Orphan Black**](https://www.tvtime.com/en/show/260315). Watched a few episodes a long while ago but didn't remember why I stopped it. After reading around that _Tatiana Maslany_ was going to be _She-Hulk_ I decied to start over again with it, her performance is just brilliant.
+
+- Started [**Ranking of Kings**](https://www.tvtime.com/en/show/391625). Watched the first episode to check what the fuss is about, seems a mix between different and interesting, so I'm waiting the drop on Crunchyroll so I can continue with it.
+
+- Watched [**Die Hard**](https://letterboxd.com/film/die-hard/). Perfect for Christmas day.
+
+- Of course, watched [**Spider-man: No way home**](https://letterboxd.com/film/spider-man-no-way-home/). 10/10. Would remove my memories of it and watch it again.
+
+## Games
+
+- Ongoing with [**Hollow Knight**](https://store.steampowered.com/app/367520/Hollow_Knight/). I'm surprised my Switch is still intact after so many deaths.
+
+[![Hollow Knight screenshot](./hollow-knight-360.jpg)](./hollow-knight.jpg)
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- (Video) [Window to the World Demo](https://youtu.be/sXxcPxjwLj8)
+- (Video) [Inside Japan's Abandoned Coin Lockers](https://youtu.be/sajcUVDDBU8)
+- [Saying goodbye to an old friend](https://ar.al/2021/12/16/saying-goodbye-to-an-old-friend/)
+- [Small technology](https://small-tech.org/videos/small-technology/)
+- [My first web0 website!](https://elliott.computer/pages/web0.html)
+- [Japan's paper culture](https://www.jetpens.com/blog/Japan-s-Paper-Culture/pt/998)
+- [For the love of the web](https://blog.jim-nielsen.com/2021/for-the-love-of-the-web/)
