@@ -17,6 +17,12 @@ jobs:
         run: |
           python -m pip install --upgrade poetry
           poetry install
+      - name: openring
+        run: |
+          git clone https://git.sr.ht/~sircmpwn/openring
+          cd openring
+          go build
+          ./openring -S ../openring/urls < ../openring/in.html > ../templates/openring.html
       - name: Build site
         run: make build
       - name: Publish to GitHub Pages

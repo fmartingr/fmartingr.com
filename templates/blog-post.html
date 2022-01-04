@@ -6,13 +6,14 @@
 {% block page_title %}{{ this.title }} | {{ super() }}{% endblock %}
 
 {% block main_content %}
-  {{ render_blog_post(this) }}
-  <div class="block-info">
-    If you want to approach me directly about this post use the most appropriate channel 
-    from <a href="{{ '/about'|url }}">the about page</a>.
-  </div>
+{{ render_blog_post(this) }}
+<div class="block-info">
+  If you want to approach me directly about this post use the most appropriate channel
+  from <a href="{{ '/about'|url }}">the about page</a>.
+</div>
+{% include "openring.html" %}
 {% endblock %}
 
 {% block endbody %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
