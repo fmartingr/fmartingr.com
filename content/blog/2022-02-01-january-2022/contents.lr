@@ -1,0 +1,99 @@
+title: January 2022
+---
+pub_date: 2022-02-01
+---
+_discoverable: yes
+---
+body:
+
+![A picture of me resting a book called Press Reset on my legs while looking at the horizon.](./image-360.jpg)
+
+<div class="text-center">We had amazing holidays this year.</div>
+
+<!-- readmore -->
+
+## Personal projects
+
+- I have been working a lot on my notion boards nowadays. Not that I'm better planning what do I do with my time, having everything laying around on different services. So I made simple boards to keep track of stuff. It seems like a stupid thing but sometimes I actually forgot about books, films, games, etc. So having everything there is very helpful to sort out what to read, watch or play next.
+
+![My notion board for games organisation](./notion-games-board-360.png)
+
+- I re-enabled [fmartingr/switch-games-json](https://github.com/fmartingr/switch-games-json) only to find out that I don't need it anymore! Started this project because of the funny way screenshots on a Nintendo Switch are stored, and turns out you can just connect it through USB to a computer and use the Android File Transfer to get them perfectly sorted in folders with game names.
+
+- I worked a bit on [**bazaar**](https://code.fmartingr.dev/fmartingr/bazaar). A simple service to extract product information from websites.
+
+- I've started to work on a way to automate some field updating in Notion that I'm calling **AutoNotion** for now. Ideally this will receive a set of configuration files in _yaml_ and will allow to make simple updates to database items when some fields change, are missing, etc. Initially this would react to events but sadly it will have to work either doing polling or running on a cronjob caching database information.
+
+- Forked [**go-shiori/shiori**](https://github.com/fmartingr/shiori) since the main one seems unmaintained. I like the simplicity of the project but it is a bookmark manager conceived as an alternative of a read-later service without features for the last. Since I want it to be more like Pocket the plan was to fork it and made it my own but I've written to the original author in case I can be the project's new maintainer.
+
+- Released _0.2.0_ of [**fmartingr/games-screenshot-manager**](https://github.com/fmartingr/games-screenshot-manager) after giving it some love it clearly deserved, just bits of improvements here and there in preparation for future features.
+
+## Books
+
+- Read [**El libro hueco**](https://www.goodreads.com/book/show/59955909-el-libro-hueco). After playing the game I strongly needed to understand everything behind the game. This compendium was amazing for that.
+
+- Started reading [**Press Reset**](https://www.goodreads.com/book/show/55277893-press-reset)
+
+- Started reading [**The Final Empire**](https://www.goodreads.com/book/show/58921971-el-imperio-final)
+
+- Read [**1984**](https://www.goodreads.com/book/show/57126185-1984) On my backlog for a long time, and it don't dissapoint at all. Just amazing.
+
+- Read [**Marvel's Must-Have: Avengers Dissasembled**](https://www.goodreads.com/book/show/55477870-los-vengadores)
+
+- Read [**Marvel's Must-Have: Universe Spiderman**](https://www.goodreads.com/book/show/55437417-spiderman)
+
+- Read [**Spiderman Life Story**](https://www.goodreads.com/book/show/58101976-spiderman)
+
+- Ongoing:
+  - [**One Piece**](https://www.goodreads.com/series/57193-one-piece)
+  - [**Hellbound**](https://www.webtoons.com/en/thriller/hellbound/list?title_no=3598)
+  - [**Solo Leveling**](https://www.goodreads.com/series/312408-solo-leveling-manhwa)
+  - [**Tower of God**](https://www.goodreads.com/series/132470-tower-of-god)
+  - [**Tokyo Revengers**](https://www.goodreads.com/series/256393-tokyo-revengers)
+
+## TVShows and Movies
+
+- Finished [**Money Heist**](https://www.netflix.com/title/80192098) mostly because the Player 2 wanted to watch it. Honestly this final part has been the worst of all series. I would have stopped watching after the first heist.
+
+- Finished [**Orphan Black**](https://www.tvtime.com/en/show/260315). _Tatiana Maslany_ is just amazing.
+
+- Finished [**The Witcher: Season 2**](https://www.tvtime.com/en/show/362696). Ended up watching everything on a rainy weekend, I'm now even more hyped to read the entire book series, if only I had time for it at the moment...
+
+- Up to date with [**The book of Boba Fett**](https://www.disneyplus.com/series/the-book-of-boba-fett/57TL7zLNu2wf). I'm not digging it much, except for episode five which I loved for obvious reasons.
+
+- Also watched a few things from [Nebula](https://nebula.app/) and [CuriosityStream](https://curiositystream.com/) this month now than I am detoxifying from YouTube. This are some interesting channels that come to mind:
+  - [Not Just Bikes](https://nebula.app/notjustbikes)
+  - [LowSpecGamer](https://nebula.app/lowspecgamer)
+  - [Extra Credits](https://nebula.app/extracredits)
+  - [Story Mode](https://nebula.app/storymode)
+  - [Minute Body](https://nebula.app/minutebody)
+  - [Kento Bento](https://nebula.app/kentobento)
+
+## Games
+
+- Finished [**Hollow Knight**](https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Hollow-Knight-1125772.html). My relationship with Hollow Knight can be easily represented by [this comic](https://cluelesshero.com/post/655919454629330944/325-toxic-relationship-help-i-just-cant-get-out).
+
+  ![Clueless Hero: Toxic Relationship](./hollow-knight.png)
+
+- Started [**Turing Complete**](https://store.steampowered.com/app/1444480/Turing_Complete/) on my backlog for a while, only to play some kind of different puzzle game. If only I were better at it...
+
+- Continuing with [**Please, don’t touch anythng!**](https://store.steampowered.com/app/354240/Please_Dont_Touch_Anything/). We managed to get a lot of new endings thanks to notes we had from previous runs. Only five endings to finish it!
+
+- Started [**Pokemon Legends: Arceus**](https://www.nintendo.es/Juegos/Nintendo-Switch/Leyendas-Pokemon-Arceus-1930510.html). This is the right way to evolve the Pokemon franchise.
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- [Web3 is centralized](https://blog.wesleyac.com/posts/web3-centralized)
+- [Why might you run your own DNS server](https://jvns.ca/blog/2022/01/05/why-might-you-run-your-own-dns-server-/)
+- [Computers as I use to love them](https://tonsky.me/blog/syncthing/)
+- [Threema Multi-Device: An Architectural Overview](https://threema.ch/en/blog/posts/md-architectural-overview)
+- [The right to delete: how faker.js exposed the fragile nature of open source culture, again](https://www.thegingerviking.com/the-right-to-delete-fakerjs-fragile-nature-open-source/)
+- [XMPP: the secure communication protocol that respects privacy](https://notes.nicfab.it/post/xmpp/xmpp/)
+- [Steam Deck Developer Kit Impressions](https://boilingsteam.com/steam-deck-developer-kit-impressions/)
+- [Scuttlebutt, A Decentralized Alternative To Facebook](https://www.inthemesh.com/archive/secure-scuttlebutt-facebook-alternative/)
+- [Ask HN: What do you think of the Wordle guy not monetizing it?](https://news.ycombinator.com/item?id=29916899)
+- [The curious case of teh RasPi in our network](https://blog.haschek.at/2019/the-curious-case-of-the-RasPi-in-our-network.html)
+- **nebula.app** [Spider-Man Writer Breaks Down the Game's Opening](https://nebula.app/videos/story-mode-spiderman-writer-breaks-down-the-games-opening)
+- [Big Fish Getting Bigger](https://cygnusentertainment.com/2022/01/19/big-fish-getting-bigger/)
+- **nebula.app** [How the Tongan shockwave caused a tsunami](https://nebula.app/videos/simonclark-how-the-tongan-shockwave-caused-a-tsunami)
+- **youtube via Piped** [Git's Best And Most Unknown Feature](https://piped.kavin.rocks/watch?v=2uEqYw-N8uE)
