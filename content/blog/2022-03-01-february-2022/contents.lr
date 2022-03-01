@@ -1,0 +1,90 @@
+title: February 2022
+---
+pub_date: 2022-03-01
+---
+_discoverable: yes
+---
+body:
+
+![Me sitting on the couch with my laptop, with a couch laptop table on top of my arms while triaging all shiori issues.](./image-360.png)
+
+<div class="text-center">I'm pretty sure this is how everyone use their laptops at home.</div>
+
+<!-- readmore -->
+
+## Personal projects
+
+- Started work on [dharma](https://code.fmartingr.dev/fmartingr/dharma), a simple tool to check for broken links, sources and hrefs on a static site to generate a report and potentially allow comparision with a local fpolder to check which files are not included/linked in the static site and can be deleted.
+
+- A lot of work in [**go-shiori**](https://github.com/go-shiori). After I wrote the original maintainer about the project it made me maintainer as well, so I've been making some quality of life fixes, triaging all issues and sorting some stuff here and there. Most of the time I'm just replying issues or reviewing pull requests, but the feeling or moving the project forward is amazing. There's a lot of work to do, though, so I'm grateful the community is there after all this time. I managed to make two releases and screw up only once!
+
+## Books
+
+- Read [**Press Reset**](https://www.goodreads.com/book/show/55277893-press-reset)
+
+- Read [**The Final Empire**](https://www.goodreads.com/book/show/58921971-el-imperio-final)
+
+- Read [**Last Hero Inuyashiki**](https://www.goodreads.com/series/177249-inuyashiki)
+
+- Read [**Umbral de lo siniestro**](https://www.goodreads.com/book/show/58975499-el-umbral-de-lo-siniestro)
+
+- Read this month:
+  - [**One Piece**](https://www.goodreads.com/series/57193-one-piece) (Up to date)
+  - [**Hellbound**](https://www.webtoons.com/en/thriller/hellbound/list?title_no=3598) (Up to date)
+  - [**Tokyo Revengers**](https://www.goodreads.com/series/256393-tokyo-revengers) (Volume 2)
+  - [**Gigant**](https://www.goodreads.com/series/249469-gigant) (Volume 8)
+  - [**Atelier of Witch-Hat**](https://www.goodreads.com/series/212829-tongari-b-shi-no-atelier) (Volume 2)
+
+## TVShows and Movies
+
+- Ongoing with [**Ranking of Kings**](https://beta.crunchyroll.com/series/G79H23W70/ranking-of-kings)
+
+- Finished [**The book of Boba Fett**](https://www.disneyplus.com/series/the-book-of-boba-fett/57TL7zLNu2wf). I'd say I liked it... but honestly I didn't. And the only thing that made me watch it through the end is 1) it is Star Wars 2) <span class="spoiler">Mando</span>.
+
+- As always, [**Nebula**](https://nebula.app/) and [**CuriosityStream**](https://curiositystream.com/) as daily drivers.
+
+- Watched the [**Legend of Vox Machina Season 1**](https://www.primevideo.com/detail/The-Legend-of-Vox-Machina/0O1MH4HMS00EO6XP75LWG5TB89)
+
+- **Harry Potter** marathon! Only the last two films remain.
+
+- I've not watched/checked on my Youtube feed for the entire month and I've lost the urge to check it out. Now I only check nebula from time to time (because it does not have updates daily) and I'm way happier and tend less to procastinate.
+
+## Games
+
+- Continuing with [**Please, don’t touch anythng!**](https://store.steampowered.com/app/354240/Please_Dont_Touch_Anything/). We are only two endings from finishing it.
+
+- Sort of finished [**Pokemon Legends: Arceus**](https://www.nintendo.es/Juegos/Nintendo-Switch/Leyendas-Pokemon-Arceus-1930510.html).
+
+  The game was crazy fun with the new catching mechanic, but the end-game is not very well crafted:
+
+  - The game doesn’t teach you to prepare a decent pokemon team
+
+  - The difficulty curve is just awful. After some easy battles with 3 pokemon max the last one is a trainer with 6 pokemon, swaps them to take type advantage and heals them to max health. At this point it can easily one shot your team easily if you're not carefu enough. <span class="spoiler">Which ends up being three combats in a row without healing in between (first vs 6 pokemon, then a legendary, and then the same legendary but angrier) making only two viable strategies: Grinding (which isn’t very effective in this game) or just sacrificing Pokemon in each fight because you know it’s going to kill them. (Which is, in fact, the  recommended method in online guides)</span>
+
+  - There was a lack of love and polish in general as well: secondary mission tracking can be vastly improved, the player should be able to travel between areas without passing through the village, if you give me a secondary mission to get _n_ items in each map, at least give me something to track them, since I already have to catch ~250 pokemon at least once, and on top of all, <span class="spoiler">don’t make having those collectibles mandatory for completing the pokedex because one pokemon only show up if you do</span>.
+that seem to be using the same engine as this one)
+  `</rant>`
+
+  Even after all that, I think is a good way to move forward with the pokemon franchise but is very obvious that this game needed more time to be polished and to think some things through.
+
+  I really hope they invest enough time in the next entries in the series since it seems that they share the engine.
+
+- Started [**Lost Ark**](https://store.steampowered.com/app/1599340/Lost_Ark/).
+
+  Oh geez, why did I do this.
+
+  ![My character fishing in Lost Ark](./lost-ark.png)
+
+## [Articles](https://t.me/fmartingr_articles)
+
+- [Google search is dying](https://dkb.io/post/google-search-is-dying)
+- **video** [Anti-Piracy in Nintendo DS Games](https://yewtu.be/watch?v=QiTene7mHpc)
+- [iCloud+ Custom Email Domains should be better](https://domlaut.com/icloud-custom-email-domains-should-be-better/)
+- [Alpine Linux and Docker Infrastructure Three Years Later](https://www.wezm.net/v2/posts/2022/alpine-linux-docker-infrastructure-three-years/)
+- [What using RSS feeds feels like](https://gilest.org/rss-feels.html)
+- [Things that used to be hard and are now easy](https://jvns.ca/blog/2022/02/20/things-that-used-to-be-hard-and-are-now-easy/)
+- **video** [Why There’s An Empty Skyscraper In The Middle Of Times Square](https://nebula.app/videos/hai-why-theres-an-empty-skyscraper-in-the-middle-of-times-square)
+- [Gemini isn't the solution to the broken web](https://kevq.uk/gemini-isnt-the-solution-to-the-broken-web/)
+- [Life of a DNS query](https://wizardzines.com/comics/life-of-a-dns-query/)
+- [Please don't use discord for FOSS projects](https://drewdevault.com/2021/12/28/Dont-use-Discord-for-FOSS.html)
+- [Why Facebook keeps collecting people’s data and building their profiles even when their accounts are deactivated](https://digiday.com/media/why-facebook-keeps-collecting-peoples-data-and-building-their-profiles-even-when-their-accounts-are-deactivated/)
