@@ -5,11 +5,11 @@ from lektor.pluginsystem import Plugin
 
 
 class EmojifyPlugin(Plugin):
-    name = u'lektor-emojify'
-    description = u'Add emoji to your pages'
+    name = "lektor-emojify"
+    description = "Add emoji to your pages"
 
     def emojize(self, text):
-        return emoji.emojize(text, use_aliases=True)
+        return emoji.emojize(text, language="alias")
 
     def on_markdown_config(self, config, **extra):
         class EmojizeMixin(object):
