@@ -1,13 +1,10 @@
 <header>
-    <div class="title">
+    <div class="avatar">
         {{ $image := resources.Get "images/avatar.jpg" }}
-        {{ $image := $image.Resize "64x" }}
+        {{ $image := $image.Resize "70x" }}
         <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" />
-        <div class="text">
-            <h1>Felipe Martin</h1>
-            <!-- <h2>Software Engineer</h2> -->
-        </div>
     </div>
+    <h1>Felipe Martín</h1>
     <nav>
         {{ range .Site.Menus.main }}
         <a class="nav-link" href="{{ .URL }}">

@@ -1,0 +1,20 @@
+---
+title: About me
+---
+
+Hi! I'm Felipe, and I am a developer. Whatever that is.
+
+I have been playing with code for a while now, but I also enjoy geeking around with computers, algorithms and other stuff; the less I know about it, the better!
+Learning new things every day is my way of life.
+
+I think that developers are like artists, writers and composers... we all make art. But we don't use strokes and colors, words or notes, we make it through code. And I really love it.
+
+If you want to get in touch feel free to drop me a line.
+
+- <a target="_blank" href="mailto:me@fmartingr.com">me@fmartingr.com</a>
+- <a target="_blank" href="https://www.linkedin.com/in/fmartingr/">linkedin.com/fmartingr</a>
+- <a target="_blank" rel="me" href="https://twitter.com/fmartingr">twitter.com/fmartingr</a>
+- <a target="_blank" rel="me" href="https://fosstodon.org/@fmartingr">fmartingr@fosstodon.org</a>
+- <a target="_blank" href="https://t.me/fmartingr">telegram.me/fmartingr</a>
+- <a target="_blank" href="https://github.com/fmartingr">github.com/fmartingr</a>
+- <a target="_blank" href="https://code.fmartingr.dev/fmartingr">code.fmartingr.dev/fmartingr</a>, personal git server

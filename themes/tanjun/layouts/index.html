@@ -1,3 +1,11 @@
 {{ define "main" }}
-
+<h2>Latest blog posts</h2>
+{{ range .Site.RegularPages }}
+<article class="blog-post">
+    <h3 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+    <div class="info text-small">{{ .Date.Format "January 02, 2006" }}</div>
+</article>
+{{end}}
 {{ end }}
+
+{{ define "bodyclass" }}home{{ end }}

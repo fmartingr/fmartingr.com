@@ -1,0 +1,12 @@
+<article class="blog-post">
+    <h1 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+    <div class="info">
+        Published on {{ .Date.Format "January 02, 2006" }}
+    </div>
+    <div class="content">
+        {{ .Summary }}
+        {{ if .Truncated }}
+        <p class="text-right"><a href="{{ .Permalink }}">Read more &raquo;</a></p>
+        {{ end }}
+    </div>
+</article>

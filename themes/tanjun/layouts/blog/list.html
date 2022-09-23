@@ -1,0 +1,11 @@
+{{ define "main" }}
+<main>
+    {{ $paginator := .Paginate (where .Pages "Type" "blog") }}
+    {{ template "_internal/pagination.html" . }}
+    {{ range $paginator.Pages }}
+    {{ template "blog/summary.html" . }}
+    {{ end }}
+    </ul>
+</main>
+{{ end }}
+

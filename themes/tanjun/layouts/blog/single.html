@@ -1,0 +1,19 @@
+{{ define "bodyclass" }}blog post{{ end }}
+
+{{ define "main" }}
+<article class="blog-post">
+    <h1 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+    <div class="info">
+        Published on {{ .Date.Format "January 02, 2006" }}
+    </div>
+    <div class="content">
+        {{ .Content }}
+    </div>
+    <hr />
+</article>
+
+<div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel
+    from <a href="/about">the about page</a>.
+</div>
+{{ end }}
