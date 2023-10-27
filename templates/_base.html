@@ -30,11 +30,12 @@
       </header>
       <hr>
       <section class="main-content">
-        {% block main_content %}asd{% endblock %}
+        {% block main_content %}{% endblock %}
       </section>
       <hr>
       <footer>
-        Site created using <a target="_blank" href="https://getlektor.com">Lektor</a>. Source code available in <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Github</a>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
       </footer>
     {% block endbody %}{% endblock %}
   </body>

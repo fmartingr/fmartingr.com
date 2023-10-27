@@ -7,5 +7,5 @@ url_style = absolute
 lektor-markdown-header-anchors = 0.3.1
 lektor-atom = 0.4.0
 lektor-htmlmin = 1.0.3
-lektor-markdown-highlighter = 0.3.1
-lektor-scss = 1.4.0
+lektor-markdown-highlighter = 0.3.2
+lektor-scss = 1.4.1
