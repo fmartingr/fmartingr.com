@@ -1,0 +1,40 @@
+
+title: My defaults at the end of 2023
+---
+pub_date: 2023-12-31
+---
+tags: technology
+---
+body:
+
+I'm too joining this trend, since it seems like a good idea to keep track of the tools I use, others may discover new ones as I have done in people lists, and it's a good way to see how my preferences change over time.
+
+Here's my list for this year:
+
+| Category              | Tools/Platforms                                                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 💻 Operating System    | [MacOS](https://www.apple.com/macos/)                                                                                     |
+| ⌨️ Launcher            | [Alfred](https://www.alfredapp.com/)                                                                                      |
+| 📱 Mobile OS           | [iPhone](https://www.apple.com/iphone/)                                                                                   |
+| 📨 Mail Client         | [Fastmail Web](https://www.fastmail.com/)                                                                                 |
+| 📝 Notes               | [Notion](https://www.notion.so/) (personal) & [Obsidian](https://obsidian.md/) (personal/work)                            |
+| 🖼️ Photo Management    | [Google Photos](https://photos.google.com/) / [iCloud Photos](https://www.icloud.com/photos/) / Local NAS (A mess)        |
+| 📆 Calendar            | [Fantastical](https://flexibits.com/fantastical)                                                                          |
+| 🙍🏻‍♂️ Contacts            | [Fastmail](https://www.fastmail.com/)                                                                                     |
+| 📁 File Storage        | [SynologyDrive](https://www.synology.com/en-us/dsm/feature/drive) & [Syncthing](https://syncthing.net/)                   |
+| 🌐 Browser             | [Arc](https://arc.net/)                                                                                                   |
+| 🔎 Search Engine       | [Kagi](https://kagi.com)                                                                                                  |
+| 🔖 Bookmarks           | [Shiori](https://github.com/go-shiori/shiori)                                                                             |
+| 📑 Read It Later       | [Shiori](https://github.com/go-shiori/shiori)                                                                             |
+| 📖 RSS Reader          | [Miniflux](https://miniflux.app/)                                                                                         |
+| ☑️ Task Management     | [Todoist](https://todoist.com/)                                                                                           |
+| 🛒 Shopping Lists      | [Todoist](https://todoist.com/)                                                                                           |
+| 👥 Social Media        | [Mastodon](https://joinmastodon.org/)                                                                                     |
+| 💬 Chat                | [Telegram](https://telegram.org/), [Element](https://element.io/), [iMessage](https://support.apple.com/explore/messages) |
+| 💰 Finances            | [Actual](https://actualbudget.com/)                                                                                       |
+| 🎵 Music               | [Apple Music](https://music.apple.com/) / [Bandcamp](https://bandcamp.com/) / Local NAS                                   |
+| 🎤 Podcasts            | [Apple Podcasts](https://www.apple.com/podcasts/) / [iVoox](https://www.ivoox.com/)                                       |
+| 🔐 Password Management | [1Password](https://1password.com/)                                                                                       |
+| 🧑‍💻 IDE and Code Editor | [Visual Studio Code](https://code.visualstudio.com/)                                                                      |
+| 🔑 VPN                 | [Tailscale](https://tailscale.com/) , [WireGuard](https://www.wireguard.com/)                                             |
+| 🏠 Home automation     | [Home Assistant](https://www.home-assistant.io/)                                                                          |
