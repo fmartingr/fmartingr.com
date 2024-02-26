@@ -4,7 +4,12 @@ import shutil
 from lektor.build_programs import AttachmentBuildProgram, buildprogram
 from lektor.context import get_ctx
 from lektor.db import Image
-from lektor.imagetools import compute_dimensions, get_image_info, get_quality, find_imagemagick
+from lektor.imagetools import (
+    compute_dimensions,
+    get_image_info,
+    get_quality,
+    find_imagemagick,
+)
 from lektor.pluginsystem import Plugin
 from lektor.reporter import reporter
 from lektor.utils import portable_popen
@@ -109,9 +114,9 @@ class ResizedImageBuildProgram(AttachmentBuildProgram):
 
 
 class ThumbnailGeneratorPlugin(Plugin):
-    name = u"thumbnail-generator"
-    description = u"A configurable way to generate thumbnails."
-    image_exts = ["png", "jpg", "jpeg", "gif"]
+    name = "thumbnail-generator"
+    description = "A configurable way to generate thumbnails."
+    image_exts = ["png", "jpg", "jpeg", "gif", "webp"]
 
     @cached_property
     def config(self):
