@@ -1,0 +1,103 @@
+title: Create an audiobook file from several mp3 files using ffmpeg
+---
+pub_date: 2024-03-12
+---
+tags: guide
+---
+body:
+
+Due to some recent traveling I have started to listen to audiobooks. I love reading but some times my eyes are just too tired to go with it but I'm not sleepy at all or maybe I just wanted the convenience to lay down but still _do_ something.
+
+Short story, I bought some from a known distributor but I'm a fan of data preservation and actually owning what I pay for. I found an application in Github that allowed me to download the files that composed the audiobook in split mp3 files, but that didn't do. I wanted a single file with correct metadata, so I got my hands dirty.
+
+![](./book_player_screenshot-360.jpeg)
+
+<!-- readmore -->
+
+Assuming you have the mp3 laying around in a folder, we need to generate or find three more things:
+
+- **`files.txt`**: A list of the MP3 files in the order we are going to combine them, in a plain text file with the format `file '<filename>'`.
+
+  You can use a simple bash command to generate the file:
+
+  ```sh
+  find . -type f -name "*mp3" -exec printf "file '%s'\n" {} \; | sed "s|\.\/||g" > files.txt
+  ```
+
+- **`metadata.txt`**: A metadata file to be used with the bundled file that contain basic information of the audiobook (title, author, narrator, ...) along with chapter information.
+
+  An example looks like this, documentation can be found [in the ffmpeg documentation](https://ffmpeg.org/ffmpeg-formats.html#Metadata-1):
+
+  ```ini
+  ;FFMETADATA1
+  title=Book name
+  artist=Book author(s)
+  composer=Book narrator(s)
+  publisher=Book publisher
+  date=Book date of publication
+
+  [CHAPTER]
+  TIMEBASE=1/1000
+  START=0 # 0:00:00
+  END=60000 # 0:01:00
+  title=Intro # Chapter title
+
+  # Repeat the [CHAPTER] block for all chapters
+  ```
+
+- **`cover.jpg`**: The artwork of the audiobook. The files I have been using (downloaded from the store) are 353x353@72dpi. I'm unsure if that's by definition, but at least be sure to use squared images.
+
+With all the files in place, we can use `ffmpeg` to do the conversion. I have followed a multi step approach to make sure I can review the process and fix any issues that may arise. Pretty sure this can be simplified somehow but I'm not a `ffmpeg` expert and I have spent too much time on this already.
+
+1. Concatenate the files into a single `mp3` file.
+
+  ```sh
+  ffmpeg -f concat -i files.txt -c copy build_01_concat.mp3
+  ```
+
+  - `-f concat`: Use the `concat` format, meaning we are going to concatenate files.
+  - `-i files.txt`: The file with the list of files to concatenate as input to ffmpeg.
+  - `-c copy`: The stream copy codec for each stream, meaning we are not going to re-encode the files, just copy them.
+  - `build_01_concat.mp3`: The output file.
+
+1. Add the cover to the file.
+
+  ```sh
+  ffmpeg -i build_01_concat.mp3 -i cover.jpg -c copy -map 0 -map 1 build_02_cover.mp3
+  ```
+
+  - `-i build_01_concat.mp3`: The file created in the above step to be used as input to ffmpeg.
+  - `-i cover.jpg`: The cover image to be added to the file as second input to ffmpeg.
+  - `-c copy`: The stream copy codec for each stream, meaning we are not going to re-encode the files, just copy them.
+  - `-map 0 -map 1`: Maps the streams from the input files to the output file.
+  - `build_02_cover.mp3`: The output file.
+
+1. Convert the `mp3` file to `m4a`.
+
+  ```sh
+  ffmpeg -i build_02_cover.mp3 -c:v copy build_03_m4a.m4a
+  ```
+
+  - `-i build_02_cover.mp3`: The file created in the above step to be used as input to ffmpeg.
+  - `-c:v copy`: The video codec to be used for the output file, meaning we are not going to re-encode the file, just copy it.
+  - `build_03_m4a.m4a`: The output file.
+
+4. Add the metadata to the `m4a` file and convert it to `m4b`.
+
+  ```sh
+  ffmpeg -i build_03_m4a.m4a -i metadata.txt -map 0 -map_metadata 1 -c copy book.m4b
+  ```
+
+  - `-i build_03_m4a.m4a`: The file created in the above step to be used as input to ffmpeg.
+  - `-i metadata.txt`: The metadata file to be used as second input to ffmpeg.
+  - `-map 0 -map_metadata 1`: Maps the streams from the input files to the output file.
+  - `-c copy`: The stream copy codec for each stream, meaning we are not going to re-encode the files, just copy them.
+  - `book.m4b`: The final output file.
+
+5. Clean up the files we created in the process that we don't need anymore.
+
+  ```sh
+  rm build_* files.txt
+  ```
+
+That's it! You should have a `m4b` file with the audiobook ready to be imported to your favorite audiobook player. I have tested this process with a couple of books and it worked like a charm. I hope it helps you too.
