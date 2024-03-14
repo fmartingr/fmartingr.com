@@ -1,0 +1,174 @@
+title: Journey to K3S: Basic cluster setup
+---
+pub_date: 2024-03-14
+---
+tags: k3s
+---
+body:
+
+I've finally started to play with K3S, a lightweight Kubernetes distribution. I have been reading about it for a while and I'm excited to see how it performs in my home lab. My services have been running in an Intel NUC running Docker container for some years now, but the plan is to migrate them to a k3s cluster of three NanoPC-T6 boards.
+
+I was looking for a small form-factor and low power consumption solution, and the NanoPC-T6 seems to fit the bill. I know I'm going to stumble upon some limitations but I'm eager to see how it goes and the problems I find along the way.
+
+My requirements are very simple: I want to run a small cluster with a few services, and I want to be able to access them from the internet and from my home. My current setup relies on Tailscale for VPN and Ingress for the services, so I'm going to try and replicate that in this new setup.
+
+![Picture of three nanopc-t6 computers on top of each other running k3s](./nanopc-cluster-360.jpeg)
+
+<!-- readmore -->
+
+## Installing DietPi on the NanoPC-T6
+
+I'm completely new to [DietPi](https://dietpi.com), but nothing that FriendlyElec offered seemed to fit my needs. I'm not a fan of the pre-installed software and I wanted to start from scratch. I tried to find compatible OSs around and there weren't many, but DietPi seemed to be a good fit and it's actively maintained.
+
+At first I tried to run from an SD Card and try and copy the data manually, but I found out that the NanoPC-T6 has an eMMC slot, so I decided to go with that. I flashed FriendlyWRT into the SD Card, booted it and used their tools to flash DietPi into the eMMC.
+
+> For this to work properly under my home network setup I had to physically connect a computer and a keyboard to the boards and disable the firewall service using: `service firewall stop`. I believe this happened because the boards live in a different VLAN/subnet in my local network since I connect new devices to a different VLAN for security reasons. With that disabled I could access the boards from my computer and continue the setup.
+
+![Flashing DietPi into the NanoPC-T6 using FriendlyWRT's web interface](./friendlywrt-emmc-tools-360.jpg)
+
+## Setting up the OS
+
+The first thing once you SSH to the boards is to change the default and global software passwords. Once the setup assistant was over I setup a new SSH key and disabled the password login.
+
+Before installing K3s I wanted to make sure the OS was up to date and had the necessary tools to run the cluster. I used the `dietpi-software` tool to be sure that some convenience utilities like `vim`, `curl` and `git` where present.
+
+I also set up the hostname by using the `dietpi-config` tool to `k3s-master-03`, `k3s-master-02` and `k3s-master-03` for the three boards.
+
+And installed `open-iscsi` to be prepared in the case I end up setting up [Longhorn](https://longhorn.io/).
+
+## Setting up the network
+
+I'm using Tailscale to connect the boards to my home network and to the internet. I installed [Tailscale](https://tailscale.com) using `dietpi-software` and link the device to my account using `tailscale up`.
+
+I also set up the static IP address for the boards using my home router. I'm using a custom [pfsense](https://www.pfsense.org/) router and I set up the IP address for the boards using the MAC address of the boards on the VLAN they are going to reside in.
+
+## Installing K3S
+
+I followed the [official documentation](https://docs.k3s.io/datastore/ha-embedded) to create an embedded etcd highly available cluster.
+
+> I'm not a fan of the `curl ... | sh` installation methods around, but this is the official way to install K3S and I'm going to follow it for convenience. **Always check the script before running it.**.
+
+1. I created the first node using the following command:
+
+   ```bash
+   curl -sfL https://get.k3s.io | K3S_TOKEN=<token> sh -s - server --cluster-init
+   ```
+
+    I used the `K3S_TOKEN` environment variable to set the token for the cluster that I will need to join the other two nodes to the cluster. Since this is the first node of the cluster I had to provide the `--cluster-init` flag to initialize the cluster.
+
+2. I joined the other two nodes to the cluster using the following command:
+
+    ```bash
+    curl -sfL https://get.k3s.io | K3S_TOKEN=<token> sh -s - server --server https://<internal ip of the first node>:6443
+    ```
+
+3. Done! I have a three node K3S cluster running in my home lab. Is **that** simple.
+
+![Output of kubectl get nodes showing three ready nodes](./kubectl-nodes-ready-360.jpg)
+
+## Checking that it works
+
+I'm going to deploy a simple service to check that the cluster is working properly. I'm going to use the `nginx` image and expose it using an Ingress:
+
+1. Create the `hello-world` namespace:
+
+    ```bash
+    kubectl create namespace hello-world
+    ```
+
+2. Create a simple index file:
+
+    ```bash
+    echo "Hello, world!" > index.html
+    ```
+
+3. Create a `ConfigMap` with the index file:
+
+    ```bash
+    kubectl create configmap hello-world-index-html --from-file=index.html -n hello-world
+    ```
+
+4. Create a deployment using the `nginx` image and the config map we just created:
+
+    ```bash
+    kubectl apply -f - <<EOF
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+        name: hello-world-nginx
+        namespace: hello-world
+    spec:
+        selector:
+            matchLabels:
+            app: hello-world
+        replicas: 3
+        template:
+            metadata:
+            labels:
+                app: hello-world
+            spec:
+            containers:
+            - name: nginx
+                image: nginx
+                ports:
+                - containerPort: 80
+                volumeMounts:
+                - name: hello-world-volume
+                mountPath: /usr/share/nginx/html
+            volumes:
+            - name: hello-world-volume
+                configMap:
+                name: hello-world-index-html
+    EOF
+    ```
+
+5. Create the service to expose the deployment:
+
+    ```bash
+    kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: Service
+    metadata:
+        name: hello-world
+        namespace: hello-world
+    spec:
+        ports:
+            - port: 80
+            protocol: TCP
+        selector:
+            app:  hello-world
+    EOF
+    ```
+
+6. Create the Ingress to expose the service to the internet:
+
+    ```bash
+    kubectl apply -f - <<EOF
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+        name: hello-world
+        namespace: hello-world
+    spec:
+        ingressClassName: "traefik"
+        rules:
+        - host: hello-world.fmartingr.dev
+          http:
+            paths:
+            - path: /
+                pathType: Prefix
+                backend:
+                service:
+                    name: hello-world
+                    port:
+                    number: 80
+    EOF
+    ```
+
+Done! I can access the service from my local network using the `hello-world.fmartingr.dev` domain:
+
+![A curl command to one of the nodes checking ingress connectivity](./curl-ingress-ready-360.jpg)
+
+That's it! I have a cluster running and I can start playing with it. There's a lot more to be done and progress will be slow since I'm doing this in my free time to dogfood kubernetes at home.
+
+Will follow up with updates once I make more progress, see you on the next one.
