@@ -37,7 +37,7 @@
       <hr>
       <footer>
         <div>My opinions are my own.</div>
-        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a>{% if last_build_date %}| Built: {{ last_build_date }}{% endif %}</div>
       </footer>
     {% block endbody %}{% endblock %}
   </body>
