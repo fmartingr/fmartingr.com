@@ -1,0 +1,128 @@
+
+title: FOSDEM 2024
+---
+pub_date: 2024-02-26
+---
+tags: conferences, fosdem
+---
+_discoverable: yes
+---
+_model: blog-post
+---
+body:
+
+![FOSDEM 2024 Opening Keynote](./fosdem-2024-360.jpeg)
+
+First weekend of February was, as usual, the FOSDEM conference in Belgium, and I could not miss it. I started attending a few years back, and since then I have tried going if my schedule allowed it.
+
+This is a super brief summary of my experience during the event on the two days I was there, though this year I left early on Sunday before the conference properly finished so Sunday was a bit more scarce. A lot of unattended talks from the agenda too, I have a **huge** backlog of videos to watch now.
+
+<!-- readmore -->
+
+As usual I met with friends and old colleagues and the event in general was a blast. I came back with recharged batteries to dedicate to my open source projects and to revive this blog. I didn't have much spare time to dedicate to anything since then, but I will try to do a bit of daily grind to meet some goals.
+
+## Saturday
+
+This is the best day for me because you come fresh and with a lot of motivation (unless you came back late from Delirium Cafe that night!) and eager to get things rolling.
+
+After a crappy breakfast (because there was no coffeeshop open nearby our place but Starbucks) we went to the conference and the first thing to do, donate! I got a hoodie a two t-shirts. I think is only natural to donate _something_ to an event that is free to attend for everyone, and very well organized on top of that.
+
+> I may be biased on that last statement, since this is the only conference I attend. Years ago I attended more (mostly local conferences in Spain) but now this is the one.
+
+After the [Welcome to FOSDEM 2024](https://fosdem.org/2024/schedule/event/fosdem-2024-3023-welcome-to-fosdem-2024/) starting keynote, I made myself strong on the Go track since it was the one that interested me the most and a colleague was giving a talk as well, and I attended a few in that track (with a stop to have lunch, of course).
+
+- [The state of Go](https://fosdem.org/2024/schedule/event/fosdem-2024-1681-the-state-of-go/): A regular for the past years, an update of what interesting changes happened (or are about to happen) with Go since last FOSDEM. In this case I already new most of them but made notes to review `yield` and `RangeFunc` which I didn't kew were coming to the language.
+
+- [The secret life of a goroutine](https://fosdem.org/2024/schedule/event/fosdem-2024-1704-the-secret-life-of-a-goroutine/): An interesting talk talking about how goroutines work from the point of view of a _necromancer_. The content was good but rushed, since the speaker only had 25m minutes and it had to prepare the audience and then explain the concepts, but going deeper or have a better understanding is good homework for the audience (us) to do afterwards.
+
+- [You're already running my code in production: My simple journey to becoming a Go contributor.](https://fosdem.org/2024/schedule/event/fosdem-2024-1813-you-re-already-running-my-code-in-production-my-simple-journey-to-becoming-a-go-contributor-/): The humble story of how a bug became a Go contribution and what were the steps required to arrive to that, showing that anyone can aim to make a contribution to the Go source code.
+
+- [Maintaining Go as a day job - a year later](https://fosdem.org/2024/schedule/event/fosdem-2024-2000-maintaining-go-as-a-day-job-a-year-later/): A very descriptive and fun talk about the pros and cons of maintaining open source software from his point of view as a maintainer of the cryptography library, as well as other contractors, showing that working in open source full time is possible, just not what you might expect.
+
+-  [How we almost secured our projects by writing more tests](https://fosdem.org/2024/schedule/event/fosdem-2024-1884-how-we-almost-secured-our-projects-by-writing-more-tests/)
+
+-  [Dependency injection: a different way to structure a project](https://fosdem.org/2024/schedule/event/fosdem-2024-1868-dependency-injection-a-different-way-to-structure-a-project/)
+
+-  [Putting an end to Makefiles in go projects with GoReleaser](https://fosdem.org/2024/schedule/event/fosdem-2024-1853-putting-an-end-to-makefiles-in-go-projects-with-goreleaser/): Already knew that Goreleaser was awesome, but his statement was bold enough to catch my interest. In the end it just showed up basic concepts of Goreleaser, and I still love my Makefiles.
+
+- [Low code graphical apps with Go top to bottom!](https://fosdem.org/2024/schedule/event/fosdem-2024-2621-low-code-graphical-apps-with-go-top-to-bottom-/): A talk about [fyne](https://fyne.io/) and the new (or at least new to me) [fyne GUI editor "defyne"](https://github.com/fyne-io/defyne), showing up how you can build interfaces directly from a graphical interface and it automatically generates some JSON definitions and Go code to go with your app.
+
+- [Creating a multiplayer game in Go, from zero](https://fosdem.org/2024/schedule/event/fosdem-2024-1886-creating-a-multiplayer-game-in-go-from-zero/)
+
+- [Smartwatch firmware... in Go? On TinyGo, small displays, and building a delightful developer experience](https://fosdem.org/2024/schedule/event/fosdem-2024-2562-smartwatch-firmware-in-go-on-tinygo-small-displays-and-building-a-delightful-developer-experience/):Content was super interesting and fun, though the speaker was clearly nervous, it was amazing how a super small firmware with go for the pine time was built, and even with just basic features I saw on the fediverse that the battery lasted for more than a month!
+
+- [Go Without Wires Strikes Back](https://fosdem.org/2024/schedule/event/fosdem-2024-2270-go-without-wires-strikes-back/): It was a bit of a lie, since there were wires involved, but -as expected- it didn't disappoint, and he managed to fly a drone over the crowd, **again**. TinyGo looks awesome, if I just had some project that could build with it.
+
+And with that, we left for the day to have dinner. The venue of choice was the [Brew Dog](https://www.brewdog.com/eu_en/brewdog-brussels) since there were some events happening in there the day before, we choose to go there for dinner and some drinks and we met with some people from FOSDEM as well, as there were more meetups happening on Saturday too.
+
+After that, another mandatory visit to Delirium Cafe, and the day was over.
+
+## Sunday
+
+I attended way less talks than anticipated because:
+1) Sunday usually is social day, that means I usually find old colleagues and friends around so I stop to chat, grab something to drink, etc.
+2) This year I left on Sunday so I had to skip some of the afternoon talks.
+3) I also missed some morning talks because the taxi that had to pick me up bluntly ignored me and went its way, so I arrived more than an hour late to the venue.
+
+When life give you lemons, you made lemonade. I took advantage of the situation and sat down around with my laptop to clean Github notifications that pile up week after week until I cleaned them, I wanted to release [shiori](https://github.com/go-shiori/shiori) 1.6.0 during FOSDEM but an unfortunate Windows bug had other plans.
+
+Some of the talks I attended that day:
+
+- [New Workflow Orchestrator in town: "Apache Airflow 2.x"](https://fosdem.org/2024/schedule/event/fosdem-2024-1652--new-workflow-orchestrator-in-town-apache-airflow-2-x-/):
+
+- [Data workflows: translating dbt to Apache Airflow](https://fosdem.org/2024/schedule/event/fosdem-2024-1651-data-workflows-translating-dbt-to-apache-airflow/)
+
+- [A slow migration from Django templates to Vue+GraphQL](https://fosdem.org/2024/schedule/event/fosdem-2024-2326-a-slow-migration-from-django-templates-to-vue-graphql/)
+
+- [Chaos Engineering in Action: Enhancing Resilience in Strimzi](https://fosdem.org/2024/schedule/event/fosdem-2024-2194-chaos-engineering-in-action-enhancing-resilience-in-strimzi/)
+
+- [Version control post-Git](https://fosdem.org/2024/schedule/event/fosdem-2024-3423-version-control-post-git/)
+
+And from there, to the airport, and home! See you next year FOSDEM!
+
+## The ones I missed
+
+This are all the talks that I missed because of the problems I had, conflicting events or because I didn't make it in time/room was full, in no particular order:
+
+- [Where have the women of tech history gone?](https://fosdem.org/2024/schedule/event/fosdem-2024-2850-where-have-the-women-of-tech-history-gone-/)
+- [DIY Private Container Registry](https://fosdem.org/2024/schedule/event/fosdem-2024-2161-diy-private-container-registry/)
+- [Open Food Facts: Learning and using Perl in 2024 to transform the food system !](https://fosdem.org/2024/schedule/event/fosdem-2024-3743-open-food-facts-learning-and-using-perl-in-2024-to-transform-the-food-system-/)
+- [Observations on a DNSSEC incident: the russian TLD](https://fosdem.org/2024/schedule/event/fosdem-2024-3740-observations-on-a-dnssec-incident-the-russian-tld/)
+- [A simple caching service for your CI](https://fosdem.org/2024/schedule/event/fosdem-2024-2671-a-simple-caching-service-for-your-ci/)
+- [The API Landscape : mapping the 2000+ API and opensource tooling for Developers](https://fosdem.org/2024/schedule/event/fosdem-2024-2952-the-api-landscape-mapping-the-2000-api-and-opensource-tooling-for-developers/)
+- [Effortless Bug Hunting with Differential Fuzzing](https://fosdem.org/2024/schedule/event/fosdem-2024-1927-effortless-bug-hunting-with-differential-fuzzing/)
+- [Cost-Effective AI Processing with Open Source Infrastructure](https://fosdem.org/2024/schedule/event/fosdem-2024-3656-cost-effective-ai-processing-with-open-source-infrastructure/)
+- [What's new in Containerd 2.0!](https://fosdem.org/2024/schedule/event/fosdem-2024-3060-what-s-new-in-containerd-2-0-/)
+- [An open-source, open-hardware offline finding system](https://fosdem.org/2024/schedule/event/fosdem-2024-3264-an-open-source-open-hardware-offline-finding-system/)
+- [vscode-container-wasm: An Extension of VSCode on Browser for Running Containers Within Your Browser](https://fosdem.org/2024/schedule/event/fosdem-2024-3187-vscode-container-wasm-an-extension-of-vscode-on-browser-for-running-containers-within-your-browser/)
+- [How do you write an emulator anyway ?](https://fosdem.org/2024/schedule/event/fosdem-2024-2146-how-do-you-write-an-emulator-anyway-/)
+- [Panda3DS: Climbing the tree of 3DS emulation](https://fosdem.org/2024/schedule/event/fosdem-2024-1726-panda3ds-climbing-the-tree-of-3ds-emulation/)
+- [Breathing Life into Legacy: An Open-Source Emulator of Legacy Apple Devices](https://fosdem.org/2024/schedule/event/fosdem-2024-2826-breathing-life-into-legacy-an-open-source-emulator-of-legacy-apple-devices/)
+- [CONFEDSS: Concolic execution and the puzzling practice of peripheral emulation](https://fosdem.org/2024/schedule/event/fosdem-2024-2247-confedss-concolic-execution-and-the-puzzling-practice-of-peripheral-emulation/)
+- [Arm64EC: Microsoft's emulation Frankenstein](https://fosdem.org/2024/schedule/event/fosdem-2024-1762-arm64ec-microsoft-s-emulation-frankenstein/)
+- [Yet another event sourcing library](https://fosdem.org/2024/schedule/event/fosdem-2024-2255-yet-another-event-sourcing-library/)
+- [Self-hosting and autonomy using guix-forge](https://fosdem.org/2024/schedule/event/fosdem-2024-2560-self-hosting-and-autonomy-using-guix-forge/)
+- [Do you know YAML?](https://fosdem.org/2024/schedule/event/fosdem-2024-2046-do-you-know-yaml-/)
+- [Welcome to Retrocomputing Devroom](https://fosdem.org/2024/schedule/event/fosdem-2024-3592-welcome-to-retrocomputing-devroom/)
+- [Project websites that don't suck](https://fosdem.org/2024/schedule/event/fosdem-2024-3154-project-websites-that-don-t-suck/)
+- [FOSS for DOCS](https://fosdem.org/2024/schedule/event/fosdem-2024-2043-foss-for-docs/)
+- [Journey to an open source contribution](https://fosdem.org/2024/schedule/event/fosdem-2024-1776-journey-to-an-open-source-contribution/)
+- [Gameboy Advance hacking for retrogamers](https://fosdem.org/2024/schedule/event/fosdem-2024-1771-gameboy-advance-hacking-for-retrogamers/)
+- [Gotta Catch ‘Em All! Raspberry Pi and Java Pokemon Training](https://fosdem.org/2024/schedule/event/fosdem-2024-3629-gotta-catch-em-all-raspberry-pi-and-java-pokemon-training/)
+- [A Game Boy and his cellphone](https://fosdem.org/2024/schedule/event/fosdem-2024-1718-a-game-boy-and-his-cellphone/)
+- [The wonderful life of a SQL query in a streaming database](https://fosdem.org/2024/schedule/event/fosdem-2024-3342-the-wonderful-life-of-a-sql-query-in-a-streaming-database/)
+- [Switching the FOSDEM conference management system to pretalx](https://fosdem.org/2024/schedule/event/fosdem-2024-3472-switching-the-fosdem-conference-management-system-to-pretalx/)
+- [S2S: PeerTube instance dedicated to Sign Language](https://fosdem.org/2024/schedule/event/fosdem-2024-2802-s2s-peertube-instance-dedicated-to-sign-language/)
+- ... and probably others
+
+## Worth mentioning
+
+### Cookies from Firefox!
+
+There was a small stand that gave free cookies courtesy of Firefox. Do you accept cookies?
+
+![Firefox food truck giving free cookies to FOSDEM atendees](./cookies-from-firefox-640.jpeg)
+
+### MacBook Pro M2 battery life
+
+I removed my laptop from current early Friday morning, when I arrived back home Sunday night my laptop still had 19% battery left, after use it to take notes, watch videos, develop, having [orbstack](https://orbstack.dev/) running in the background... In terms of battery I haven't seen anything better.

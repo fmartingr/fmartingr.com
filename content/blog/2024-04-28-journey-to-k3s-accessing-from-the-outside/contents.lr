@@ -1,0 +1,121 @@
+title: Journey to K3s: Accessing from the Outside
+---
+pub_date: 2024-04-28
+---
+tags: k3s, networking
+---
+body:
+
+Up until now I have been working locally (on my home network). While that is enough for most of the services I'm running I need to access some of them from the outside. For example, I want to expose this blog to the internet and access Miniflux to read my RSS feeds on the go.
+
+There are a few ways to achieve this but I have some specific requirements that I want to meet:
+
+1. **Zero-trust approach**: I don't want to expose the services directly to the internet.
+2. **Public services**: Other clients apart from me should be able to access some of the services.
+3. **Home IP safety**: Don't directly expose my home IP address. (This is on par with #1, but I want to make it explicit).
+4. **On-transit encryption**: Full on transit encryption from the client to the cluster with no re-encryption in the middle.
+5. No Cloudflare. (Breaks #4)
+6. No Tailscale. (Breaks #2, also there are other users at home and I don't want to have the Tailscale client running all the time).
+
+What does this leave me? A reverse proxy server.
+
+![](./healthcheck-360.png)
+
+<!-- readmore -->
+
+I'm going to setup [HAProxy](https://www.haproxy.org/) in a separate external server to act as a reverse proxy that will connect to my home k3s cluster directly, but since the DNS records will point to this HAProxy server my home IP address will not be exposed. HAProxy won't be able to decrypt the traffic but leverage the [SSL SNI header](https://en.wikipedia.org/wiki/Server_Name_Indication) to route the traffic back to the cluster for the allowed domains that I setup. This way I can have a zero-trust approach and have the traffic encrypted from the client to the cluster.
+
+So, to start working I created a new VPS in [Hetzner Cloud](https://hetzner.cloud/?ref=gSMfCgZFSz1u) _(affiliate link)_ and installed HAProxy in there, which is the easy part. Once the system is up to date and with the minimal services running I can start working on setting up HAProxy.
+
+## Passthrough traffic
+
+Passthrough traffic is fairly simple, just create a _frontend_ that listens on port 443 and sends the traffic to the ssl _backend_ that check for SSL and sends data upstream to the k3s cluster. Since I'm are not decrypting the traffic [TCP mode](https://www.haproxy.com/documentation/haproxy-configuration-tutorials/load-balancing/tcp/) is used to tunnel the traffic.
+
+I'm going to use [`ssl-hello-chk`](https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#4-option%20ssl-hello-chk) option to ensure the traffic is SSL. This option checks if the first bytes of the connection are a valid SSL handshake, if not it will drop the connection.
+
+```cfg
+frontend k3s-01-ssl
+  # Listen on port 443 (HTTPS)
+  bind *:443
+
+  # Use TCP mode, meaning that HAProxy won't decrypt the traffic and just passthrough to the upstream server
+  mode tcp
+
+  # Enable advanced logging of TCP connections with session state and timers
+  option tcplog
+
+  # Send to the backend
+  use_backend k3s-01-ssl
+
+backend k3s-01-ssl
+  # Use TCP mode, meaning that HAProxy won't decrypt the traffic and just passthrough to the upstream server
+  mode tcp
+
+  # Balance the traffic between the servers in a round-robin fashion (not needed for a single server)
+  balance roundrobin
+
+  # Retry at least 3 times before giving up
+  retries 3
+
+  # Check if the traffic is SSL
+  option ssl-hello-chk
+
+  # Send the traffic to the k3s cluster
+  server home UPSTREAM_IP:443 check
+
+```
+
+## Force SSL (redirect HTTP to HTTPS)
+
+Since initially I'm not going to expose plain HTTP services I can just [redirect](https://www.haproxy.com/documentation/haproxy-configuration-tutorials/http-redirects/#sidebar) all HTTP trafic to HTTPS: Just need to create a new frontend that listens on port 80 and redirects the traffic to the HTTPS frontend. This should work transparently for the client.
+
+```cfg
+frontend k3s-01-http
+  # Listen on port 80 (HTTP)
+  bind *:80
+
+  # Use HTTP mode
+  mode http
+
+  # Redirect switching scheme to HTTPS
+  http-request redirect scheme https
+```
+
+## Deny non-allowed domains
+
+For security reasons I want to deny access to all domains that are not in the allowed list: that is domains that I explicitly allow for outside access.
+
+I'm going to create a file `/etc/haproxy/allowed-domains.txt` with the list of domains separated by newlines and use the [`acl`](https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/acls/) directive to check if the domain is in the list abruptly droping the connection if it's not.
+
+The file `/etc/haproxy/allowed-domains.txt` looks like this:
+
+```text
+# /etc/haproxy/allowed-domains.txt
+miniflux.fmartingr.com
+```
+
+The new configuration options for the **frontend** part. No changes needed on the backend.
+
+```cfg
+frontend k3s-01-ssl
+  # ... other configurations
+
+  # Allow up to 5 seconds to inspect the TCP request before giving up.
+  # Required since HAProxy needs to inspect the SNI header to route the traffic.
+  tcp-request inspect-delay 5s
+
+  # Accept the request only after the hello message is received (which should contain the SNI header).
+  tcp-request content accept if { req_ssl_hello_type 1 }
+
+  # Deny the request if the domain is not in the allowed list
+  acl allowed_domain req.ssl_sni -m end -i -f /etc/haproxy/allowed-domains.txt
+
+  # Send to the backend if the domain is allowed
+  use_backend k3s-01-ssl if allowed_domain
+```
+
+## Conclusion
+
+Once all this changes are in place I can restart the HAProxy service and the traffic should be routed to the k3s cluster so I can access the services from the outside without exposing my home IP address and have the traffic encrypted from the client to the cluster. Though not perfect this is a fairly simple and good setup, it requires manual labor but it's a good tradeoff for the requirements I have.
+
+> Back when I set up Miniflux [I created an ingress specifically for external access](/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/#setting-up-an-external-ingress) that wasn't working since my cluster could not be reached by the ACME servers on the domain I set up. Now that I have HAProxy in place the domain can be setup to point to it and the traffic will be correctly routed to the cluster completing the configuration by requesting a certificate from Let's Encrypt and exposing the Ingress to the internet.

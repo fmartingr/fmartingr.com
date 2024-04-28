@@ -1,0 +1,54 @@
+title: Importing data manually into a longhorn volume
+---
+pub_date: 2024-04-09
+---
+body:
+
+I was in the process of migrating [Shiori](https://github.com/go-shiori/shiori) from my docker environment to the new [k3s cluster I'm setting up](https://blog.josem.dev/2024-04-08-setting-up-a-k3s-cluster-on-raspberry-pi/). Shiori is a bookmarks manager that uses an SQLite database and a folder to store the data from the bookmarks. I didn't want to switch engines just yet since I want to improve SQLite's performance first, so I decided to move the data directly to a longhorn volume.
+
+This probably is super simple and vastly known but it wasn't clear for me at first. Posting it here for future reference and for anyone that might find it useful.
+
+<!-- readmore -->
+
+Considering that I already have the data from the docker volume in a `tar.gz` file exported with the correct hierachy the migration process is way simpler than I anticipated. I just need to create the Longhorn volume and the volume claim, create a pod that has access to the volume and pipe the data into the pod to the appropriate location.
+
+First create your volume in the way that you prefer. You can apply the YAML directly or use the Longhorn UI to create the volume. I created mine using the UI beforhand.
+
+With the volume and volume claim (named `shiori-data`) created I'm going to create a pod that has access to the volume via the volume claim. I'm going to use the same `shiori` image that I'm going to use in the final pod that will use the volume claim since I'm lucky to have the `tar` command in there. If you don't have it, you can use a different image that has `tar` bundled in it.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shiori-import-pod
+  namespace: shiori
+spec:
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: shiori-data
+  containers:
+    - name: shiori
+      image: ghcr.io/go-shiori/shiori:v1.6.2
+      volumeMounts:
+        - mountPath: "/tmp/shiori-data"
+          name: data
+   # In my personal case, I need to specify user, group and filesystem group to match the longhorn volume
+   # with the docker image specification.
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+```
+
+With the pod running I can copy the data into the volume by piping it into an `exec` call and upacking it with `tar` on the fly:
+
+```bash
+cat shiori_data.tar.gz | kubectl exec -i -n namespace shiori-import-pod -- tar xzvf - -C /tmp/shiori-data/
+```
+
+> **Note**: I tried using `kubectl cp` before to copy the file into the pod -since internally uses the same approach-, but I had some issues apparently due to different `tar` versions on my host machine and the destination pod so I decided to use the pipe approach and it worked. The result should be the same.
+
+With the data copied into the volume I can now delete the import pod and deploy the application using the approrpiate volume claim. In my case I just need to change the `mountPath` in the deployment container spec to the correct path where the application expects the data to be.
+
+I don't know why I expected this to be harder than it really is, but I am happy that I was able to migrate everything in less than an hour.

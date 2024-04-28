@@ -1,0 +1,310 @@
+title: Journey to K3S: Deploying the first service and its requirements
+---
+pub_date: 2024-03-25
+---
+tags: k3s, homelab
+---
+body:
+
+I have my K3S cluster up and running, and I'm ready to deploy my first service. I'm going to start migrating one of the simplest services I have running in my current docker setup, the RSS reader [Miniflux](https://miniflux.app/).
+
+I'm going to use Helm charts through the process since k3s supports Helm out of the box, but for this first service there's also some preparation to do. I'm missing the storage backend, a way to ingress traffic from the internet, a way to manage the certificates and the database. Also, I need to migrate my current data from one database to another, but those are postgresql databases so I guess a simple `pg_dump`/`pg_restore` or `psql` commands will do the trick.
+
+![A screenshot showing the miniflux namespace in my k3s cluster with healthy pods and a request to the internal ingress endpoint showing a 200 status code](./k9s-miniflux-running-locally-640.jpg)
+
+<!-- readmore -->
+
+## Setting up Longhorn for storage
+
+The first thing I need is a storage backend for my services. I'm going to use Longhorn for this, since it's a simple and easy to use solution that works well with k3s. I'm going to install it using Helm, and I'm going to use the default configuration for now.
+
+```yaml
+# longhorn-helm-chart.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: longhorn
+  namespace: kube-system
+spec:
+  repo: https://charts.longhorn.io
+  chart: longhorn
+  targetNamespace: longhorn-system
+  createNamespace: true
+  version: v1.6.0
+```
+
+```bash
+$ kubectl apply -f longhorn-helm-chart.yaml
+```
+
+This should generate all required resources for Longhorn to work. In my case I also enabled the ingress for the Longhorn UI to do some set up of the node allocated storage according to my needs and hardware, though I will not cover that in this post.
+
+```yaml
+# longhorn-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: longhorn-ingress
+  namespace: longhorn-system
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: longhorn-system-longhorn-auth-middleware@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: longhorn.k3s-01.home.arpa
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: longhorn-frontend
+            port:
+              number: 80
+```
+
+```bash
+$ kubectl apply -f longhorn-ingress.yaml
+```
+
+With this you should be able to access your Longhorn UI at the domain set up in your ingress. In my case it's `longhorn.k3s-01.home.arpa`.
+
+> Keep in mind that this is a local domain, so you might need to set up a local DNS server or add the domain to your `/etc/hosts` file.
+
+This example is not perfect by any means and if you plan to have this ingress exposed be sure to use a proper certificate and secure your ingress properly with authentication and other security measures.
+
+## Setting up cert-manager to manage certificates
+
+The next step is to set up cert-manager to manage the certificates for my services. I'm going to use Let's Encrypt as my certificate authority and allow cert-manager to generate domains for the external ingresses I'm going to set up.
+
+```yaml
+# cert-manager-helm-chart.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: cert-manager
+  namespace: kube-system
+spec:
+  repo: https://charts.jetstack.io
+  chart: cert-manager
+  targetNamespace: cert-manager
+  createNamespace: true
+  version: v1.14.4
+  valuesContent: |-
+    installCRDs: true
+```
+
+```bash
+$ kubectl apply -f cert-manager-helm-chart.yaml
+```
+
+In order to use Let's Encrypt as the certificate authority, I need to set up the issuer for it. I'm going to use the production issuer in this example since the idea is exposing the service to the internet.
+
+```yaml
+# letsencrypt-issuer.yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+  namespace: cert-manager
+spec:
+  acme:
+    email: your@email.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-produdction
+    solvers:
+    - http01:
+        ingress:
+          class: traefik
+```
+
+```bash
+$ kubectl apply -f letsencrypt-issuer.yaml
+```
+
+With this, I should be able to request certificates for my services using the `letsencrypt-production` issuer.
+
+## Setting up the CloudNative PostgreeSQL Operator
+
+> The chart for Miniflux is capable of deploying a PostgreSQL instance for the service, but I'm going to use the CloudNative PostgreSQL Operator to manage the database for this service (and others) on my own. This is because I want to have the ability to manage the databases separately from the services.
+
+Miniflux only supports postgresql so I'm going to use the CloudNative PostgreSQL Operator to manage the database, first let's intall the operator using the Helm chart:
+
+```yaml
+# cloudnative-pg-helm-chart.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: cloudnative-pg
+  namespace: kube-system
+spec:
+  repo: https://cloudnative-pg.github.io/charts
+  chart: cloudnative-pg
+  targetNamespace: cnpg-system
+  createNamespace: true
+  valuesContent: |-
+    mode: standalone
+    cluster:
+      instances: 2
+    backups:
+      enabled: true
+```
+
+```bash
+$ kubectl apply -f cloudnative-pg-helm-chart.yaml
+```
+
+This will install the CloudNative PostgreSQL Operator in the `cnpg-system` namespace. I'm going to create a PostgreSQL instance for Miniflux in the `miniflux` namespace.
+
+```yaml
+# miniflux-db.yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: miniflux-db
+  namespace: miniflux
+spec:
+  instances: 2
+  storage:
+    size: 2Gi
+    storageClass: longhorn
+```
+
+```bash
+$ kubectl apply -f miniflux-db.yaml
+```
+
+With this a PostgreSQL cluster with two instances and 2Gi of storage will be created in the `miniflux` namespace, note that I have specified the `longhorn` storage class for the storage.
+
+When this is finished a new secret with the connection information for the database called `miniflux-db-app` will be created. It will look like this:
+
+```yaml
+apiVersion: v1
+kind: Secre
+type: kubernetes.io/basic-auth
+metadata:
+  name: miniflux-db-app
+  namespace: miniflux
+  # ...
+data:
+  dbname: <base64 encoded data>
+  host: <base64 encoded data>
+  jdbc-uri: <base64 encoded data>
+  password: <base64 encoded data>
+  pgpass: <base64 encoded data>
+  port: <base64 encoded data>
+  uri: <base64 encoded data>
+  user: <base64 encoded data>
+  username: <base64 encoded data>
+```
+
+We are going to reference this secret directly in the Miniflux deployment below.
+
+## Deploying Miniflux
+
+Now that we have all the requirements set up, we can deploy Miniflux.
+
+I'm going to use [gabe565's miniflux helm chart](https://artifacthub.io/packages/helm/gabe565/miniflux) for this, since they are simple and easy to use. I tried the [TrueCharts](https://artifacthub.io/packages/helm/truecharts/miniflux) chart but I couldn't get it to work properly, since they only support amd64 and I'm running on arm64, though a few tweaks here and there _should_ make it work.
+
+```yaml
+# miniflux-helm-chart.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: miniflux
+  namespace: kube-system
+spec:
+  repo: https://charts.gabe565.com
+  chart: miniflux
+  targetNamespace: miniflux
+  createNamespace: true
+  version: 0.8.1
+  valuesContent: |-
+    image:
+      tag: 2.1.1
+    env:
+      CREATE_ADMIN: "0"
+      DATABASE_URL:
+        secretKeyRef:
+          name: miniflux-db-app
+          key: uri
+    postgresql:
+      enabled: false
+```
+
+> In order to customize Miniflux check out their [configuration](https://miniflux.app/docs/configuration.html) documentation and set the appropriate values in the `env` section.
+
+```bash
+$ kubectl apply -f miniflux-helm-chart.yaml
+```
+
+> I'm using `CREATE_ADMIN: "0"` to avoid creating an admin user for Miniflux, since I already have one in my current database after I migrated it. If you want to create an admin user you can set this to `1` and set the `ADMIN_USERNAME` and `ADMIN_PASSWORD` values in the `env` section. See the [chart documentation](https://artifacthub.io/packages/helm/gabe565/miniflux) for more information.
+
+This will create a Miniflux deployment in the `miniflux` namespace, using the `miniflux-db-app` database secret for the database connection.
+
+Wait until everything is ready in the `miniflux` namespace:
+
+```bash
+$ kubectl get pods -n miniflux
+NAME                        READY   STATUS
+miniflux-678b9c8ff5-7dbj5   1/1     Running
+miniflux-db-1               1/1     Running
+miniflux-db-2               1/1     Running
+
+$ kubectl logs -n miniflux miniflux-678b9c8ff5-7dbj5
+time=2024-03-24T23:00:42.487+01:00 level=INFO msg="Starting HTTP server" listen_address=0.0.0.0:8080
+```
+
+## Setting up an external ingress
+
+> I'm not going to cover the networking setup for this but your cluster should be able to route traffic from the internet to the ingress controller (the master nodes). In my case I'm using a zero-trust approach with Tailscale to avoid exposing my homelab directly to the internet but there are a number of ways to do this, pick the one that suits you best.
+
+Setting up an ingress for the service that supports SSL is easy with cert-manager and Traefik, we only need to create an `Ingress` resource in the `miniflux` namespace with the appropiate configuration and annotations and cert-manager will take care of the rest:
+
+```yaml
+# miniflux-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: miniflux-external
+  namespace: miniflux
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: miniflux.fmartingr.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: miniflux
+            port:
+              number: 8080
+  tls:
+    - secretName: miniflux-fmartingr-com-tls
+      hosts:
+      - miniflux.fmartingr.com
+```
+
+```bash
+$ kubectl apply -f miniflux-ingress.yaml
+```
+
+This will create an ingress for Miniflux in the `miniflux` namespace and cert-manager will take care of the certificate generation and renewal using the `letsencrypt-production` issuer as specified in the `annotations` attribute.
+
+After a few minutes you should be able to access Miniflux at the domain set up in the `host` field:
+
+```
+$ curl -I https://miniflux.fmartingr.com
+HTTP/2 200
+server: traefik
+...
+```
+
+And that's it! You should have Miniflux up and running in your k3s cluster with all the requirements set up.
+
+I can't recommend [Miniflux](https://miniflux.app) enough, it's a great RSS reader that is simple to use and has a great UI. It probably is the first service I deployed in my homelab and I'm happy to have it running in my k3s cluster now, years later.

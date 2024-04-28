@@ -11,7 +11,9 @@
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta http-equiv="cleartype" content="on">
-
+    {% block analytics %}
+    {% if not is_dev %}<script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>{% endif %}
+    {% endblock %}
     {% block endhead %}{% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
@@ -35,7 +37,7 @@
       <hr>
       <footer>
         <div>My opinions are my own.</div>
-        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a>{% if last_build_date %}| Built: {{ last_build_date }}{% endif %}</div>
       </footer>
     {% block endbody %}{% endblock %}
   </body>
