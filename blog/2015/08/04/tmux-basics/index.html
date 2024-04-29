@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tmux basics | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2015/08/04/tmux-basics/">Tmux basics</a></h1>
+    <div class="info">
+      Published on August 04, 2015
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2015/08/04/tmux-basics/tmux.png" alt=""></p>
+<p>Discovered it not a long time ago (and now replaced with the experimental
+version of iterm2 <a href="https://iterm2.com/features.html">because of goodies</a>),
+tmux deserves a lot of attention because it have lots of potential.</p>
+<p>TMUX stands for Terminal Multiplexer. <em>It lets you switch easily between
+several programs in one terminal, detach them (they keep running in the
+background) and reattach them to a different terminal. And do a lot more.</em>
+Yeah, they sell themselves well.</p>
+<p>For the novices, it lets you have panels (split terminals) and windows just
+with some keybinds, detaching from them (so they keep running) and with the
+possibility of storing configurations for certain tasks, in which you need to
+open a running server and editor and some watcher at the same time, just with
+a command.</p>
+<p>For example, if you are like in the top screenshot, pressing <code>CTRL</code>+<code>b</code> <code>%</code>
+<code>CTRL</code>+<code>b</code> <code>"</code> changes the layout to this:</p>
+<p><img src="/blog/2015/08/04/tmux-basics/tmux-horver.png" alt=""></p>
+<p>And those numbers with a tilde at the bottom? The open windows. You can open
+more pressing <code>CTRL</code>+<code>b</code> <code>c</code>, like this:</p>
+<p><img src="/blog/2015/08/04/tmux-basics/tmux-window.png" alt=""></p>
+<p>This are the two basic things you will use everyday. Of course, there are
+<a href="http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-
+current/man1/tmux.1?query=tmux&amp;sec=1">more stuff you can do</a>, but for the basics I will list the more
+frequent keybinds here to start using it right now.</p>
+<table>
+<thead><tr>
+<th>Meta key</th>
+<th><code>CTRL</code>+<code>b</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split pane horizontal</td>
+<td><code>Meta</code>+<code>"</code></td>
+</tr>
+<tr>
+<td>Split pane vertical</td>
+<td><code>Meta</code>+<code>%</code></td>
+</tr>
+<tr>
+<td>Swap pane</td>
+<td><code>Meta</code>+<code>o</code></td>
+</tr>
+<tr>
+<td>Kill pane</td>
+<td><code>Meta</code>+<code>x</code></td>
+</tr>
+<tr>
+<td>Toggle focus on current pane</td>
+<td><code>Meta</code>+<code>z</code></td>
+</tr>
+<tr>
+<td>Show pane numbers</td>
+<td><code>Meta</code>+<code>q</code></td>
+</tr>
+<tr>
+<td>Press a the number of the pane you want to focus when shown.</td>
+<td></td>
+</tr>
+<tr>
+<td>Break pane into window</td>
+<td><code>Meta</code>+<code>+</code></td>
+</tr>
+<tr>
+<td>Restore window to pane</td>
+<td><code>Meta</code>+<code>-</code></td>
+</tr>
+<tr>
+<td>Change pane layout</td>
+<td><code>Meta</code>+<code>spacebar</code></td>
+</tr>
+<tr>
+<td>Create new window</td>
+<td><code>Meta</code>+<code>c</code></td>
+</tr>
+<tr>
+<td>Switch to window #x</td>
+<td><code>Meta</code>+<code>&lt;number&gt;</code></td>
+</tr>
+<tr>
+<td>Kill window</td>
+<td><code>Meta</code>+<code>&amp;</code></td>
+</tr>
+<tr>
+<td>Next window</td>
+<td><code>Meta</code>+<code>n</code></td>
+</tr>
+<tr>
+<td>Previous window</td>
+<td><code>Meta</code>+<code>p</code></td>
+</tr>
+<tr>
+<td>List windows</td>
+<td><code>Meta</code>+<code>w</code></td>
+</tr>
+<tr>
+<td>Rename window</td>
+<td><code>Meta</code>+<code>,</code></td>
+</tr>
+<tr>
+<td>Find window</td>
+<td><code>Meta</code>+<code>f</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Homepage: </strong><a href="https://tmux.github.io">tmux</a></li>
+<li><strong>My tmux.conf:</strong> <a href="https://github.com/fmartingr/dotfiles/blob/master/home/.tmux.conf">Github</a></li>
+<li><strong>Cheatsheet by <a href="https://github.com/MohamedAlaa">MohamedAlaa</a></strong>: <a href="https://gist.github.com/MohamedAlaa/2961058">Tmux cheatsheet gist</a></li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

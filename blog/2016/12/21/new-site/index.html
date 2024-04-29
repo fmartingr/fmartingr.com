@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>New site | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2016/12/21/new-site/">New site</a></h1>
+    <div class="info">
+      Published on December 21, 2016
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>After a really long time I finally managed to spend some time redesigning and moving my blog to another platform, everyone already know that <a href="https://gitlab.com/fmartingr/fmartingr.com/blob/master/fmartingrcom/themes/v1/templates/blog/entry.jinja#L67">I tried really hard</a> to create an editor that satisfied me while the answer was simpler.</p>
+<!-- readmore -->
+
+<p>I like to <em>reinvent the wheel</em> (<del>I don't even know if that expression exists or it's said like that in English, let me know!</del> <a href="http://www.urbandictionary.com/define.php?term=reinvent%20the%20wheel">Apparently yes</a>) but this time I got really far... like years far: I stopped writting because I did not find any editor confortable to the point <a href="https://gitlab.com/fmartingr/fmartingr.com">I created my own blog application</a> without success. This madness has to stop, there has to be something already there for me.</p>
+<p>After trying almost every blog and static content generator out there I stumbled upon <a href="/blog/2016/12/21/new-site/Lektor">https://www.getlektor.com</a>, a simple but really powerful static site generator that almost completely fit my needs.</p>
+<p>After trying it a bit, I migrated the new theme I was making <a href="https://gitlab.com/fmartingr/fmartingr.com/tree/v3">in a refactor of my old site to Flask</a> (<em>yikes!</em>) and recreated the same site structure to do a final test.</p>
+<p>I liked it.</p>
+<p><em>But why?</em> you may ask... <em>Lektor's editor is worst that the one you made</em>.</p>
+<p>And you are right, Lektor's editor is just a <code>textarea</code>, but you forget one thing: <strong>all the content are plain text files that I can edit with whatever I want</strong>.</p>
+<p>Having this flexibility is awesome, most of the content of the site <a href="/made-with-open-source">is edited in either Emacs or Atom</a>. Even if it was tricky at first because Lektor creates all the content in the same path <a href="https://github.com/fmartingr/fmartingr-lektor/tree/master/content">I managed a -I'm sure overengineered- way</a> to sort the files the way I wanted. Will improve it in the future when I know more about Lektor's internals.</p>
+<p>The theme also reflects the change I've been noticing in the past year: I want simplicity, so the site is as simple as it gets.</p>
+<p>Just a few colors, no CSS frameworks (only a simple grid) and everything is made up from scratch. It still needs a little enhancements but it wont get much further. Also I'm sure I left a few stuff broken when I migrated all the blog entries but everything will be fixed with time.</p>
+<p>I hope this gives me more time and motivation to keep writing. There are a few old drafts from tools that I'm going to finish up, and... well, more stuff that will be shared with you in future posts. :)</p>
+<p>P.S.: I do not forget that I owe you the conclusion of <a href="/blog/2016/04/11/penguin-trials/">the penguin trials</a> too!</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

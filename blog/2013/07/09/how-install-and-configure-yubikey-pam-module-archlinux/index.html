@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>How to install and configure the yubikey-pam module on archlinux | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/07/09/how-install-and-configure-yubikey-pam-module-archlinux/">How to install and configure the yubikey-pam module on archlinux</a></h1>
+    <div class="info">
+      Published on July 09, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/07/09/how-install-and-configure-yubikey-pam-module-archlinux/yubico.jpg" alt=""></p>
+<p>Not so long ago I've been gifted with a Yubikey. It's a two-auth hardware
+solution with multiple auth methods (OTP, Challenge-response, OATH-HOTP and
+static password). It easily scaled to one of my favourite and most useful
+gadgets.</p>
+<p>I've been a google authenticator user for a while, but the yubikey is just
+much easier to work with: when configured, you only need to tap a button on
+the usb stick to generate your key. You can use this in many ways, but in this
+post I'm focusing on ssh authentication and how to install the yubico-pam
+module into an Arch installation.</p>
+<h2 id="installing-the-required-packages">Installing the required packages</h2><p>Thanks to the awesome arch community we already have the needed packages on
+the AUR, these are: <a href="https://aur.archlinux.org/packages/yubico-pam-git/">yubico-pam-
+git</a>, <a href="https://aur.archlinux.org/packages/yubico-c-client-git/">yubico-c-client-
+git</a>, <a href="https://aur.archlinux.org/packages/yubikey-
+personalization-git/">yubikey-
+personalization-git</a> and
+<a href="https://aur.archlinux.org/packages/libyubikey/">libyubikey</a>. Keep in mind
+that you <em>may</em> need to install more packages depending on your system
+installation.</p>
+<p>You can install that with your favourite AUR helper or using <code>makepkg</code>:</p>
+<div class="hll"><pre><span></span>$ curl -O https://aur.archlinux.org/packages/li/libyubikey/libyubikey.tar.gz
+$ tar xvzf libyubikey.tar.gz
+$ cd libyubikey
+$ makepkg PKGBUILD
+# ...
+$ sudo pacman -U libyubikey-1.10-2-x86_64.pkg.tar.xz
+</pre></div>
+<p>Repeat that step for all the packages, in order: <em>libyubikey</em>, <em>yubico-c-
+client</em>, <em>yubikey-personalization</em> and <em>yubico-pam</em>. If you have trouble
+installing from the AUR <a href="https://wiki.archlinux.org/index.php/AUR#Installing_packages">refer to the appropiate wiki
+page</a>.</p>
+<h2 id="configure-the-pam-module">Configure the PAM module</h2><p>Edit <code>/etc/pam.d/sshd</code> and add on top on the rest of the auth modules:</p>
+<div class="hll"><pre><span></span>auth sufficient pam_yubico.so id=XXXX key=XXXX
+</pre></div>
+<p>You can obtain an ID/key conbination by registering your yubikey <a href="https://upgrade.yubico.com/getapikey/">at this
+page</a>.</p>
+<h2 id="authorization-methods">Authorization methods</h2><h3 id="individual-authorization-mapping">Individual authorization mapping</h3><p>If your server have multiple users this is the easiest method to let them
+configure their yubikeys. You just need to create the file
+<code>$HOME/.yubico/authorized_yubikeys</code> with the following contents:</p>
+<div class="hll"><pre><span></span>&lt;username&gt;:&lt;Yubikey token ID 1&gt;[:&lt;Yubikey token ID 2][:...]
+</pre></div>
+<p>The yubikey token identifier can be obtained by removing the last 32
+characters of any OTP value, and you can add more than one ID to the file.</p>
+<p>Restart your ssh server to apply the changes.</p>
+<h3 id="central-authorization-mapping">Central authorization mapping</h3><p>Create a file on <code>/etc/yubikey_mappings</code> that will contain all your users and
+their respective yubikey token identifiers, like this:</p>
+<div class="hll"><pre><span></span>&lt;first username&gt;:&lt;Yubikey token ID 1&gt;[:&lt;Yubikey token ID 2][:...]
+&lt;second username&gt;:&lt;Yubikey token ID 3&gt;[:&lt;Yubikey token ID 4][:...]
+</pre></div>
+<p>For this to work, you need to specify this file to the pam module <code>authfile</code>
+parameter:</p>
+<div class="hll"><pre><span></span>auth sufficient pam_yubico.so id=XXXX key=XXXX authfile=/etc/yubikey_mappings
+</pre></div>
+<p>After that estart your ssh server to apply the changes.</p>
+<h2 id="logging-in">Logging in</h2><p>The next time you're asked for a password on you ssh login you can use a
+yubikey OTP instead of your current password -if you have any-.</p>
+<p>This method works pretty well with authorized ssh keys as well, since you will
+log-in automatically from a computer with a configured ssh key but an OTP -or
+password- will be required for logging in from anywhere else.</p>
+<p><strong>Yubico-pam module |</strong> <a href="https://github.com/Yubico/yubico-pam">Github</a>
+<strong>Yubico |</strong> <a href="http://www.yubico.com/">Home page</a></p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

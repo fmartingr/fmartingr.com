@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>HowTo: OS X screenshots without shadows | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2012/12/20/howto-os-x-screenshots-without-shadows/">HowTo: OS X screenshots without shadows</a></h1>
+    <div class="info">
+      Published on December 20, 2012
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>The beautiful shadows that OS X brings to screenshots are good in some ways or
+depending the purpose of the screenshot itself. But for other things are a
+pain in the ass.</p>
+<p>After some research I've found multiple ways to get rid of that shadows</p>
+<h2 id="1-the-default-setting">1) The default setting</h2><p>Since the terminal command allows you to deactivate the shadow I assumed that
+there could be some <code>defaults</code> option for the same purpose. And it is!</p>
+<p>With this two commands you can use the normal keybinds to do <em>shadowless</em>
+screenshots:</p>
+<div class="hll"><pre><span></span>defaults write com.apple.screencapture disable-shadow -bool true killall SystemUIServer`
+</pre></div>
+<p>To revert to the original status:</p>
+<div class="hll"><pre><span></span>defaults write com.apple.screencapture disable-shadow -bool false killall SystemUIServer
+</pre></div>
+<h2 id="2-the-grab-utility">2) The Grab utility</h2><p>Open the Grab.app: <code>Applications &gt; Utilities &gt; Grab</code>, and under the <code>Capture</code>
+menu you will find the <code>Window</code> option.</p>
+<p>You can also use the <code>SHIFT</code>+<code>CMD</code>+<code>W</code> keybind -while Grab.app is focused-.</p>
+<h2 id="3-the-terminal-way">3) The terminal way</h2><p>OS X provides us with the <code>screencapture</code> command, so we can hack around and
+build our own scripts. A simple one that allows interactive capture without
+shadow:</p>
+<div class="hll"><pre><span></span>screencapture -i -o filename.png
+</pre></div>
+<p>A more complete one that saves the screenshot on the desktop with the datetime
+as filename:</p>
+<div class="hll"><pre><span></span>screencapture -i -o ~/Desktop/screenshot_`date +%Y%m%d_%H%M%S`.png
+</pre></div>
+<p>These are some ways I found. You can play around and make your own bash or
+Automator scripts and improve it to your needs.</p>
+<p>Hope this helps!</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

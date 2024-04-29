@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Importing data manually into a longhorn volume | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/09/import-data-manually-into-a-longhorn-volume/">Importing data manually into a longhorn volume</a></h1>
+    <div class="info">
+      Published on April 09, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I was in the process of migrating <a href="https://github.com/go-shiori/shiori">Shiori</a> from my docker environment to the new <a href="https://blog.josem.dev/2024-04-08-setting-up-a-k3s-cluster-on-raspberry-pi/">k3s cluster I'm setting up</a>. Shiori is a bookmarks manager that uses an SQLite database and a folder to store the data from the bookmarks. I didn't want to switch engines just yet since I want to improve SQLite's performance first, so I decided to move the data directly to a longhorn volume.</p>
+<p>This probably is super simple and vastly known but it wasn't clear for me at first. Posting it here for future reference and for anyone that might find it useful.</p>
+<!-- readmore -->
+
+<p>Considering that I already have the data from the docker volume in a <code>tar.gz</code> file exported with the correct hierachy the migration process is way simpler than I anticipated. I just need to create the Longhorn volume and the volume claim, create a pod that has access to the volume and pipe the data into the pod to the appropriate location.</p>
+<p>First create your volume in the way that you prefer. You can apply the YAML directly or use the Longhorn UI to create the volume. I created mine using the UI beforhand.</p>
+<p>With the volume and volume claim (named <code>shiori-data</code>) created I'm going to create a pod that has access to the volume via the volume claim. I'm going to use the same <code>shiori</code> image that I'm going to use in the final pod that will use the volume claim since I'm lucky to have the <code>tar</code> command in there. If you don't have it, you can use a different image that has <code>tar</code> bundled in it.</p>
+<div class="hll"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shiori-import-pod</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shiori</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
+<span class="w">      </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shiori-data</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shiori</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/go-shiori/shiori:v1.6.2</span>
+<span class="w">      </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/shiori-data&quot;</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data</span>
+<span class="w">   </span><span class="c1"># In my personal case, I need to specify user, group and filesystem group to match the longhorn volume</span>
+<span class="w">   </span><span class="c1"># with the docker image specification.</span>
+<span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">    </span><span class="nt">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">    </span><span class="nt">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+</pre></div>
+<p>With the pod running I can copy the data into the volume by piping it into an <code>exec</code> call and upacking it with <code>tar</code> on the fly:</p>
+<div class="hll"><pre><span></span>cat<span class="w"> </span>shiori_data.tar.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>-n<span class="w"> </span>namespace<span class="w"> </span>shiori-import-pod<span class="w"> </span>--<span class="w"> </span>tar<span class="w"> </span>xzvf<span class="w"> </span>-<span class="w"> </span>-C<span class="w"> </span>/tmp/shiori-data/
+</pre></div>
+<blockquote><p><strong>Note</strong>: I tried using <code>kubectl cp</code> before to copy the file into the pod -since internally uses the same approach-, but I had some issues apparently due to different <code>tar</code> versions on my host machine and the destination pod so I decided to use the pipe approach and it worked. The result should be the same.</p>
+</blockquote>
+<p>With the data copied into the volume I can now delete the import pod and deploy the application using the approrpiate volume claim. In my case I just need to change the <code>mountPath</code> in the deployment container spec to the correct path where the application expects the data to be.</p>
+<p>I don't know why I expected this to be harder than it really is, but I am happy that I was able to migrate everything in less than an hour.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

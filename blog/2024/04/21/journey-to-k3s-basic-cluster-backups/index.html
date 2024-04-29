@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Journey to K3s: Basic Cluster Backups | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/21/journey-to-k3s-basic-cluster-backups/">Journey to K3s: Basic Cluster Backups</a></h1>
+    <div class="info">
+      Published on April 21, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>There a time to deploy new services to the cluster, and there is a time to backup the cluster. Before I start depending more and more of the services I want to self-host it's time to start thinking about backups and disaster recovery. My previous server have been running with a simple premise: if it breaks, I can rebuild it.</p>
+<p>I'm going to try and keep that same simple approach here, theoretically if something bad happens I should be able to rebuild the cluster from scratch by backing up cluster snapshots and the data stored in the persistent volumes.</p>
+<p><img src="/blog/2024/04/21/journey-to-k3s-basic-cluster-backups/longhorn-backups-360.jpg" alt="Longhorn screenshot displaying ongoing backups"></p>
+<!-- readmore -->
+
+<h2 id="cluster-resources">Cluster resources</h2><p>In my case I store all resources I create in a git repository (namespaces, helm charts, configuration for the charts, etc) so I can recreate them easily if needed. This is a good practice to have in place, but it's also a good idea to have a backup of the resources in the cluster to avoid problems when the cluster tries to regenerate the state from the same resources.</p>
+<h2 id="set-up-the-nfs-share">Set up the NFS share</h2><blockquote><p>In my case the required packages to mount NFS shares were already installed in the system, your experience may vary depending on the distribution you are using.</p>
+</blockquote>
+<p>First I had to create the folder where the NFS share will be mounted:</p>
+<div class="hll"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/mnt/k3s-01
+</pre></div>
+<p>Mount the NFS share</p>
+<div class="hll"><pre><span></span>sudo<span class="w"> </span>mount<span class="w"> </span>nfs-server.home.arpa:/shares/k3s-01<span class="w"> </span>/mnt/k3s-01
+</pre></div>
+<p>Check if the NFS share is mounted correctly by listing the contents of the folder, creating a file and checking the available disk space:</p>
+<div class="hll"><pre><span></span>$<span class="w"> </span>ls<span class="w"> </span>/mnt/k3s-01
+k3s-master-01
+
+$<span class="w"> </span>df<span class="w"> </span>-h
+Filesystem<span class="w">      </span>Size<span class="w">  </span>Used<span class="w"> </span>Avail<span class="w"> </span>Use%<span class="w"> </span>Mounted<span class="w"> </span>on
+...
+nfs-server.home.arpa:/shares/k3s-01<span class="w">  </span><span class="m">1</span>.8T<span class="w">  </span><span class="m">1</span>.1T<span class="w">  </span>682G<span class="w">  </span><span class="m">62</span>%<span class="w"> </span>/mnt/k3s-01
+...
+
+$<span class="w"> </span>touch<span class="w"> </span>/mnt/k3s-01/k3s-master-01/test.txt
+$<span class="w"> </span>ls<span class="w"> </span>/mnt/k3s-01/k3s-master-01
+test.txt
+</pre></div>
+<p>With this I have the NFS share mounted and ready to be used by the cluster and I can start storing the backups there.</p>
+<h2 id="the-cluster-snapshots">The cluster snapshots</h2><p>Thankfully for this k3s <a href="https://docs.k3s.io/datastore/backup-restore">provides a very straightforward method to create snapshots by either using the <code>k3s etcd-snapshot</code> command</a> to create them manually or by setting up a cron job to create them automatically. The cron job is set up by default, so I only had to adjust the schedule and retention to my liking and set up a proper backup location: the NFS share.</p>
+<p>Adjusting the <code>etcd-snapshot-dir</code> in the k3s configuration file to point to the new location, long with the retention and other options:</p>
+<div class="hll"><pre><span></span><span class="c1"># /etc/rancher/k3s/config.yaml</span>
+<span class="nt">etcd-snapshot-retention</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
+<span class="nt">etcd-snapshot-dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/k3s-01/k3s-master-01/snapshots</span>
+<span class="nt">etcd-snapshot-compress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+<p>After restarting the k3s service the snapshots will be created in the new location and the old ones will be deleted after the retention period.</p>
+<p>You can also create a snapshot manually by running the command: <code>k3s etcd-snapshot save</code>.</p>
+<h2 id="longhorn">Longhorn</h2><p>Very easy too! I just followed the <a href="https://longhorn.io/docs/1.6.1/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-smbcifs-backupstore">Longhorn documentation on NFS backup store</a> by going to the Longhorn Web UI and specifying my NFS share as the backup target.</p>
+<p><img src="/blog/2024/04/21/journey-to-k3s-basic-cluster-backups/longhorn-backup-config-360.jpg" alt="Longhorn backup setup screenshot"></p>
+<p>After setting up the backup target I created a backup of the Longhorn volumes and scheduled backups to run every day at 2am with a conservative rentention policy of 3 days.</p>
+<h2 id="conclusion">Conclusion</h2><p>Yes, it was <strong>that</strong> easy!</p>
+<p>With the backups in place I can now sleep a little better knowing that I can recover from a disaster if needed. The next step is to test the backups and the recovery process to make sure everything is working as expected.</p>
+<p>I hope I don't need to use this ever, though. :)</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

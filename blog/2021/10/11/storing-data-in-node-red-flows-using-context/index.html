@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Storing data in Node-Red flows using contexts | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2021/10/11/storing-data-in-node-red-flows-using-context/">Storing data in Node-Red flows using contexts</a></h1>
+    <div class="info">
+      Published on October 11, 2021
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I've been adding some automations to my Home Assistant recently so it can inform us of takeaway menu changes for local restaurants. We have a few favourites and they usually offer different options each day so checking for updates and notifying us via our Telegram bot is pretty easy.</p>
+<!-- readmore -->
+
+<p>Since I didn't want to use any library or custom program/service to analyze the page I'm relaying this kind of work to the Node-Red service in my Home Assistant instance. It's a server that is always working, easy to set up, work and iterate from, and I already have some integrations in place for notifications and other QoL, so it seemed like a 110% win.</p>
+<p>Despite having used Node-Red for various purposes along the years I usually delegated state to different services, databases or the filesystem. Not sure why I didn't check if Node-Red had something built-in-- which of course it had.</p>
+<p>Node-Red has this concept of <em>context</em>. By default a context is stored in memory only, and you can get/set values from a node or from function nodes very easily:</p>
+<p><img src="/blog/2021/10/11/storing-data-in-node-red-flows-using-context/node-red-change-node-360.png" alt="Node-Red Change node allows to make changes in contexts"></p>
+<blockquote><p>You can also edit contexts programatically from function nodes using:</p>
+<div class="hll"><pre><span></span><span class="nx">msg</span><span class="p">.</span><span class="nx">contentSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">123</span><span class="w"> </span><span class="c1">// From another node</span>
+<span class="nx">flow</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;menuContentSize&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">contentSize</span><span class="p">)</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">flow</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;menuContentSize&quot;</span><span class="p">)</span>
+</pre></div>
+</blockquote>
+<p>In my case I wanted the data to persist service restarts and Node-Red provides a context store filesystem based which stores changes in memory and persists them to disk every 30 seconds, more than enough for my use case.</p>
+<p>To enable it we need to modify the <code>settings.js</code> file of the Node-Red installation and add the appropriate <code>contextStore</code> parameters:</p>
+<div class="hll"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="w">  </span><span class="nx">contextStorage</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">module</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;localfilesystem&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">base</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;state&quot;</span><span class="w"> </span><span class="c1">// This will store the data in ~/.node-red/state,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">module</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;memory&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+<blockquote><p>In this example I created a new context store called <em>state</em> using the filesystem module I talked before and additionally I set up the storage in a custom directory.</p>
+</blockquote>
+<p>This way I can have two context stores: one in memory (the default) and one to store my custom states. You can create more for your use cases but keep in mind that you need to select a different <code>dir</code> for each of them so they wont collide. For more information check <a href="https://nodered.org/docs/api/context/store/localfilesystem#implementation-details">the implementation details</a>.</p>
+<p>In order to select an store to use you have a dropdown in the change node:</p>
+<p><img src="/blog/2021/10/11/storing-data-in-node-red-flows-using-context/node-red-change-node-dropdown-360.png" alt="Node red change node with dropdown selection"></p>
+<blockquote><p>Or use the third argument<code>flow.set(key, value, store)</code>/<code>flow.get(key, store)</code> to select it programatically.</p>
+</blockquote>
+<p>This allows for this very simple state checks in my case but allows for way more complex behaviors right out of the box.</p>
+<p>I'm a very big fan of Node-Red. And I can use that so get notified of takaway menu changes now. Talk about a first world problem.</p>
+<ul>
+<li>References:<ul>
+<li><a href="https://nodered.org/docs/user-guide/context">Node-Red: Context</a></li>
+<li><a href="https://nodered.org/docs/api/context/store/localfilesystem#options">Node-Red: Local Filesystem context store</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

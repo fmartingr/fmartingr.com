@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Extracting data from obfuscated java code | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/07/04/extracting-data-from-obfuscated-java-code/">Extracting data from obfuscated java code</a></h1>
+    <div class="info">
+      Published on July 04, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/07/04/extracting-data-from-obfuscated-java-code/header.png" alt=""></p>
+<p>For those who don't know, I started a site a while ago minecraft related (yes,
+<a href="/blog/2013/1/12/weekly-project-status-dropping-projects-hard/">the one I dropped</a>). If you don't know what minecraft is (really?!), you can check <a href="http://minecraft.net/">the
+official site</a>, since this game can be a little
+difficult to explain.</p>
+<p>The project (which is online at
+<a href="http://www.minecraftcodex.com">minecraftcodex.com</a>) is just a database of
+items, blocks, entities, etc. related to the game, but as in any other site of
+this kind, entering all this information can lead to an absolute <em>boredom</em>. So
+I thought... what if I can extract some of the data from the game
+<em>classfiles</em>? That would be awesome! <em>Spoiler alert</em> I did it.</p>
+<blockquote><p>Think this as my personal approach to all steps below: it doesn't mean that they're the best solutions.</p>
+</blockquote>
+<h2 id="unpackaging-the-jarfile-and-decompiling-the-classes">Unpackaging the jarfile and decompiling the classes</h2><p>First of all, you have a <em>minecraft.jar</em> file that it's just a packaged set of
+java compiled files, you can just <code>tar -xf</code> or <code>unzip</code> it into a folder:</p>
+<div class="hll"><pre><span></span>unzip -qq minecraft.jar -d ./jarfile
+</pre></div>
+<p>With this we now have a folder called _jarfile__ _filled with all the jar
+contents. We now need to use a tool to decompile all the compiled files into
+.java files, because the data we're looking for it's hard-coded into the
+source. For this purpose we're going to use <a href="http://varaneckas.com/jad/">JAD</a>,
+a java decompiler. With a single line of <em>bash</em> we can look for all the .class
+files and decompile them into .java source code:</p>
+<div class="hll"><pre><span></span>ls ./jarfile/*.class | xargs -n1 jad -sjava -dclasses &amp;&gt; /dev/null
+</pre></div>
+<p>All the class files have been converted and for ease of use, we've moved them
+into a separate directory. But there's a lot of files! And also, when we open
+one...</p>
+<div class="hll"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">aea</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">aeb</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">aea</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">abyte0</span><span class="o">[]</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">,</span>
+<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d2</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">a</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">abyte0</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span><span class="w"> </span><span class="n">d2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0F</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">nextFloat</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">6F</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5D</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+<p>Look at that beautiful obfuscated piece of code! This is getting more
+interesting at every step: almost 1.600 java files with obfuscated source
+code.</p>
+<h2 id="searching-for-the-data">Searching for the data</h2><p>I took the following approach: Since I know what I'm looking for (blocks,
+items, etc) and I also know that the information is hard-coded into the
+source, there must be some kind of string I can use to search all the files
+and get only the ones that contains the pieces of information I look for. For
+this test, I used the string "diamond":</p>
+<div class="hll"><pre><span></span>$ grep diamond ./classes/*
+./classes/bfp.java:        &quot;cloth&quot;, &quot;chain&quot;, &quot;iron&quot;, &quot;diamond&quot;, &quot;gold&quot;
+./classes/bge.java:        &quot;cloth&quot;, &quot;chain&quot;, &quot;iron&quot;, &quot;diamond&quot;, &quot;gold&quot;
+./classes/kd.java:        w = (new kc(17, &quot;diamonds&quot;, -1, 5, xn.p, k)).c();
+./classes/rf.java:        null, &quot;mob/horse/armor_metal.png&quot;, &quot;mob/horse/armor_gold.png&quot;, &quot;mob/horse/armor_diamond.png&quot;
+./classes/xn.java:        p = (new xn(8)).b(&quot;diamond&quot;).a(wh.l);
+./classes/xn.java:        cg = (new xn(163)).b(&quot;horsearmordiamond&quot;).d(1).a(wh.f);
+</pre></div>
+<p>As you can see, with a simple word we've filtered down to five files (from
+1.521 in this test). Is proof that we can get some information from the source
+code and we now to filter even more, looking around some files I selected
+another keyword: <em>flintAndSteel</em>, works great here, but in a real example you
+will need to use more than one keyword to look for data.</p>
+<div class="hll"><pre><span></span>$ grep flintAndSteel ./classes/*
+./classes/xn.java:    public static xn k = (new xh(3)).b(&quot;flintAndSteel&quot;);
+</pre></div>
+<p>Only one file now, we're going to assume that all the items are listed there
+and proceed to extract the information.</p>
+<h2 id="parsing-the-items">Parsing the items</h2><p>This was the more complicated thing to do. I started doing some regular
+expressions to matchs the values I wanted to extract, but soon that became
+inneficient due to:</p>
+<ul>
+<li>The obfuscated code varies with every released version/snapshot -or it should.</li>
+<li>The use of OOP difficulted method searching with RegEx matching, since the names could change from version to version, making the tool unusable on updates.</li>
+<li>The need to modify the RegEx if something in the code changes, or if we want to extract some other value.</li>
+</ul>
+<p>After some tests, I decided to <em>convert</em> the java code into python. For that,
+I used simple find and match to get the lines that had the definitions I
+wanted, something line this:</p>
+<div class="hll"><pre><span></span><span class="c1">// As a first simple filter, we only use a code line if a double quote is found on it.</span>
+<span class="c1">// Then, regex: /new (?P&lt;code&gt;[a-z]{2}\((?P&lt;id&gt;[1-9]{1,3}).*\&quot;(?P&lt;name&gt;\w+)\&quot;\))/</span>
+<span class="c1">// ...</span>
+<span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">xm</span><span class="p">(</span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="n">xo</span><span class="p">.</span><span class="na">e</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;hoeGold&quot;</span><span class="p">);</span>
+<span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">yi</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="n">aqh</span><span class="p">.</span><span class="na">aD</span><span class="p">.</span><span class="na">cE</span><span class="p">,</span><span class="w"> </span><span class="n">aqh</span><span class="p">.</span><span class="na">aE</span><span class="p">.</span><span class="na">cE</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;seeds&quot;</span><span class="p">);</span>
+<span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">xn</span><span class="p">(</span><span class="mi">40</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;wheat&quot;</span><span class="p">).</span><span class="na">a</span><span class="p">(</span><span class="n">wh</span><span class="p">.</span><span class="na">l</span><span class="p">);</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">vr</span><span class="p">)(</span><span class="k">new</span><span class="w"> </span><span class="n">vr</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="n">vt</span><span class="p">.</span><span class="na">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;helmetCloth&quot;</span><span class="p">);</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">vr</span><span class="p">)(</span><span class="k">new</span><span class="w"> </span><span class="n">vr</span><span class="p">(</span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="n">vt</span><span class="p">.</span><span class="na">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;chestplateCloth&quot;</span><span class="p">);</span>
+<span class="c1">// ...</span>
+</pre></div>
+<p>Since that java code is not python evaluable, just convert it:</p>
+<ul>
+<li>Remove unmatched parenthesis and double definitions</li>
+<li>Remove semicolons</li>
+<li>Remove variable definitios</li>
+<li>Converted arguments to string. This can be improved a lot, leaving decimals, converting floats to python notation, detecting words for string conversion, etc. Since for now I am not using any of the extra parameters this works for me.</li>
+<li>Be careful with reserved python names! (<code>and</code>, <code>all</code>, <code>abs</code>, ...)</li>
+</ul>
+<div class="hll"><pre><span></span><span class="o">//</span> <span class="n">Java</span><span class="p">:</span> <span class="n">U</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span> <span class="n">yi</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="n">aqh</span><span class="o">.</span><span class="n">aD</span><span class="o">.</span><span class="n">cE</span><span class="p">,</span> <span class="n">aqh</span><span class="o">.</span><span class="n">aE</span><span class="o">.</span><span class="n">cE</span><span class="p">))</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;seeds&quot;</span><span class="p">);</span>
+<span class="n">yi</span><span class="p">(</span><span class="s2">&quot;39&quot;</span><span class="p">,</span> <span class="s2">&quot;aqh.ad.cE&quot;</span><span class="p">,</span> <span class="s2">&quot;aqh.aE.cE&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;seeds&quot;</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">Java</span><span class="p">:</span> <span class="n">bm</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span> <span class="n">xi</span><span class="p">(</span><span class="mi">109</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.3</span><span class="n">F</span><span class="p">,</span> <span class="n">true</span><span class="p">))</span><span class="o">.</span><span class="n">a</span><span class="p">(</span><span class="n">mv</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="n">F</span><span class="p">)</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;chickenRaw&quot;</span><span class="p">);</span>
+<span class="n">xi</span><span class="p">(</span><span class="s2">&quot;109&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;0.3F&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">a</span><span class="p">(</span><span class="s2">&quot;mv.s.H&quot;</span><span class="p">,</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;0.3F&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;chickenRaw&quot;</span><span class="p">)</span>
+</pre></div>
+<p>Now I defined an object to match with the java code definitions when
+evaluating:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">GameItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">game_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;Item(</span><span class="si">%d</span><span class="s2">: &#39;</span><span class="si">%s</span><span class="s2">&#39;)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="s2">&quot;Sets the name&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span>
+</pre></div>
+<p>As you can see, this class have a global "catch-all" method, since we don't
+know the obsfuscated java names, that function will handle every call. In that
+concrete class, we now that an object method with only one string parameter is
+the one that define the item's name, and we do so in our model.</p>
+<p>Now, we will evaluate a line of code that will raise and exception saying that
+the class name <em>&lt;insert obfuscated class name here&gt;</em> is not defined.
+With that, we will declare that name as an instance of the GameItem class, so
+re-evaluating the code again will return a GameItem object:</p>
+<div class="hll"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Tries to evaluate the piece of code that we converted</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c1"># Class name do not exist! We need to define it.</span>
+    <span class="c1"># Extract class name from the error message</span>
+    <span class="c1"># Defined somewhere else: class_error_regex = re.compile(&#39;name \&#39;(?P&lt;name&gt;\w+)\&#39; is not defined&#39;)</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">class_error_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+    <span class="c1"># Define class name as instance of GameItem</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">],</span> <span class="n">class_name</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="p">(</span><span class="n">GameItem</span><span class="p">,),</span> <span class="p">{}))</span>
+    <span class="c1"># Evaluate again to get the object</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+</pre></div>
+<p>And with this, getting data from source code was possible and really helpful.</p>
+<p>A lot of things could be improved from this to get even more information from
+the classes, since after spending lot's of time looking for certain patterns
+on the code I can say what some/most of the parameters mean, and that means
+more automation on new releases!</p>
+<h2 id="real-use-case">Real use case</h2><p>Apart from getting the base data for the site (all the data shown on minecraft
+codex is directly mined from the source code), I made up a tool that shows
+changes from the last comparision -if any. This way I can easily discover what
+the awesome mojang team added to the game every snapshot they release:</p>
+<p><img src="/blog/2013/07/04/extracting-data-from-obfuscated-java-code/diff.png" alt=""></p>
+<p>This is the main tool I use for minecraft codex, is currently bound to the
+site itself but I'm refactoring it to made it standalone and publish it on
+github.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

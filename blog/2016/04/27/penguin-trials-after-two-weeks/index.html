@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>The penguin trials after two weeks | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2016/04/27/penguin-trials-after-two-weeks/">The penguin trials after two weeks</a></h1>
+    <div class="info">
+      Published on April 27, 2016
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>It's been two weeks already and I will make a quick post with two subjects:
+the stuff broken that needed to be fixed (from my point of view) and
+improvements to the workstation that made my life easier.</p>
+<p>After other two weeks I will post a summary with the good and bad parts.</p>
+<!-- readmore -->
+
+<h2 id="stuff-fixed">Stuff fixed</h2><h3 id="lightdm-black-screen">Lightdm black screen</h3><p>After the first reboot the first problem appeared, the lightdm login window
+was a black screen (accepting input but showing nothing). I remember that from
+not so long ago when I tried to install linux on my home computer and that
+happened, luckily it had a solution, I just needed to install <code>lightdm-gtk-
+greeter</code> and replace it at the lightdm configuration.</p>
+<div class="hll"><pre><span></span># /etc/lightdm/lightdm.conf
+# ...
+greeter-session=lightdm-gtk-greeter
+# ...
+</pre></div>
+<h3 id="better-font-rendering-for-i3">Better font rendering for i3</h3><p>The default fonts for the i3bar and so on are a bit clunky for my personal
+taste so I changed the rendering from <code>pango</code> to <code>xft</code> and now it looks nice.</p>
+<div class="hll"><pre><span></span>font xft:monospace 8
+</pre></div>
+<h3 id="better-font-rendering-system-wide-ala-os-x">Better font rendering system wide (ala. OS X)</h3><p>One of my worst problems with linux is the font rendering. Everything looks
+worse than on OS X, that's a fact. Even people using linux desktops say it
+when looking text on a OS X machine. Luckily I found <code>infinality</code>, a patch for
+the font rendering in the freetype2 package that left my fonts almost
+<em>Macish</em>.</p>
+<p>I just installed the <code>infinality-bundle</code> following <a href="https://wiki.archlinux.org/index.php/Infinality">the official ArchLinux
+Wiki entry</a> on the subject
+and used the setup for the <em>Soft of OS X</em> appareance editing the
+<code>/etc/profile.d/infinality-settings.sh</code> using the <code>ultimate5</code> configuration.</p>
+<div class="hll"><pre><span></span>export INFINALITY_FT=&quot;ultimate5&quot;
+</pre></div>
+<p>Just restart X to the settings to take effect. I haven't seen problems with
+the infinality patch until now.</p>
+<h2 id="improvements-over-the-base-system">Improvements over the base system</h2><h3 id="adding-some-background-with-feh">Adding some background with feh</h3><p>The most basic stuff! I don't really know if there's another way to do this
+but looking around I found that using <code>feh</code> you can just point to an image
+file and use that as wallpaper.</p>
+<p>Just adding this to my i3 config file:</p>
+<div class="hll"><pre><span></span>exec_always feh --bg ~/.config/i3/wallpaper.png
+</pre></div>
+<p>I want to improve it having a script that will iterate over png images inside
+a folder and using one at random but since I don't need fancy stuff this will
+work for now.</p>
+<h3 id="running-stuff-when-i-log-in">Running stuff when I log in</h3><p>To start programs when you log in at your session adding them to your i3
+configuration seems like the way to go:</p>
+<div class="hll"><pre><span></span># Startup programs
+exec dropbox
+</pre></div>
+<h3 id="adding-a-lock-screen-with-i3lock">Adding a lock screen with i3lock</h3><p>Another thing I missed a lot. When I leave my desk I lock my computer so no
+one can, just say, put a David Hasselhoff wallpaper on it or something, so
+with <code>i3lock</code>, <code>scrut</code>, a bash script and a key binding I have a very nice
+screen locker in place!</p>
+<div class="hll"><pre><span></span>#!/bin/sh
+
+# Take screenshot
+scrot /tmp/lockscreen.png
+
+# Pixellate
+mogrify -scale 10% -scale 1000% /tmp/lockscreen.png
+
+# Lock screen with the image
+i3lock -i /tmp/lockscreen.png
+</pre></div>
+<p>And in the i3 config file:</p>
+<div class="hll"><pre><span></span>bindsym $mod+l ~/.config/i3/i3lock.sh
+</pre></div>
+<h3 id="more-integrated-notifications-with-dunst">More integrated notifications with dunst</h3><p>Since the default desktop environment I installed was xfce4, the notifications
+being shown was from them and it were horrible. Instead of that I installed
+<a href="https://github.com/knopwob/dunst">dunst</a>.</p>
+<p><img src="/blog/2016/04/27/penguin-trials-after-two-weeks/dunst.png" alt="dunst notifications"></p>
+<p>They are not the best looking notifications but are well integrated with the
+system design and are highly customizable, they will change soon enough :)</p>
+<h3 id="using-the-media-keys-for-volume-with-alsa-mixer">Using the media keys for volume with alsa mixer</h3><p>This was easy since I just need to bind the X media volume up and down to the
+alsa mixer control app so I can use the keyboard to control the system volume
+easily.</p>
+<div class="hll"><pre><span></span># Media keys
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 4%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 4%- unmute
+</pre></div>
+<h3 id="using-the-media-keys-for-media-players-with-playerctl">Using the media keys for media players with playerctl</h3><p>By default my system didn't recognize the media keys for
+play/pause/back/forward for any player but this was the easiest of them all.
+Just installed <code>playerctl</code> and every app I used until now worked out of the
+box. Even the forward/backwards keys for <code>mpv</code> which wasn't working for mpv
+with mps-youtube on OS X are functional on my linux box!</p>
+<div class="hll"><pre><span></span># Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+# bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+</pre></div>
+<h3 id="removing-the-title-bars-for-the-windows">Removing the title bars for the windows</h3><p>That was space I didn't need, it may seem stupid but... how often do you look
+at the titlebar of the app you're using? Some like the browsers didn't even
+have one! So I've removed the titlebars and left only 2px borders for the
+application windows.</p>
+<div class="hll"><pre><span></span># Windows without titlebars
+for_window [class=&quot;^.*&quot;] border pixel 2
+</pre></div>
+<h3 id="auto-enable-floating-for-pop-up-windows">Auto enable floating for pop-up windows</h3><p>It was really annoying watching a google login window take half of the desktop
+just for a moment to login into a service, so every window with the role of
+popup is now floating by default.</p>
+<div class="hll"><pre><span></span># Browser popups floating
+for_window [window_role=&quot;pop-up&quot;] floating enable
+</pre></div>
+<h3 id="using-a-custom-i3bar-with-i3pystatus">Using a custom i3bar with i3pystatus</h3><p>Since most of the default information the i3bar was unnecesary I found out
+about i3pystatus that allows you to use python modules to customize the i3bar
+at will. Below are my config file and the i3bar.py I use for it.</p>
+<div class="hll"><pre><span></span><span class="kn">from</span> <span class="nn">i3pystatus</span> <span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">i3pystatus.updates</span> <span class="kn">import</span> <span class="n">pacman</span><span class="p">,</span> <span class="n">yaourt</span>
+
+
+<span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="p">()</span>
+
+<span class="c1"># Pacman/Yaourt updates</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;updates&quot;</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;Updates: </span><span class="si">{count}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">format_no_updates</span><span class="o">=</span><span class="s2">&quot;No updates&quot;</span><span class="p">,</span>
+                <span class="n">backends</span><span class="o">=</span><span class="p">[</span><span class="n">pacman</span><span class="o">.</span><span class="n">Pacman</span><span class="p">(),</span> <span class="n">yaourt</span><span class="o">.</span><span class="n">Yaourt</span><span class="p">()])</span>
+
+<span class="c1"># Displays clock like this:</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;clock&quot;</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%a</span><span class="s2"> </span><span class="si">%-d</span><span class="s2"> %b %H:%M&quot;</span><span class="p">,)</span>
+
+<span class="c1"># CPU</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;cpu_usage&#39;</span><span class="p">)</span>
+
+<span class="c1"># Memory</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;mem&#39;</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{used_mem}</span><span class="s1">/</span><span class="si">{total_mem}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Shows the average load of the last minute and the last 5 minutes</span>
+<span class="c1"># (the default value for format is used)</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00ff00&#39;</span><span class="p">)</span>
+
+<span class="c1"># Shows the address and up/down state of enp6s0</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;network&quot;</span><span class="p">,</span>
+                <span class="n">interface</span><span class="o">=</span><span class="s2">&quot;enp6s0&quot;</span><span class="p">,</span>
+                <span class="n">format_up</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{v4cidr}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Shows disk usage of /</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;disk&quot;</span><span class="p">,</span>
+                <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{used}</span><span class="s2">/</span><span class="si">{total}</span><span class="s2">G [</span><span class="si">{avail}</span><span class="s2">G]&quot;</span><span class="p">,)</span>
+
+<span class="c1"># Shows pulseaudio default sink volume</span>
+<span class="n">status</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;pulseaudio&quot;</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;♪</span><span class="si">{volume}</span><span class="s2">&quot;</span><span class="p">,)</span>
+
+<span class="n">status</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+<div class="hll"><pre><span></span># .config/i3/config
+bar {
+    status_command ~/.config/i3/i3bar.py
+    position up
+}
+</pre></div>
+<h3 id="hide-the-mouse-cursor-when-not-needed">Hide the mouse cursor when not needed</h3><p>Using i3 I rely on the keyboard a lot, so much that sometimes my wireless
+mouse turn itself off to save battery due to inactivity. That said, it's
+really annoying for me having the cursor over text I'm writing or just sitting
+there when I don't need it so I installed
+<a href="https://wiki.archlinux.org/index.php/unclutter">unclutter</a> and running it on
+startup was very relieving.</p>
+<div class="hll"><pre><span></span><span class="c1"># .config/i3/unclutter.sh</span>
+<span class="c1">#!/bin/bash</span>
+unclutter<span class="w"> </span><span class="p">&amp;</span>
+</pre></div>
+<div class="hll"><pre><span></span># .config/i3/config
+exec ~/.config/i3/unclutter.sh
+</pre></div>
+<h2 id="what-s-next">What's next?</h2><p>There are still two weeks pending and even after all this tweaks the
+customization is far from over! There are still stuff I miss a lot, like:</p>
+<ul>
+<li>Easily take screenshots with keybinds.</li>
+<li>Better window switching.</li>
+<li>Better dmenu launcher</li>
+<li>Prevent the screenshoter from drawing the area selector on the screenshot taken. (<strong>xfce4-screenshoter</strong>)</li>
+<li><code>ctrl</code>+<code>e</code>/<code>a</code> for end and start of line global keybinds.</li>
+<li>Use the scratchpad more and try to improve it.</li>
+</ul>
+<p>See ya in two weeks!</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

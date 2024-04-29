@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Setting up TP-Link&#39;s Archer C5400 in AP mode | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2020/11/08/setting-up-tp-link-archer-c5400-in-ap-mode/">Setting up TP-Link&#39;s Archer C5400 in AP mode</a></h1>
+    <div class="info">
+      Published on November 08, 2020
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I recently bought a firewall router for home to improve our general stability (ISP provided routers kinda suck) and
+improve security at home. The more smart devices connected to the network the more concerned I become of this kind
+of stuff.</p>
+<p>In this case my problem was very simple: I have the firewall router and the access point router. My access point
+router (TP-Link's Archer C5400) exposes it's own DHCP server over it's own LAN segment. For my firewall router to
+work properly it has to recognise all devices on the network and with the access point creating it's own LAN,
+everything connected via Wifi was showing up in the firewall as one device (the access point router).</p>
+<p><img src="/blog/2020/11/08/setting-up-tp-link-archer-c5400-in-ap-mode/c5400.jpg" alt="Archer C5400"></p>
+<!-- readmore -->
+
+<p>The router's interface didn't allow me to set up AP mode, thus only letting me use it as a router. I contacted support
+and they told me that the version the router I had (V1) didn't support AP mode only the newest version (V2, from 2017)
+supported it, or some other latest devices.</p>
+<p>I didn't want to gave up on my router because it improved my wireless performance at home significantly from the ISP
+router and even some Unifi's I tried in the past but in the end I got an AX6000 to try it out (which was the newer
+version of the one I have so I expected it to perform similarly).
+We tested it for some days and wireless performance wasn't as good as with the C5400 and some of our devices lost
+connectivity from time to time so I ended up returning it and keeping the one I had.</p>
+<p>After thinking for a while and even considering looking for a C5400-V2 I tested to manually set it up on my access
+point before wasting more money on devices, after all, I was very happy with this one. And to my surprise I could
+enable AP mode on the router very easily.</p>
+<h2 id="instructions">Instructions</h2><ol>
+<li><p>Connect to your C5400 via Wifi (Ethernet should work as well)</p>
+</li>
+<li><p>Disconnect the WAN cable from the router (you will lose internet connection but you can access the C5400's web
+interface)</p>
+<p><img src="/blog/2020/11/08/setting-up-tp-link-archer-c5400-in-ap-mode/internet.png" alt="Internet"></p>
+</li>
+<li><p>Disable DHCP. You will retain your lease until you reconnect again.</p>
+<p><img src="/blog/2020/11/08/setting-up-tp-link-archer-c5400-in-ap-mode/dhcp.png" alt="DHCP"></p>
+</li>
+<li><p>Give the router a free IP address from the range your router is exposing on it's LAN segment.</p>
+<p><img src="/blog/2020/11/08/setting-up-tp-link-archer-c5400-in-ap-mode/lan.png" alt="LAN"></p>
+<p>In this case the LAN segment is <code>192.168.1.0/24</code> and the DCHP esposes from the <code>192.168.1.150</code>-<code>200</code>,
+in order to have the IP easily accesible I gave it the <code>192.168.1.2</code> while the router is the <code>192.168.1.1</code>.</p>
+</li>
+<li><p>Connect an ethernet cable coming from the router to a LAN port (<strong>not WAN</strong>).</p>
+</li>
+<li><p>Reboot your router.</p>
+</li>
+</ol>
+<p>After your access point has finished rebooting it should have the IP address you set on the LAN settings and
+all devices connected to the access point should have their IP Addresses allocated by the router, successfuly
+making the C5400 a proper access point.</p>
+<p>I'm unsure if this works in other models as well, but I belive it should and if you came here looking for a
+change give it a try and let me know if it worked for your model as well so I can update the post accordingly.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

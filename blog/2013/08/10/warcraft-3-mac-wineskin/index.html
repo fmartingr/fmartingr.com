@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Warcraft 3 on MAC with wineskin | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/08/10/warcraft-3-mac-wineskin/">Warcraft 3 on MAC with wineskin</a></h1>
+    <div class="info">
+      Published on August 10, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>A few days ago, I bought Warcraft III. I never finished it before, since I
+didn't own the game, and lately I had this inner urge to play a game on the
+Warcraft series. Since going back to World of Warcraft isn't an option, I
+decided to rollback to the part of the Warcraft lore that is unknown to me.</p>
+<p>Sadly after buying the game I discovered that they dropped support for the
+game when Apple did the conversion of their hardware from powerpc to intel.
+There was no way of running the mac version of the game on newer hardware, and
+I even contacted Blizzard support about the matter, but the answer was the one
+I feared: I had to use wine. This reminded me of the old days when I was a
+linux user and this was needed in order to play anything on linux.</p>
+<p><img src="/blog/2013/08/10/warcraft-3-mac-wineskin/wineskin.png" alt=""></p>
+<h2 id="installing-the-needed-software">Installing the needed software</h2><p>First of all, you will need to download
+<a href="http://wineskin.urgesoftware.com/tiki-
+index.php?page=Wineskin%2C+Play+your+favorite+Windows+games+on+Mac+OS+X+without+needing+Microsoft+Windows">Wineskin</a>,
+as we're going to use this to "emulate" our windows environment. Also,
+download the windows warcraft downloaders from your battle.net account.</p>
+<p>Execute it and download the last engine (clicking on the plus symbol) and also
+update the wrapper.</p>
+<p>You should see your wineskin window similar to the one on the left.</p>
+<p>Now you need to create a clean wrapper for your Warcraft III installation.</p>
+<h2 id="creating-the-wrapper">Creating the wrapper</h2><p>Just click on the "Create New Blank Wrapper" button and give it a name. I will
+go with "Warcraft III.app". It will ask you to install some mono/gecko
+libraries needed for the wrapper. Just go with it and wait until all the
+process finishes.</p>
+<p>You will be prompted if you want to open the containing folder, do it since
+now we need to configure our wrapper.</p>
+<p>Now, right click the app you created and select "Show package contents".</p>
+<p>Execute Wineskin.app, and select "Install software", on the next panel select
+"Select setup executable" and go to the path of your warcraft 3 downloader,
+that will prompt the installation menu when it finishes.</p>
+<p>Install your warcraft as you would in a windows machine, and when you exit the
+installer wineskin will ask for the main executable file, select "Warcraft
+III.exe". After that, repeat the process with the Frozen Throne executable.</p>
+<h2 id="configuration">Configuration</h2><p>We need to tweak some things before we can play, here's what I did:</p>
+<ul>
+<li>Go to set screen options and set windowed. Since I have a 16:9 screen and the game runs at 4:3, everything is streched. Maybe there's a 16:9 patch around the net.</li>
+<li>I customized the icon with <a href="http://icons.iconarchive.com/icons/3xhumed/mega-games-pack-36/256/Warcraft-3-Reign-of-Chaos-5-icon.png">this one</a>. You need to convert it to ICNS for using it with wineskin (you can use <a href="http://iconverticons.com/online/">this online tool</a>). Copy it into the package and select on the advanced options in the wineskin executable.</li>
+<li>If you want to play with the frozen throne expansion, change the Windows EXE on the advanced settings panel to "Frozen Throne.exe".</li>
+<li>Since wine can't play the cinematics, you can safely remove/rename the movies folder under the warcraft installation folder. (Default: <code>drive_c/Program Files/Warcraft III</code>)</li>
+<li>Delete the game installers if you stored them into the wineskin package to keep the .app file size to a minimum.</li>
+</ul>
+<h2 id="enjoy">Enjoy!</h2><p><img src="/blog/2013/08/10/warcraft-3-mac-wineskin/game.png" alt=""></p>
+<p>It's done! Store the Warcraft III.app somewhere if you don't want to repeat
+the process if you delete the game.</p>
+<h3 id="updates">Updates:</h3><ul>
+<li>Using the -opengl EXE flag will get you a smoother framerate. (thanks to <strong>Sylvain Prevost</strong> in the comments)</li>
+<li>Suggested engine: WS9Wine1.7.2. (by <strong>Sylvain Prevost</strong> in the comments)</li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

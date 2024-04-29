@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/28/journey-to-k3s-accessing-from-the-outside/">Journey to K3s: Accessing from the Outside</a></h1>
+    <div class="info">
+      Published on April 28, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Up until now I have been working locally (on my home network). While that is enough for most of the services I'm running I need to access some of them from the outside. For example, I want to expose this blog to the internet and access Miniflux to read my RSS feeds on the go.</p>
+<p>There are a few ways to achieve this but I have some specific requirements that I want to meet:</p>
+<ol>
+<li><strong>Zero-trust approach</strong>: I don't want to expose the services directly to the internet.</li>
+<li><strong>Public services</strong>: Other clients apart from me should be able to access some of the services.</li>
+<li><strong>Home IP safety</strong>: Don't directly expose my home IP address. (This is on par with #1, but I want to make it explicit).</li>
+<li><strong>On-transit encryption</strong>: Full on transit encryption from the client to the cluster with no re-encryption in the middle.</li>
+<li>No Cloudflare. (Breaks #4)</li>
+<li>No Tailscale. (Breaks #2, also there are other users at home and I don't want to have the Tailscale client running all the time).</li>
+</ol>
+<p>What does this leave me? A reverse proxy server.</p>
+<p><img src="/blog/2024/04/28/journey-to-k3s-accessing-from-the-outside/healthcheck-360.png" alt=""></p>
+
+          <p class="text-right"><a href="/blog/2024/04/28/journey-to-k3s-accessing-from-the-outside/">Read more &raquo;</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/21/journey-to-k3s-basic-cluster-backups/">Journey to K3s: Basic Cluster Backups</a></h1>
+    <div class="info">
+      Published on April 21, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>There a time to deploy new services to the cluster, and there is a time to backup the cluster. Before I start depending more and more of the services I want to self-host it's time to start thinking about backups and disaster recovery. My previous server have been running with a simple premise: if it breaks, I can rebuild it.</p>
+<p>I'm going to try and keep that same simple approach here, theoretically if something bad happens I should be able to rebuild the cluster from scratch by backing up cluster snapshots and the data stored in the persistent volumes.</p>
+<p><img src="/blog/2024/04/21/journey-to-k3s-basic-cluster-backups/longhorn-backups-360.jpg" alt="Longhorn screenshot displaying ongoing backups"></p>
+
+          <p class="text-right"><a href="/blog/2024/04/21/journey-to-k3s-basic-cluster-backups/">Read more &raquo;</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/09/import-data-manually-into-a-longhorn-volume/">Importing data manually into a longhorn volume</a></h1>
+    <div class="info">
+      Published on April 09, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I was in the process of migrating <a href="https://github.com/go-shiori/shiori">Shiori</a> from my docker environment to the new <a href="https://blog.josem.dev/2024-04-08-setting-up-a-k3s-cluster-on-raspberry-pi/">k3s cluster I'm setting up</a>. Shiori is a bookmarks manager that uses an SQLite database and a folder to store the data from the bookmarks. I didn't want to switch engines just yet since I want to improve SQLite's performance first, so I decided to move the data directly to a longhorn volume.</p>
+<p>This probably is super simple and vastly known but it wasn't clear for me at first. Posting it here for future reference and for anyone that might find it useful.</p>
+
+          <p class="text-right"><a href="/blog/2024/04/09/import-data-manually-into-a-longhorn-volume/">Read more &raquo;</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/08/audiobooks-can-be-a-great-alternative-to-tv/">Audiobooks can be a great alternative to TV</a></h1>
+    <div class="info">
+      Published on April 08, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>We have been doing a sort of experiment lately. My SO had eye surgery a few weeks ago and the first days se barely opened her eyes and even when she could open them blue light took a toll and make her eyes dry and tired really quickly.
+Since I still had to work and she had to rest, I suggested her to try out listening to an audiobook. She was a bit skeptical at first, but gave it a try.</p>
+<p>I got her <a href="https://openlibrary.org/works/OL34050635W/Yumi_and_the_Nightmare_Painter?edition=">Yumi and the nightmare painter</a>; she already read <a href="https://openlibrary.org/works/OL28687656W/Tress_of_the_Emerald_Sea?edition=">Tress of the emerald sea</a> a few months ago and wanted to read something else from the same author an I got the feeling that this one was good for her too. I had a long plane trip ahead of me at that time too so I tried it out as well, though in my case the book wasn't new to me since I read it last year when it was released.</p>
+<p>She loved it, both the book and the experience, and finished it in a couple of days. Even asked for more! Since <em>Yumi and the nightmare painter</em> is a short book and self-contained, talking to her we decied to try out a longer series together. A friend gave her <a href="https://openlibrary.org/works/OL16807297W/Steelheart_%28The_Reckoners_Book_1%29?edition=steelheart0000sand_g0e1">Steelheart</a> for her birthday last year, so we decided to start <em>The Reckoners</em>.</p>
+<p><img src="/blog/2024/04/08/audiobooks-can-be-a-great-alternative-to-tv/plappa-ios-360.jpeg" alt="Plappa running on my phone playing the last Recokerns book, Calamity"></p>
+
+          <p class="text-right"><a href="/blog/2024/04/08/audiobooks-can-be-a-great-alternative-to-tv/">Read more &raquo;</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/">Journey to K3S: Deploying the first service and its requirements</a></h1>
+    <div class="info">
+      Published on March 25, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I have my K3S cluster up and running, and I'm ready to deploy my first service. I'm going to start migrating one of the simplest services I have running in my current docker setup, the RSS reader <a href="https://miniflux.app/">Miniflux</a>.</p>
+<p>I'm going to use Helm charts through the process since k3s supports Helm out of the box, but for this first service there's also some preparation to do. I'm missing the storage backend, a way to ingress traffic from the internet, a way to manage the certificates and the database. Also, I need to migrate my current data from one database to another, but those are postgresql databases so I guess a simple <code>pg_dump</code>/<code>pg_restore</code> or <code>psql</code> commands will do the trick.</p>
+<p><img src="/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/k9s-miniflux-running-locally-640.jpg" alt="A screenshot showing the miniflux namespace in my k3s cluster with healthy pods and a request to the internal ingress endpoint showing a 200 status code"></p>
+
+          <p class="text-right"><a href="/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/">Read more &raquo;</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+
+  <div>
+  <div class="pagination">
+    <div class="float-left">
+      
+        <span class="disabled">&laquo; Newer</span>
+      
+    </div>
+    <div class="float-right">
+      
+        <a href="/blog/page/2/">Older &raquo;</a>
+      
+    </div>
+    <div class="text-center">Page 1</div>
+    <div class="clearfloat"></div>
+  </div>
+</div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

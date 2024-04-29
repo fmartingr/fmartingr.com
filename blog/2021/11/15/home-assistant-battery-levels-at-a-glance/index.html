@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Home Assistant battery levels at a glance | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2021/11/15/home-assistant-battery-levels-at-a-glance/">Home Assistant battery levels at a glance</a></h1>
+    <div class="info">
+      Published on November 15, 2021
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I was talking recently about how many Zigbee devices are too many and how the most troublesome thing you can have is batteries dieing on you at the same time. If you install several devices at once and have it's batteries dead at the same it it's a bit of a hassle going to each one and replacing it (depending where you have them and how difficult is to replace).</p>
+<!-- readmore -->
+
+<p>It came to me that if we could see the battery status of devices easily on a card this can be at least addressed by knowing which batteries are most discharged.</p>
+<p>As context, since I'm usually playing with devices I use number as identifiers. For example, my motion sensors are named <em>Motion Sensor #X</em> (where <em>X</em> is an increasing number). This way it's ID is <code>motion_sensor_1</code> and it's entities <code>(entity type).motion_sensor_X_(attribute)</code>. I use this nomenclature everywhere so I can easily identify entities with the internal search (and because you need to have a method, always!).</p>
+<p>So. I can get all entities that represent a battery by searching for <code>_battery</code> but I have no real means of translating that search into a card without <a href="https://github.com/thomasloven/lovelace-auto-entities">a third party component called <strong>Auto entities</strong></a>.</p>
+<p>This card allows to <em>automatically populate lovelace cards with entities matching certain criteria</em> which is what I'm looking for, and it's pretty easy to use as well!</p>
+<p>I have a card on my dashboard with this configuration to display battery statuses accross my entities:</p>
+<div class="hll"><pre><span></span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom:auto-entities</span>
+<span class="nt">card</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entities</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Battery statusq</span>
+<span class="w">  </span><span class="nt">state_color</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">show_header_toggle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">filter</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">include</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;*_battery&#39;</span>
+<span class="nt">sort</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">state</span>
+<span class="w">  </span><span class="nt">numeric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">reverse</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">show_empty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">unique</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entity</span>
+</pre></div>
+<p>And this is how it looks:</p>
+<p><img src="/blog/2021/11/15/home-assistant-battery-levels-at-a-glance/card-screenshot-640.png" alt="Auto entities displaying the battery levels of the different devices at home"></p>
+<p>This card is very powerful, I already have a few other ideas on how to use it.</p>
+<p>Check it out: <a href="https://github.com/thomasloven/lovelace-auto-entities">Auto entities card</a></p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

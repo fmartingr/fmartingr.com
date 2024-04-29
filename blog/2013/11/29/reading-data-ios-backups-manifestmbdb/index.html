@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Reading data from iOS backups: Manifest.mbdb | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/11/29/reading-data-ios-backups-manifestmbdb/">Reading data from iOS backups: Manifest.mbdb</a></h1>
+    <div class="info">
+      Published on November 29, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Recently, I&#39;ve been working on a tool to extract data from iOS backups, and one of the files that a backup have is the Manifest.mbdb (or mbdx for old versions).</p><p>The Manifest.mbdb is a binary file that contains records for the hashed files that the backup includes, the hashed files can be anything that a certain application requires or saved, from a image thumbnail to a sqlite3 database file.</p><p>Reading the file can be tricky, since the record itself have a variable length, so you can just split the file based on a delimiter, you need to read it byte to byte. I&#39;m going to expose here the data structures this file contains:</p><table border="0" cellpadding="0" cellspacing="0" id="string_entity" style="width:100%">
+    <tbody>
+        <tr>
+            <th colspan="4"><strong>String entity</strong></th>
+        </tr>
+        <tr>
+            <th><strong>Type</strong></th>
+            <th><strong>Name</strong></th>
+            <th><strong>Description</strong></th>
+            <th><strong>Null value</strong></th>
+        </tr>
+        <tr>
+            <td>uint16</td>
+            <td>Lenght</td>
+            <td>Length of the string</td>
+            <td>0x0000</td>
+        </tr>
+        <tr>
+            <td>ASCII data</td>
+            <td>Data</td>
+            <td>Actual string of (length) size. Don&#39;t need to read this if length is null.</td>
+            <td><em>nothing</em></td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" id="property_entity" style="width:100%">
+    <tbody>
+        <tr>
+            <th colspan="3"><strong>Property entity</strong></th>
+        </tr>
+        <tr>
+            <th><strong>Type</strong></th>
+            <th><strong>Name</strong></th>
+            <th><strong>Description</strong></th>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Key</td>
+            <td>Key of the property</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>value</td>
+            <td>Property value</td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+        <tr>
+            <th colspan="4"><strong>Record entity</strong></th>
+        </tr>
+        <tr>
+            <th><strong>Type</strong></th>
+            <th><strong>Field name</strong></th>
+            <th><strong>Description</strong></th>
+            <th><strong>Null value</strong></th>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Domain</td>
+            <td>App domain</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Path</td>
+            <td>Path to file</td>
+            <td>0x0000</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Target</td>
+            <td>&nbsp;</td>
+            <td>0xFFFF</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Hash</td>
+            <td>SHA-1 hash of the file</td>
+            <td>0xFFFF</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Encription key</td>
+            <td>Encryption key -if any-</td>
+            <td>0xFFFF</td>
+        </tr>
+        <tr>
+            <td>uint16</td>
+            <td>Mode</td>
+            <td>File mode:
+            <ul>
+                <li>0xAXXX: Symlink</li>
+                <li>0x4000: Directory</li>
+                <li>0x8000: File</li>
+            </ul>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint64</td>
+            <td>inode number</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>User ID</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Group ID</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Last modified time</td>
+            <td>EPOCH</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Last accesed time</td>
+            <td>EPOCH</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Created time</td>
+            <td>EPOCH</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint64</td>
+            <td>File size</td>
+            <td>&nbsp;</td>
+            <td>0x0...0</td>
+        </tr>
+        <tr>
+            <td>uint8</td>
+            <td>Flag</td>
+            <td>0x1 to 0xB</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint8</td>
+            <td>Properties number</td>
+            <td>Number of properties to follow with this record</td>
+            <td>0x00</td>
+        </tr>
+        <tr>
+            <td><a href="#property_entity">property</a>[0...n]</td>
+            <td>Property objects</td>
+            <td>Each property object -if any-</td>
+            <td><em>nothing</em></td>
+        </tr>
+        <tr>
+            <td>--</td>
+            <td>File name</td>
+            <td>SHA1(domain + path)</td>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody>
+</table><p><strong>More info:&nbsp;</strong> <a href="http://theiphonewiki.com/wiki/ITunes_Backup#Manifest.mbdb">The iPhone Wiki</a> | <a href="http://nagareshwar.securityxploded.com/wp-content/uploads/2012/09/mbdb-record.jpg">This image I found</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

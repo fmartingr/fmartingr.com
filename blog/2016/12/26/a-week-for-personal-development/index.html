@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>A week for personal development | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2016/12/26/a-week-for-personal-development/">A week for personal development</a></h1>
+    <div class="info">
+      Published on December 26, 2016
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Sadly, over time, my programming time at work is becoming less frequent. Doesn’t mean I don’t do stuff it’s just little by little most my time is spent on management things. Since I don’t want to get stalled and to give myself focus into other things I got last week off to see whatever I was capable of making. To my surprise it was time well spent.</p>
+<!-- readmore -->
+
+<blockquote><p>Side effect: instead of five or six days it was down to four or less cause you know, everyone is busy these days ;)</p>
+</blockquote>
+<p>So, what did I do?</p>
+<h2 id="used-lektor-to-build-this-site">Used Lektor to build this site</h2><p><a href="https://github.com/fmartingr/fmartingr-lektor">This site on github</a></p>
+<p>I finally managed to rebuild my site from scratch with <a href="https://www.getlektor.com">lektor</a>. Already wrote about this <a href="/blog/2016/12/21/new-site/">in a previous post</a>.</p>
+<p>Summary:</p>
+<ul>
+<li>🔼 Read other people's code, which is nice.</li>
+<li>🔼 Made some goodies with Make, Gulp and Bash to automate stuff.</li>
+<li>🔼 Discovered that ARM servers are <del>not so</del> fun.</li>
+<li>🔽 It wasn't coding.</li>
+</ul>
+<h2 id="natif">Natif</h2><p><a href="https://github.com/fmartingr/natif">Natif on github</a></p>
+<p>Simple app to use a website as a desktop application.</p>
+<p>I wanted to do something with <a href="https://electron.atom.io">electron</a> for some time now and since I use some webapps that I wanted outside of my browser this was a simple yet powerful ally for me.</p>
+<p>I wanted it mostly to create a <em>Netflix app</em> because my main browser is Firefox and Netflix isn't working on it but <a href="https://github.com/fmartingr/natif/issues/1">I came into <em>trouble</em> when trying it out</a>.</p>
+<p>Summary:</p>
+<ul>
+<li>🔼 Tried electron.</li>
+<li>🔼 Simple code, good results.</li>
+<li>🔽 Widevine.</li>
+<li>🔽 Packaging automation on release for every operating system without a decent server will force me to use jenkins, and I don't want to.</li>
+</ul>
+<h2 id="symboldoc">SymbolDoc</h2><p><a href="https://github.com/fmartingr/symboldoc">Symboldoc on github</a></p>
+<p>Print a simple docstring based on a given python module and a symbol name.</p>
+<p>I wanted to use <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">abtract syntax trees</a> for something thinking it was more difficult than it really were, and it came to a simple script that print a docstring for a symbol that also could be easily integrated into my emacs setup, forcing me to document my projects more.</p>
+<p>Summary:</p>
+<ul>
+<li>🔼 Used AST!</li>
+<li>🔼 Made tests.</li>
+<li>🔽 Understanding the AST wasn't as difficult as I expected.</li>
+</ul>
+<h2 id="nout">Nout</h2><p><a href="https://github.com/fmartingr/nout">Nout on github</a></p>
+<p>Maybe in the future a note taking app.</p>
+<p>After trying almost every note taking app out there mine are just files on a <code>Notes</code> folder written in markdown syntax. Thinking about what I needed, it came just to a couple features, so I thought that creating an index of my notes in a sqlite database would be enough. Parsing files to normalize the information and using simple queries to look up for the data.</p>
+<p>Right now I only made the file watcher and the database storage, there's a pull request on the works with some tests. It's not usable yet.</p>
+<p>Summary:</p>
+<ul>
+<li>🔼 Forgot how fun was working with multithreading.</li>
+<li>🔼 Getting the mindset to start bigger projects.</li>
+<li>🔼 Now I know that <a href="https://docs.python.org/3.6/library/fnmatch.html">fnmatch</a> exists.</li>
+<li>🔽 Got the feeling that the components are not as modular as they should be.</li>
+<li>🔽 Not enough testing, solving it now.</li>
+<li>🔽 Not documented, but time was scarce.</li>
+</ul>
+<h2 id="other-stuff">Other stuff</h2><p>Other things I did:</p>
+<ul>
+<li>Started reading <a href="https://pragprog.com/book/tpp/the-pragmatic-programmer">the pragmatic programmer</a> and started to feel that it was money really well invested. <strong>Highly recommended to every developer out there</strong>. (Thank you <a href="https://github.com/RusEu">@RusEu</a> and <a href="https://github.com/miguelgr">@MiguelGR</a>)</li>
+<li>Made a few Pull Requests to <a href="https://github.com/enkore/i3pystatus">i3pystatus</a>. Minor things but it felt rewarding.</li>
+<li>Made <a href="https://github.com/fmartingr/fmartingr-lektor/tree/master/packages/emojify">a simple plugin for lektor</a>. Not published yet.</li>
+<li>Built a list of stuff to automate my laptop provisioning with Ansible even more.</li>
+<li>Tuned a little bit more my i3 configuration.</li>
+<li>Found out tools like codecov, scrutinizer and gemnasium.</li>
+<li>Learn things about open source projects (guidelines, contribution, CI, ...).</li>
+<li>Moved my site from a custom server to <a href="https://www.firebase.com">Firebase</a>.</li>
+</ul>
+<p>Things I miss:</p>
+<ul>
+<li>Doing something in another programming language. Not so long ago <a href="https://github.com/fmartingr/goshare">I tried golang</a> and I got the feeling that I should have invested more time in this or a new one.</li>
+<li>Lack of documentation but you know, when there's not enough time...</li>
+<li>Focus on unit testing more than I did.</li>
+<li>Related with the above, should have tried to use <a href="https://en.wikipedia.org/wiki/Test-driven_development">TDD</a> or another different development process.</li>
+<li>Not having a boilerplate to create projects and its integrations and base file tree, spent a lot of time doing it. It's silly because you're not creating tons of projects in a short period of time but it's a task that could be automated somehow.</li>
+</ul>
+<p>Overall it felt really rewarding. I encourage everyone to get some time off to create new stuff, maintain your projects, create that tool you always wanted, research about that subject you read so long ago, etc.</p>
+<p>I don't know when but I will surely repeat this.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

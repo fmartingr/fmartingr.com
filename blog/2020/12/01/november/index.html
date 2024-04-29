@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>November 2020 | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2020/12/01/november/">November 2020</a></h1>
+    <div class="info">
+      Published on December 01, 2020
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Checking my images it seems this month I didn't have anything remarkable from the outside so... I just
+wanted to share that this month I have given myself some very nice meals and I improved the
+Katsu Curry recipe quite a bit. I'm not good at cooking by any means, but the relax you get
+from listening to music while cooking some healthy food is pretty good.</p>
+<p><a href="/blog/2020/12/01/november/image.jpg"><img src="/blog/2020/12/01/november/image-360.jpg" alt="This month I&#39;ve made myself a lot of nice meals"></a></p>
+<!-- readmore -->
+
+<h2 id="projects">Projects</h2><ul>
+<li><p><a href="https://github.com/fmartingr/switch-games-json"><strong>Switch games json</strong></a></p>
+<p>I made a simple script to parse and expose the Nintendo Switch game list in JSON including the encrypted title ID
+field that is used on the screenshots on the system. The JSON list is generated every day from the Switchbrew wiki
+and exposed via Github pages.</p>
+<p>The main problem here is that not every game is present on Switchbrew, so I'm unsure how to automate this without
+asking people to pull request missing games or doing that myself (for the ones missing). I need to check if the same
+title ID filed that is required to get the proper encrypted field is present on the eShop's API. If that's the case
+it would be possible to get the list for all games <em>easily</em>.</p>
+</li>
+<li><p><a href="https://github.com/fmartingr/games-screenshot-manager"><strong>Games Screenshot Manager</strong></a></p>
+<p>Related to the one above, an application to fetch and sort all screenshots found from several providers and games.
+Currently working for Steam, Nintendo Switch and some games on several operating systems. I'm starting to like this
+<em>golang</em> thing. :D</p>
+</li>
+<li><p><a href="https://github.com/fmartingr/butterrobot"><strong>Butterrobot</strong></a></p>
+<p>I've been making slow progress with the admin interface. I'm trying to keep it as simple as possible: a way to
+check which channels and plugins there are available and an option to enable plugins with channels allowing a
+JSON configuration to be used with them, since the same plugin on a different channel would require a different
+output. I hope to have something useful on December if my time allows.</p>
+</li>
+<li><p>I've also spent some time playing with:</p>
+<ul>
+<li><strong>My Raspberries</strong>: Playing with different OSs, booting from USB, setting up Home Assistant properly, ...</li>
+<li><strong>Firewalla</strong>: Setting up my network devices, assigning IPs and understanding it's inner workflows a bit. I've
+also setup Pi-Hole inside it as main DNS server replacing the one they use.</li>
+<li><strong>Alpine Linux</strong>: On the Pis and containers to understand the difference with other OSs.</li>
+<li><strong>Arch Linux</strong>: I'm currently starting from scratch my Dell XPS 13 using Arch Linux base, and while it's more work
+than a <em>Next, next, next, finish</em> install I'm enjoying it quite a lot since the result you get is a minimal install.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>I'm working on blog posts for the Arch Linux installation, Alpine on Raspberry and self-hosting my smart devices
+using Home Assistant so the blog have more content than the monthly updates. Another mini-posts for the tools I
+self-host myself will</p>
+</li>
+<li><p>Infra side it seems that my docker services via an VPS as door from the internet through an SDN to my home server
+keep achieving 100% uptime from some months now, only going down if I test something on a dev service.</p>
+<p>Problem is that even if it <em>works</em>, the containerized setup with two load balancers, SDN and so on seems both
+complex from my use case and useful if something goes wrong.</p>
+<p>I'm considering either moving to a simpler approach (non-containerized) or go all-in containerd and use something
+like <a href="https://k3s.io">k3s</a> to orchestrate the server at home. I would have an excuse to add some Pis and clusterize
+everything properly.</p>
+<p>I still don't know the path I'm going to take with this.</p>
+</li>
+</ul>
+<h2 id="books">Books</h2><ul>
+<li><p><a href="https://www.goodreads.com/book/show/28249.The_Magicians_Guild"><strong>The Magicians' Guild</strong></a> (<em>Trudi Canavan</em>)</p>
+<p>Ongoing. I try to read a chapter a day if time or focus allows. I'm actually enjoying the story so far, even if
+reading anything magic related after Mistborn seems dull.</p>
+</li>
+</ul>
+<h2 id="tvshows-and-movies">TVShows and Movies</h2><ul>
+<li><a href="https://www.disneyplus.com/series/star-wars-rebels/64MCZgAzY0Zw"><strong>Star wars: Rebels</strong></a></li>
+<li><a href="https://www.disneyplus.com/movies/rogue-one-a-star-wars-story/14CV6eSbygOA"><strong>Rogue One: A star-wars Story</strong></a></li>
+<li><a href="https://www.disneyplus.com/movies/star-wars-a-new-hope-episode-iv/12fVeZxD2fWJ"><strong>Star Wars: A new hope</strong></a></li>
+<li><p><a href="https://www.disneyplus.com/movies/star-wars-the-empire-strikes-back-episode-v/iqtDTZAewwYl"><strong>Star Wars: The empire strikes back</strong></a></p>
+<p>Star Wars Marathon continues!</p>
+</li>
+<li><p><a href="https://www.primevideo.com/detail/0HBVL22LMA40B0XBY30RUOC9EH/"><strong>Bones</strong></a></p>
+<p>Slowly and steady our <em>joker</em> when we don't know what to put on TV over meals.</p>
+</li>
+<li><p><a href="https://www.disneyplus.com/series/the-mandalorian/3jLIGMDYINqD"><strong>Mandalorian</strong></a></p>
+<p>It's back! This is why I look forward to Fridays now.</p>
+</li>
+<li><p><a href="https://www.netflix.com/title/70281312"><strong>The Blacklist</strong></a></p>
+<p>I discovered this randomly because the trailer poped up on my Netflix feed. The premise seemed interesting
+and James Spader is such a great actor... Not sure how I managed to convince the Player 2 to watch this but
+it seems she's enjoying it too. Kinda different from what we usually watch together, but welcome nevertheless.</p>
+</li>
+</ul>
+<h2 id="games">Games</h2><ul>
+<li><p><a href="https://store.steampowered.com/app/751780/Forager/"><strong>Forager</strong></a></p>
+<p>I completed all the achievements a while ago, but the author decided to add more... so I just fire this up
+from time to time to try and maintain Forager on my Steam Perfect Games list.</p>
+</li>
+<li><p><a href="https://minecraft.net"><strong>Minecraft</strong></a></p>
+<p>Oh my, this again? It seems so. Some friends wanted to get on the <em>blocky</em> train again. I have been out of
+Minecraft for a good while (years!) and it seems interesting to come back after all this time. There are
+some new things to explore and since I didn't really "finish" the game back in the day... let's see how
+this goes.</p>
+<p>Spoiler alert: We spent more time constructing stuff rather than <em>progressing</em> through the game.</p>
+</li>
+<li><p><a href="https://store.steampowered.com/app/1390010/pyramida/"><strong>Pyramida</strong></a></p>
+<p>From Sokpop, the creators of Simmiland. A simple village builder game that seems minimalistic and fun in
+the same way their other games are. I don't play this often since a play session can last a while (as it happened
+with Simmiland) but let's see if I manage to get every achievement.</p>
+</li>
+<li><p><a href="https://www.nintendo.es/Juegos/Nintendo-Switch/Hyrule-Warriors-La-era-del-cataclismo-1838129.html"><strong>The legend of Zelda: Age of Calamity</strong></a></p>
+<p>The Nintendo game for this month, already going strong on my Switch. I wasn't really sure if I would enjoy a
+<em>musou</em> game even if it was Nintendo related, but so far is looking really good. I didn't though that cutting
+through hordes of bokoblins would be so satisfactory and fun! I'm still not sure if the lore is "<em>canon</em>" or if
+it truly precedes Breath of the Wild as <span class="spoiler">it seems to happen on a parallel timeline created
+by a time traveler</span>, but I'm eager to know how it ends, even if the finale is the same as the sequel.</p>
+</li>
+<li><p><a href="https://magic.wizards.com/en"><strong>Magic: The gathering (physical)</strong></a></p>
+<p>This refers to the physical version of the game. We bought a starter kit and play against each other from
+time to time. It's new for both of us so this is an interesting learning curve to share.</p>
+</li>
+</ul>
+<h2 id="articles-https//t-me/fmartingr-articles"><a href="https://t.me/fmartingr_articles">Articles</a></h2><ul>
+<li><a href="https://drewdevault.com/2020/11/01/What-is-Gemini-anyway.html">What is this Gemini thing anyway, and why am I excited about it?</a></li>
+<li><a href="https://www.jeffgeerling.com/blog/2020/raspberry-pi-400-teardown-and-review">Raspberry Pi 400: Teardown and Review</a></li>
+<li><a href="https://podcasts.google.com/?feed=aHR0cHM6Ly9zZWxmaG9zdGVkLnNob3cvcnNz">(podcast) Self-Hosted Show</a></li>
+<li><a href="https://www.youtube.com/watch?v=LWyAtbOhW2w">Why Arcades Are Still Thriving In Japan</a></li>
+<li><a href="https://sneak.berlin/20201112/your-computer-isnt-yours/">Your computer isn't yours</a><ul>
+<li><a href="https://blog.jacopo.io/en/post/apple-ocsp/">Does Apple really log every app you run? A technical look – Jacopo Jannone - blog</a></li>
+<li><a href="https://social.wildeboer.net/@jwildeboer/105219402213708346">Response from Apple</a></li>
+</ul>
+</li>
+<li><a href="https://drewdevault.com/2020/11/17/Better-than-DuckDuckGo.html">We can do better than DuckDuckGo</a></li>
+<li><a href="https://raccoon.onyxbits.de/blog/bugreport-free-support/">No, "Open Source" does not mean "Includes Free Support"</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/random.7.html">random(7)</a><ul>
+<li><a href="https://security.stackexchange.com/questions/162507/getrandom-syscalls-relation-to-kernel-entropy-pool-state/175771#175771">GETRANDOM syscall</a></li>
+</ul>
+</li>
+<li><a href="https://work.lisk.in/2020/11/20/even-faster-bash-startup.html">Even faster bash startup</a></li>
+<li>(Spanish) <a href="https://youtu.be/FOxUAMuBtMM">La Revolución Mandaloriana que va a cambiar el cine</a></li>
+<li><a href="http://boginjr.com/it/sw/dev/vinyl-boot/">Booting from a vinyl record</a></li>
+<li><a href="https://medium.com/@_orcaman/when-too-much-concurrency-slows-you-down-golang-9c144ca305a">When too much concurrency slows you down (golang)</a></li>
+<li><a href="https://filipnikolovski.com/posts/ebpf/">TIL: eBPF is awesome</a></li>
+<li><a href="https://dgl.cx/2020/06/sqlite-json-support">SQLite as a document database</a></li>
+<li><a href="https://rakhim.org/honestly-undefined/19/">Blogging vs. blog setups</a></li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

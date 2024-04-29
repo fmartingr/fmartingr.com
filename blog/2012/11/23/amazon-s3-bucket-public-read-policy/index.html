@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Amazon S3 bucket public read policy | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2012/11/23/amazon-s3-bucket-public-read-policy/">Amazon S3 bucket public read policy</a></h1>
+    <div class="info">
+      Published on November 23, 2012
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>After migrating the blog to a PaaS service I had a proble that the disk space
+was volatile and I had to store the images and binary files on another server
+or CDN. After thinking for a while I decied to give a try to amazon S3.</p>
+<p>Created a bucket that I'm going to use as CDN for now on, but geeking around I
+saw that the permissions are modified by file, not by folder/bucket. Searching
+aroung the docs I found the policies, that are JSON strings wich include
+properties for the entire bucket.</p>
+<p>For making a read-only public bucket you need this:</p>
+<div class="hll"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;Version&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2008-10-17&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;Statement&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">    </span><span class="s2">&quot;Sid&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;AllowPublicRead&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Effect&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Principal&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;AWS&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;Action&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="s2">&quot;Resource&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;arn:aws:s3:::/*&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}]</span>
+<span class="p">}</span>
+</pre></div>
+<p>Replace &lt;bucket name&gt; for yours and apply changes. With this the entire
+bucket will be publicy accesible, but if you want to be more restrictive, you
+may specify a subfolder:</p>
+<div class="hll"><pre><span></span><span class="s2">&quot;Resource&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;arn:aws:s3:::&lt;bucket&gt;/&lt;path&gt;/*&quot;</span><span class="p">]</span>
+</pre></div>
+<p>Hope this helps.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

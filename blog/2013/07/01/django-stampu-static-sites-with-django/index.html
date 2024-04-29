@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>django-stampu: Static sites with django | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/07/01/django-stampu-static-sites-with-django/">django-stampu: Static sites with django</a></h1>
+    <div class="info">
+      Published on July 01, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/07/01/django-stampu-static-sites-with-django/django-stampu.png" alt=""></p>
+<blockquote><p>After finishing zombiepress a friend of mine wanted to use it but asked for
+some kind of conversion to static since he uploads its current blog to github.
+That's how this project was born.</p>
+</blockquote>
+<p>Django as a static site? Of course, it's possible, only if your project it's
+using a simple backend infrastructure, it doesn't let users modify the
+database, and also doesn't have contact forms or that kind of stuff. The
+conversion of a blog into static content was really easy, in about 30 minutes
+I had an alpha working -which is the 0.1.2 version uploaded in github/pypi-.</p>
+<p>django-stampu is basically a crawler. Some people led me to solutions much
+more complicated. (Ex. Running a command and let the computer work.) And I
+didn't like that. I wanted a conversion of the site as I see it when running
+the <code>runserver</code> command, for that purpose you have to follow all the internal
+links of the site and save the items as *.html if the content-type matches. It
+also saves the static files in the site, but I need to look further into that,
+because it can't save files needed by css files yet, it only checks for
+src/href attributes on all tags in html files.</p>
+<p>Want to try it?</p>
+<ol>
+<li>Install django-stampu: <code>pip install django-stampu</code></li>
+<li>Add it to your <code>INSTALLED_APPS</code></li>
+<li>Execute the command: <code>python manage.py stamp</code></li>
+<li>Check the <code>_static</code> folder.</li>
+</ol>
+<p>Easy, right? That's what I want to hear!</p>
+<p>Keep in mind that this is a proof of concept, I need to improve lots of things
+and add some configuration variables for people that want to customize their
+sites.</p>
+<p>If you want to contribute in any way, you can <a href="https://github.com/fmartingr/django-stampu">check the source code at
+github</a>.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

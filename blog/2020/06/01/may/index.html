@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>May 2020 | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2020/06/01/may/">May 2020</a></h1>
+    <div class="info">
+      Published on June 01, 2020
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I can go out now. In those rare days with good weather here I can
+take pictures like this.</p>
+<p><a href="/blog/2020/06/01/may/image.jpg"><img src="/blog/2020/06/01/may/image-360.jpg" alt="A picture from the beach"></a></p>
+<!-- readmore -->
+
+<h1 id="tvshows/movies">TVSHows/Movies</h1><ul>
+<li><p><strong>Mandalorian</strong> (ongoing)</p>
+<p>I say ongoing, but I think I have not watched it this month... the thing
+is that I still have to finish it.</p>
+</li>
+<li><p><strong>Rick and Morty</strong> (ongoing)</p>
+<p>Of course I'm up to date, don't be <em>rickdiculous</em>.</p>
+</li>
+<li><p><strong>Once upon a time</strong> (ongoing)</p>
+<p>To kill time during lunch/dinner because my Player 2 likes it. Pretty
+boring though. Only the first season is "good" in some way because the
+premise is interesting, after that it all goes to <em>shirt</em>.</p>
+</li>
+</ul>
+<h1 id="manwha">Manwha</h1><p>Same as <a href="/blog/2020/05/01/april/">last month</a>.</p>
+<ul>
+<li><p><a href="https://www.webtoons.com/en/fantasy/dice/list?title_no=64&amp;page=1"><strong>DICE</strong></a> (ongoing)</p>
+</li>
+<li><p><a href="https://www.webtoons.com/en/action/the-gamer/list?title_no=88"><strong>The Gamer</strong></a> (ongoing)</p>
+</li>
+</ul>
+<p>And I have the urge to read <em>One Piece</em> but don't know from where
+(legally) withouth investing a lot in physical copies...</p>
+<h1 id="projects">Projects</h1><p>Little progress on code this month, just making some tests and
+concepts (because <em>Memories</em> required front-end work and I forgot
+almost everything I knew about CSS).</p>
+<p>Spent some time reworking my local infra from scratch. All the
+services I had running were done with poorly manual labor and now I'm
+working on provisioning everything using Ansible. I have to do the same
+for my computers since I'm planning the new dotfiles from scratch too.</p>
+<ul>
+<li><p><strong>Jeeves</strong></p>
+<p>Very little progress, just added a few tasks and so, the example here
+is not working because docker is broken on my machine at the time of
+writing, but it should work. Promise.</p>
+<p>My problem with this is that until it has a proper server to trigger
+tasks via webhooks, crons or other methods is just a lightweight
+(and worst) Ansible <em>wannabe</em>.</p>
+<div class="hll"><pre><span></span>  $ jeeves execute Jeevesfile.yaml
+  (i) Running flow from Jeevesfile.yaml
+  === Running flow: Create synology-drive package
+  ok! Running step [1/8]: Download x86_64 deb
+  ok! Running step [2/8]: Calculate md5sum for x86_64 deb file
+  ok! Running step [3/8]: Download i686 deb
+  ok! Running step [4/8]: Calculate md5sum for i686 deb file
+  ok! Running step [5/8]: Create build directory
+  ok! Running step [6/8]: Parse PKGBUILD
+  ok! Running step [7/8]: Create SRCINFO file
+  Image &#39;archlinux:latest&#39; does not exist container
+  err Executing step [8/8]: Test install in container
+</pre></div>
+</li>
+<li><p><strong>Butterrobot</strong></p>
+<p>Spent some time refactoring code and thinking on what to use for
+a simple admin interface to setup new features for the bots, enable or
+disable plugins and all that.</p>
+<p><img src="/blog/2020/06/01/may/butterrobot.png" alt="Butterrobot !dice plugin"></p>
+</li>
+<li><p><strong>Memories</strong> (previously <em>Unnamed photo viewer</em>)</p>
+<p>Worked on reading the files from the filesystem and extracting the
+mininmum required metadata for me to save on the database (to have
+some search/filters going on). Also got some ideas depending on how the
+files are stored (use folder names as "tags" to search for example).</p>
+<p>Also played around with thumbnails, which are tricky to do depending on
+the file, and I have a lot of variety (from standard JPEG to HEIC going
+through 360 videos, etc.). I also noticed that I have a lot of files
+with wrong metadata, which does <strong>not</strong> help at all with my testing.</p>
+<p>Well, I have a simple frontend now, but everything is a very work in
+progress (and those menu links are just dummy navigation).</p>
+<p>I need to focus on implement a proper backend and decide on the main
+features to implement in the first release, which should come with a
+simple frontend and API for people to create their own.</p>
+<p><img src="/blog/2020/06/01/may/memories.png" alt="Memories screenshot"></p>
+</li>
+</ul>
+<h1 id="videogames">Videogames</h1><ul>
+<li><p><a href="https://animal-crossing.com/new-horizons"><strong>Animal Crossing: New Horizons</strong></a></p>
+<p>Just a daily routine trying to complete the monthly <em>citteropedia</em>.</p>
+</li>
+<li><p><a href="https://store.playstation.com/es-es/product/EP0082-CUSA07187_00-FFVIIREMAKE00000"><strong>Final Fantasy VII: Remake</strong></a></p>
+<p>I think I'm almost through the end, just finishing up some side quests
+prior to the final chapters. I'm having lots of fun, probably
+because the slow pace so I don't finish it in just a few days.</p>
+<p>I can't describe how awesome the soundtrack is, specially with the
+nostalgia effect from the original.</p>
+</li>
+<li><p><a href="https://store.steampowered.com/app/105600/Terraria/"><strong>Terraria</strong></a></p>
+<p>The last update for Terraria came out this month and I'm going through
+the content with a friend trying to go though all the content. Well,
+not <em>all</em> content, since there is <strong>a lot</strong>. This game is a piece of
+art, one of those rare gems that I wish I had more time to properly
+enjoy it.</p>
+</li>
+<li><p><a href="https://store.steampowered.com/app/466560/Northgard/"><strong>Northgard</strong></a></p>
+<p>This has been on my Steam library for quite some time, and since the
+Valhalla announcement I had the urge to play something Viking related.
+Didn't play much (two scenarios I think). Is a fairly nice strategy
+game but it has enough elements to make it enjoyable for a player like
+me (because I'm not very good at them).</p>
+</li>
+<li><p><a href="https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Minecraft-Dungeons-1749059.html"><strong>Minecraft Dungeons</strong></a>:</p>
+<p>Got this for the switch because I wanted to have something to spend a
+few minutes in and kill some time and couldn't I be more worng.</p>
+<p>My surprise has been the awful load times (2m+ to start playing from
+the Switch main menu), sub-30 framerates and the awesome chance of the
+game crashing when putting the console in sleep mode. The game is
+<em>fun</em> to play from time to time (and I'm sure is way more fun in
+multiplayer) but the Switch version is just so bad that no one should
+buy it.</p>
+</li>
+<li><p>Some <a href="https://www.seaofthieves.com/"><strong>Sea of Thieves</strong></a> and <a href="https://beta.playvalorant.com"><strong>Valorant</strong></a> with friends to keep me close while social distancing, though I'm not sure I would keep playing since rebooting to Windows just to play some games is itching me a lot lately, rather buy what I can play on Linux and purchasing the rest on Switch or PS4 if needed.</p>
+</li>
+</ul>
+<h1 id="articles">Articles</h1><ul>
+<li><a href="https://thomask.sdf.org/blog/2019/11/09/take-care-editing-bash-scripts.html">Take care editing bash scripts</a></li>
+<li><a href="https://www.tbray.org/ongoing/When/202x/2020/04/29/Leaving-Amazon">Bye, Amazon</a></li>
+<li><a href="https://www.youtube.com/watch?v=gwF0L55kIgg">Sprite Analysis: Top-Down RPG Pixel Art (Pokémon)</a></li>
+<li><a href="https://www.arp242.net/email-auth.html">Experiences with email-based login</a></li>
+<li><a href="https://shouldiblockads.com/">Should I block ads?</a></li>
+<li><a href="https://medium.com/@keivan/the-day-appget-died-e9a5c96c8b22">The day AppGet died</a></li>
+<li><a href="https://nrkbeta.no/2020/05/26/how-our-99th-percentile-response-time-went-from-4000-ms-to-sub-10-ms/">How our 99th percentile response time went from 4000 ms to sub 10 ms</a></li>
+<li><a href="https://lkml.org/lkml/2020/5/29/1038">Linus Torvalds Re: A wide monitor is for looking at lots of files.</a></li>
+<li><a href="https://computers-are-fast.github.io/">Do you know how much your computer can do in a second?</a></li>
+<li><a href="https://benwiser.com/blog/Making-game-engines-is-a-waste-of-time---I-probably-won%E2%80%99t-stop-making-them.html">Making game engines is a waste of time. I probably won't stop making them</a></li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

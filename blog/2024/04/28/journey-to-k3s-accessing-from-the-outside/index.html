@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Journey to K3s: Accessing from the Outside | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/04/28/journey-to-k3s-accessing-from-the-outside/">Journey to K3s: Accessing from the Outside</a></h1>
+    <div class="info">
+      Published on April 28, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Up until now I have been working locally (on my home network). While that is enough for most of the services I'm running I need to access some of them from the outside. For example, I want to expose this blog to the internet and access Miniflux to read my RSS feeds on the go.</p>
+<p>There are a few ways to achieve this but I have some specific requirements that I want to meet:</p>
+<ol>
+<li><strong>Zero-trust approach</strong>: I don't want to expose the services directly to the internet.</li>
+<li><strong>Public services</strong>: Other clients apart from me should be able to access some of the services.</li>
+<li><strong>Home IP safety</strong>: Don't directly expose my home IP address. (This is on par with #1, but I want to make it explicit).</li>
+<li><strong>On-transit encryption</strong>: Full on transit encryption from the client to the cluster with no re-encryption in the middle.</li>
+<li>No Cloudflare. (Breaks #4)</li>
+<li>No Tailscale. (Breaks #2, also there are other users at home and I don't want to have the Tailscale client running all the time).</li>
+</ol>
+<p>What does this leave me? A reverse proxy server.</p>
+<p><img src="/blog/2024/04/28/journey-to-k3s-accessing-from-the-outside/healthcheck-360.png" alt=""></p>
+<!-- readmore -->
+
+<p>I'm going to setup <a href="https://www.haproxy.org/">HAProxy</a> in a separate external server to act as a reverse proxy that will connect to my home k3s cluster directly, but since the DNS records will point to this HAProxy server my home IP address will not be exposed. HAProxy won't be able to decrypt the traffic but leverage the <a href="https://en.wikipedia.org/wiki/Server_Name_Indication">SSL SNI header</a> to route the traffic back to the cluster for the allowed domains that I setup. This way I can have a zero-trust approach and have the traffic encrypted from the client to the cluster.</p>
+<p>So, to start working I created a new VPS in <a href="https://hetzner.cloud/?ref=gSMfCgZFSz1u">Hetzner Cloud</a> <em>(affiliate link)</em> and installed HAProxy in there, which is the easy part. Once the system is up to date and with the minimal services running I can start working on setting up HAProxy.</p>
+<h2 id="passthrough-traffic">Passthrough traffic</h2><p>Passthrough traffic is fairly simple, just create a <em>frontend</em> that listens on port 443 and sends the traffic to the ssl <em>backend</em> that check for SSL and sends data upstream to the k3s cluster. Since I'm are not decrypting the traffic <a href="https://www.haproxy.com/documentation/haproxy-configuration-tutorials/load-balancing/tcp/">TCP mode</a> is used to tunnel the traffic.</p>
+<p>I'm going to use <a href="https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#4-option%20ssl-hello-chk"><code>ssl-hello-chk</code></a> option to ensure the traffic is SSL. This option checks if the first bytes of the connection are a valid SSL handshake, if not it will drop the connection.</p>
+<div class="hll"><pre><span></span><span class="na">frontend k3s-01-ssl</span>
+<span class="w">  </span><span class="c1"># Listen on port 443 (HTTPS)</span>
+<span class="w">  </span><span class="na">bind *</span><span class="o">:</span><span class="s">443</span>
+
+<span class="w">  </span><span class="c1"># Use TCP mode, meaning that HAProxy won&#39;t decrypt the traffic and just passthrough to the upstream server</span>
+<span class="w">  </span><span class="na">mode tcp</span>
+
+<span class="w">  </span><span class="c1"># Enable advanced logging of TCP connections with session state and timers</span>
+<span class="w">  </span><span class="na">option tcplog</span>
+
+<span class="w">  </span><span class="c1"># Send to the backend</span>
+<span class="w">  </span><span class="na">use_backend k3s-01-ssl</span>
+
+<span class="na">backend k3s-01-ssl</span>
+<span class="w">  </span><span class="c1"># Use TCP mode, meaning that HAProxy won&#39;t decrypt the traffic and just passthrough to the upstream server</span>
+<span class="w">  </span><span class="na">mode tcp</span>
+
+<span class="w">  </span><span class="c1"># Balance the traffic between the servers in a round-robin fashion (not needed for a single server)</span>
+<span class="w">  </span><span class="na">balance roundrobin</span>
+
+<span class="w">  </span><span class="c1"># Retry at least 3 times before giving up</span>
+<span class="w">  </span><span class="na">retries 3</span>
+
+<span class="w">  </span><span class="c1"># Check if the traffic is SSL</span>
+<span class="w">  </span><span class="na">option ssl-hello-chk</span>
+
+<span class="w">  </span><span class="c1"># Send the traffic to the k3s cluster</span>
+<span class="w">  </span><span class="na">server home UPSTREAM_IP</span><span class="o">:</span><span class="s">443 check</span>
+</pre></div>
+<h2 id="force-ssl-redirect-http-to-https">Force SSL (redirect HTTP to HTTPS)</h2><p>Since initially I'm not going to expose plain HTTP services I can just <a href="https://www.haproxy.com/documentation/haproxy-configuration-tutorials/http-redirects/#sidebar">redirect</a> all HTTP trafic to HTTPS: Just need to create a new frontend that listens on port 80 and redirects the traffic to the HTTPS frontend. This should work transparently for the client.</p>
+<div class="hll"><pre><span></span><span class="na">frontend k3s-01-http</span>
+<span class="w">  </span><span class="c1"># Listen on port 80 (HTTP)</span>
+<span class="w">  </span><span class="na">bind *</span><span class="o">:</span><span class="s">80</span>
+
+<span class="w">  </span><span class="c1"># Use HTTP mode</span>
+<span class="w">  </span><span class="na">mode http</span>
+
+<span class="w">  </span><span class="c1"># Redirect switching scheme to HTTPS</span>
+<span class="w">  </span><span class="na">http-request redirect scheme https</span>
+</pre></div>
+<h2 id="deny-non-allowed-domains">Deny non-allowed domains</h2><p>For security reasons I want to deny access to all domains that are not in the allowed list: that is domains that I explicitly allow for outside access.</p>
+<p>I'm going to create a file <code>/etc/haproxy/allowed-domains.txt</code> with the list of domains separated by newlines and use the <a href="https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/acls/"><code>acl</code></a> directive to check if the domain is in the list abruptly droping the connection if it's not.</p>
+<p>The file <code>/etc/haproxy/allowed-domains.txt</code> looks like this:</p>
+<div class="hll"><pre><span></span># /etc/haproxy/allowed-domains.txt
+miniflux.fmartingr.com
+</pre></div>
+<p>The new configuration options for the <strong>frontend</strong> part. No changes needed on the backend.</p>
+<div class="hll"><pre><span></span><span class="na">frontend k3s-01-ssl</span>
+<span class="w">  </span><span class="c1"># ... other configurations</span>
+
+<span class="w">  </span><span class="c1"># Allow up to 5 seconds to inspect the TCP request before giving up.</span>
+<span class="w">  </span><span class="c1"># Required since HAProxy needs to inspect the SNI header to route the traffic.</span>
+<span class="w">  </span><span class="na">tcp-request inspect-delay 5s</span>
+
+<span class="w">  </span><span class="c1"># Accept the request only after the hello message is received (which should contain the SNI header).</span>
+<span class="w">  </span><span class="na">tcp-request content accept if { req_ssl_hello_type 1 }</span>
+
+<span class="w">  </span><span class="c1"># Deny the request if the domain is not in the allowed list</span>
+<span class="w">  </span><span class="na">acl allowed_domain req.ssl_sni -m end -i -f /etc/haproxy/allowed-domains.txt</span>
+
+<span class="w">  </span><span class="c1"># Send to the backend if the domain is allowed</span>
+<span class="w">  </span><span class="na">use_backend k3s-01-ssl if allowed_domain</span>
+</pre></div>
+<h2 id="conclusion">Conclusion</h2><p>Once all this changes are in place I can restart the HAProxy service and the traffic should be routed to the k3s cluster so I can access the services from the outside without exposing my home IP address and have the traffic encrypted from the client to the cluster. Though not perfect this is a fairly simple and good setup, it requires manual labor but it's a good tradeoff for the requirements I have.</p>
+<blockquote><p>Back when I set up Miniflux <a href="/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/#setting-up-an-external-ingress">I created an ingress specifically for external access</a> that wasn't working since my cluster could not be reached by the ACME servers on the domain I set up. Now that I have HAProxy in place the domain can be setup to point to it and the traffic will be correctly routed to the cluster completing the configuration by requesting a certificate from Let's Encrypt and exposing the Ingress to the internet.</p>
+</blockquote>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

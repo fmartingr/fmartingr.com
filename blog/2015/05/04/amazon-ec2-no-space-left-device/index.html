@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Amazon EC2: No space left on device | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2015/05/04/amazon-ec2-no-space-left-device/">Amazon EC2: No space left on device</a></h1>
+    <div class="info">
+      Published on May 04, 2015
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>So a funny thing happened today at out pre-production environment. I was
+performing our pre-big-PR deployment when a beautiful error was shown in my
+terminal:</p>
+<div class="hll"><pre><span></span>cannot create X: No space left on device
+</pre></div>
+<p>What?! How could that be possible. I know that our environment don't have a
+lot of bytes for us to play with but having the storage already full with our
+database and other services outside this machine just wasn't possible. And I
+was right.</p>
+<div class="hll"><pre><span></span>fmartingr@pre-production:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/xvda1       59G   37G   21G  65% /
+none            4.0K     0  4.0K   0% /sys/fs/cgroup
+udev            2.0G   12K  2.0G   1% /dev
+tmpfs           396M  400K  395M   1% /run
+none            5.0M     0  5.0M   0% /run/lock
+none            2.0G     0  2.0G   0% /run/shm
+none            100M     0  100M   0% /run/user
+</pre></div>
+<p>What?! Now I sure don't understand a thing. I was laughing hysterically when
+my brain just started working as I remembered an old friend: the
+<a href="http://www.wikiwand.com/en/Inode">inode</a>.</p>
+<div class="hll"><pre><span></span>fmartingr@pre-production:~$ df -i
+Filesystem      Inodes   IUsed   IFree IUse% Mounted on
+/dev/xvda1     3932160 3932160       0  100% /
+none            505855       2  505853    1% /sys/fs/cgroup
+udev            504558     403  504155    1% /dev
+tmpfs           505855     332  505523    1% /run
+none            505855       1  505854    1% /run/lock
+none            505855       1  505854    1% /run/shm
+none            505855       4  505851    1% /run/user
+</pre></div>
+<p>F<strong>k you. Our deploys are made using "isolated" builds. That is, we reinstall
+pip/bower requirements </strong>for every build.** So each build take about ~50k
+inodes, and we keep some in case some rollback is needed, but of course,
+keeping two months old builds wasn't needed at all, so I made a script that
+just deletes builds older than two weeks and our poor thing was happy again.</p>
+<p>To search which folder of your server is eating the inode limit, you can run
+this command:</p>
+<div class="hll"><pre><span></span>find . -xdev -type f | cut -d &quot;/&quot; -f 2 | sort | uniq -c | sort -nr
+</pre></div>
+<p>This will show the path name and the inode count, keep going inside dirs to
+get some detailed input, once found, just delete the files that are causing
+havok.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Self-hosting my home with Home Assistant (part 1) | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/">Self-hosting my home with Home Assistant (part 1)</a></h1>
+    <div class="info">
+      Published on December 20, 2020
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Even if I've been a Home Assistant's user for quite some time I have never dedicated myself to have a truly stable and dedicated service at home. I always treated it more like a pet project than anything else, but this is changing now.</p>
+<p>I have a fair amount of <em>Smart Devices</em> around the house and just as you come to expect they come from different companies, protocols and sizes. Each day it passes I'm more and more concerned about my privacy and the value of the hardware I do not truly own.</p>
+<p>With this in mind I have started <strong>the journey of self-hosting!</strong> Which to put it simply is... every device that is in my home (with a few exceptions that you'll see later) will be controlled by this Home Assistance instance.</p>
+<!-- readmore -->
+
+<blockquote><p>Note: I wanted to install this on a USB Drive, but apparently that's still not supported for <em>Home Assistant OS</em>, so I'm stuck with an SD Card for now. Some time after starting working on this I heard about <a href="https://www.home-assistant.io/blog/2020/12/13/home-assistant-os-release-5/#external-data-disk"><code>datactl</code></a> but I will setup that sometime later.</p>
+</blockquote>
+<h2 id="base-home-assistant-os-using-an-sd-card">Base Home Assistant OS using an SD Card</h2><p>For this just stick to the <a href="https://www.home-assistant.io/hassio/installation/">official documentation</a>. Only download the latest release <a href="https://github.com/home-assistant/operating-system/releases">from github</a> and copy the <em>img</em> card to your SD Card with <code>dd</code>, Balena or the tool of choice.</p>
+<p>Put the SD Card on your Pi, turn it on and let's get started.</p>
+<h2 id="base-installation">Base installation</h2><p>After booting, you will be welcome with a wizard installation. Just follow the basic instructions to generate the main user/account, and the name and location for your home assistant.</p>
+<p>Bonus: Use some website <a href="https://www.freemaptools.com/elevation-finder.htm">like this</a> to get your elevation if you're feeling picky.</p>
+<p>After that, you will be greeted by something similar to this:</p>
+<p><a href="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/base.png"><img src="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/base-360.png" alt="Base install after the wizard"></a></p>
+<h2 id="update-the-system">Update the system</h2><p>Go to your Supervisor tab and check if you have any pending updates.</p>
+<h2 id="moving-to-mariadb">Moving to MariaDB</h2><p>The default database backend is SQLite, and that has it's limitations, so let's move everything to MariaDB before any other configuration.</p>
+<ol>
+<li>Install the File editor addon from <strong>Supervisor &gt; Add-ons &gt; File editor</strong> and start it.</li>
+<li>Install the MySQL addon from <strong>Supervisor &gt; Add-ons &gt; MariaDB</strong></li>
+<li>Once installed, go to the configuration tab and set a password</li>
+<li>Under the Info tab start the MariaDB Service and enable the Watchdog service</li>
+<li>Go to the file editor interface and edit the <code>configuration.yaml</code> file.</li>
+<li><p>Add the configuration for the <a href="https://www.home-assistant.io/integrations/recorder/"><code>recorder</code></a> integration:</p>
+<div class="hll"><pre><span></span><span class="nt">recorder</span><span class="p">:</span>
+<span class="w"> </span><span class="nt">db_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql://homeassistant:&lt;password&gt;@core-mariadb/homeassistant?charset=utf8</span>
+<span class="w"> </span><span class="nt">commit_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w"> </span><span class="nt">purge_keep_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span>
+
+<span class="nt">history</span><span class="p">:</span>
+</pre></div>
+<p>In this case I also set data to be stored for 90 days and a 5s delay between disk writes (since I'm using an SD Card and their lifespan is not very long with abundant I/O).</p>
+<p>More information on the documentation: <a href="https://www.home-assistant.io/integrations/recorder/"><code>recorder</code></a>, <a href="https://www.home-assistant.io/integrations/history/"><code>history</code></a></p>
+</li>
+<li>Restart Home Assistant for the changes to take effect under <strong>Configuration &gt; Server Constrols &gt; Restart</strong>.</li>
+</ol>
+<h2 id="backups">Backups</h2><p>Now another if not the most important of them all, automatic snapshots in case something goes wrong.</p>
+<p>Go to <strong>Configuration &gt; Automations &gt; Add automation</strong>, and in top-right hamburger menu press <strong>Edit as YAML</strong>.</p>
+<p>This configuration will perform a Weekly Snapshot every Monday at 3.00 AM. It is a sensible default once Home Assistant is running, but if you're going to play with it you may need to consider more frequent backups.</p>
+<div class="hll"><pre><span></span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Weekly Snapshot</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Performs</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">weekly</span><span class="nv"> </span><span class="s">snapshot&#39;</span>
+<span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+<span class="nt">trigger</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">time</span>
+<span class="w">    </span><span class="nt">at</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;03:00&#39;</span>
+<span class="nt">condition</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">time</span>
+<span class="w">    </span><span class="nt">weekday</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mon</span>
+<span class="nt">action</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hassio.snapshot_full</span>
+<span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;weekly_{{</span><span class="nv"> </span><span class="s">now().strftime(</span><span class="se">&#39;&#39;</span><span class="s">%Y-%m-%d</span><span class="se">&#39;&#39;</span><span class="s">)</span><span class="nv"> </span><span class="s">}}&#39;</span>
+</pre></div>
+<p>Keep in mind that this snapshots are stored on the <code>/backup</code> folder on the Home Assistant instance, you need to create a way of moving that <strong>out</strong> of the system. You can use other automation, SCP from another machine or any compatible tool of your choice.</p>
+<h2 id="setting-up-accounts-and-users-that-will-use-the-system">Setting up accounts and users that will use the system</h2><p>This used to be more complex a while ago, now you only need to go to <strong>Configuration &gt; People</strong> and add the users you need.</p>
+<p>Now you can even add the avatar directly from the interface! Back in the day you required to upload the file and fiddling with YAMLs.</p>
+<p>Also, for some options and add-ons to display, you need to enable "Advanced mode" on your user profile page.</p>
+<p><img src="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/advanced_mode-360.png" alt="Advanced mode enabled on my user"></p>
+<h2 id="ssh-access">SSH Access</h2><p>Easily handled by an integration, as almost everything with Home Assistant.</p>
+<blockquote><p>For this add-on to show up you need to enable Advanced mode as shown in the previous step.</p>
+</blockquote>
+<p>Just install the <strong>Terminal and SSH</strong> addon, add your ssh key under the configuration tab under the <code>authorized_keys</code> property, and expose a port for the SSH server on the host. After that Start the service and enable the Watchdog to monitor it in case it fails.</p>
+<h2 id="enable-ssl">Enable SSL</h2><p>Even if my home assistant installation is going to be LAN only (using a VPN to have external access) I always setup SSL in all my services and while there are some options when setting this up with Home Assistant, I went the nginx way since that's what I'm more comfortable with.</p>
+<p>Go to <strong>Supervisor &gt; Add-on Store</strong> and install the <strong>NGINX Home Assistant SSL proxy</strong>.</p>
+<p>Put your files under <code>/ssl</code> connecting to the instance via SSH or using any file editor addon on the store.</p>
+<p>Under its <strong>Configuration</strong> tab, set up the domain and path to the certificate and key files.</p>
+<div class="hll"><pre><span></span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">homeassistant.local</span>
+<span class="nt">certfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx/homeassistant.local/homeassistant.crt</span><span class="w"> </span><span class="c1"># Relative to /ssl</span>
+<span class="nt">keyfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx/homeassistant.local/homeassistant.key</span><span class="w"> </span><span class="c1"># Relative to /ssl</span>
+</pre></div>
+<p>There are a number of guides out there to generate self-signed certificates. I have my own Certificate Authority that use to sign certificates for my local services, that way I can just trust my own CA and every dependant certificate will work out of the box.</p>
+<p>As a note, for this to work with the companion apps on iOS you need to generate the certificates with <a href="https://support.apple.com/en-us/HT210176">pretty specific requisites</a>. Android worked as a charm.</p>
+<h2 id="getting-the-home-assistant-companion">Getting the Home Assistant Companion</h2><p>Download the application from your phone's store and after logging in you can setup the sensors to be sent to Home Assistant, this will be linked to your account so you could perform automation with them on the server.</p>
+<p>Apart from using the app to control your home devices, the sensors will be useful to generate automation in the future.</p>
+<p>Another useful thing to setup here is the local (LAN) address to use when the phone is connected to Wifi at home, using an external hostname when connecting via VPN/RemoteControl.</p>
+<h2 id="the-first-automation-tell-me-about-updates">The first automation: tell me about updates</h2><p>I use an script to send notifications to all devices (persons) on the house, with the <code>title</code> and <code>message</code> parameter:</p>
+<div class="hll"><pre><span></span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Send Notifications</span>
+<span class="nt">sequence</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">notify.mobile_app_oneplus6</span>
+<span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">title</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<span class="w">      </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<span class="c1"># Insert more notifcations into sequence</span>
+<span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+<span class="nt">variables</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+<p>And this automation will check when there are any updates and send a notification using the previous script with the version number that just came in:</p>
+<div class="hll"><pre><span></span><span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update notification</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Notify</span><span class="nv"> </span><span class="s">everyone</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">there&#39;s</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">update</span><span class="nv"> </span><span class="s">available&quot;</span>
+<span class="nt">trigger</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">state</span>
+<span class="w">    </span><span class="nt">entity_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">binary_sensor.updater</span>
+<span class="w">    </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;off&#39;</span>
+<span class="w">    </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;on&#39;</span>
+<span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="nt">action</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">script.send_notifications</span>
+<span class="w">    </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">New Home Assistant Release</span>
+<span class="w">      </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="w">        </span><span class="no">Home Assistant  {{ state_attr(&#39;binary_sensor.updater&#39;, &#39;newest_version&#39;)</span>
+<span class="w">        </span><span class="no">}}  is now available.</span>
+<span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single</span>
+</pre></div>
+<p><img src="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/update_notification-360.jpg" alt="Update notification on my phone"></p>
+<h2 id="add-system-sensors">Add system sensors</h2><p>I want to control how the Raspberry is doing, so I'm going to enable some system sensors using the <a href="https://www.home-assistant.io/integrations/systemmonitor"><code>systemmonitor</code></a> sensor.</p>
+<p>Edit the <code>configuration.yaml</code> file and add the following:</p>
+<div class="hll"><pre><span></span><span class="nt">sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">systemmonitor</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">disk_use_percent</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">memory_use_percent</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">swap_use_percent</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">load_1m</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">load_5m</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">load_15m</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processor_use</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processor_temperature</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">last_boot</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">throughput_network_in</span>
+<span class="w">        </span><span class="nt">arg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eth0</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">throughput_network_out</span>
+<span class="w">        </span><span class="nt">arg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eth0</span>
+</pre></div>
+<p>This requires a Home Assistant restart for the changes to take effect.</p>
+<p>I also added a custom lovelace dashboard to monitor everything easily, here is the YAML configuration:</p>
+<div class="hll"><pre><span></span><span class="nt">views</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Overview</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">overview</span>
+<span class="w">    </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;mdi:eye&#39;</span>
+<span class="w">    </span><span class="nt">visible</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">be3b6f5bc71c49ff9be6830d545cb4e0</span>
+<span class="w">    </span><span class="nt">badges</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="w">    </span><span class="nt">cards</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span>
+<span class="w">        </span><span class="nt">cards</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.processor_use_percent</span>
+<span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Processor</span>
+<span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span>
+<span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.memory_use_percent</span>
+<span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65</span>
+<span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Memory</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.disk_use_percent</span>
+<span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Disk usage</span>
+<span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
+<span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.processor_temperature</span>
+<span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">45</span>
+<span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">55</span>
+<span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">70</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Temperature</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gauge</span>
+<span class="w">            </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sensor.load_5m</span>
+<span class="w">            </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">            </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">            </span><span class="nt">severity</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">              </span><span class="nt">yellow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">              </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">System</span>
+</pre></div>
+<p>And here's a preview:</p>
+<p><img src="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/system_monitor-360.png" alt="Home Assistant simple system monitor lovelace dashboard"></p>
+<h2 id="adding-integrations">Adding integrations</h2><p>At this point if you already have devices on your network your Home Assistant will send you a notification like this:</p>
+<p><a href="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/notification.png"><img src="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/notification-360.png" alt="Notification telling that devices where found on network"></a></p>
+<p>So I'm going to setup the base integrations with the server to start controlling some devices.</p>
+<h3 id="chromecast">Chromecast</h3><blockquote><p>But you said self-hosted! Yeah, yeah... And I want to, but there's no real alternative to the Cast protocol to self host, the speakers with Chromecast devices are just so convenient...</p>
+</blockquote>
+<p>One of the simplest things to set up, just go to your integrations and add it. It will prompt you to select in which rooms each Chromecast device is and that's it.</p>
+<p><a href="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/chromecast.png"><img src="/blog/2020/12/20/self-hosting-my-home-with-home-assistant-part-1/chromecast-360.png" alt="Chromecast configuration"></a></p>
+<h3 id="weather-openweathermap">Weather (OpenWeatherMap)</h3><p>I'm going to use the <a href="https://www.home-assistant.io/integrations/openweathermap/"><code>OpenWeatherMap</code></a> integration because it provides more sensors than the one setup by default.</p>
+<p>You just need to <a href="https://openweathermap.org/">register to the service</a> and enable the integration under <strong>Configuration &gt; Integrations &gt; OpenWeatherMap</strong>, supply your API key and set the mode to <strong>onecall_hourly</strong> which will download 3h forecasts each hour, enough for the free tier.</p>
+<blockquote><p>I had to wait for an hour or so until the API Key was valid for the integration to use, it keep saying <strong>Invalid API Key</strong> until I received a confirmation email for my account.</p>
+</blockquote>
+<h3 id="phillips-hue">Phillips Hue</h3><p>Linking the Phillips Hue is super easy, you only need to add the Hue integration, select the bridge IP from the dropdown (or input one manually) and press the button on the bridge to confirm.</p>
+<p>After selecting in which area the bridge and bulbs are in, you're good to go.</p>
+<blockquote><p><strong>BONUS:</strong> Since the comunication is done via LAN with the bridge, the bridge itself doesn't need internet access to work (as I have mine blocked in my firewall). Also in my case this is only temporal since I will move every Zigbee device to a cluster controlled by Home Assistant.</p>
+</blockquote>
+<h3 id="tuya-smart-things">Tuya (Smart Things)</h3><p>This is one of the dependencies I have that I'm most eager to get rid off, but for now there are some smart plugs at home that I need to control.</p>
+<p>Going to <strong>Configuration &gt; Integrations &gt; Add</strong> the <strong>Tuya</strong> is on the list; you need to enter your username, password and country code for the integration to communicate with the Tuya API, so your devices will require internet connection.</p>
+<p>The plan is to try and flash the plugs with Tasmota to free them from the <em>cloud</em> and any new ones I'm getting will be Zigbee compatbile with the hopes on having only Zigbee smart plugs at home.</p>
+<h2 id="closing">Closing</h2><p>That was easy!</p>
+<p>The folks at Home Assistant have been working on this so good that almost everything can be done from the interface now. I see any <em>normal</em> user working with this mostly plug and play from the UI which is amazing in my opinion.</p>
+<p>In future post I will dive into my Zigbee configuration, InfluxDB, ESPHome, Alarms ... there's so much to do!</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

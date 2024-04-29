@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Journey to K3S: Basic cluster setup | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/03/14/journey-to-k3s-basic-cluster-setup/">Journey to K3S: Basic cluster setup</a></h1>
+    <div class="info">
+      Published on March 14, 2024
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>I've finally started to play with K3S, a lightweight Kubernetes distribution. I have been reading about it for a while and I'm excited to see how it performs in my home lab. My services have been running in an Intel NUC running Docker container for some years now, but the plan is to migrate them to a k3s cluster of three NanoPC-T6 boards.</p>
+<p>I was looking for a small form-factor and low power consumption solution, and the NanoPC-T6 seems to fit the bill. I know I'm going to stumble upon some limitations but I'm eager to see how it goes and the problems I find along the way.</p>
+<p>My requirements are very simple: I want to run a small cluster with a few services, and I want to be able to access them from the internet and from my home. My current setup relies on Tailscale for VPN and Ingress for the services, so I'm going to try and replicate that in this new setup.</p>
+<p><img src="/blog/2024/03/14/journey-to-k3s-basic-cluster-setup/nanopc-cluster-360.jpeg" alt="Picture of three nanopc-t6 computers on top of each other running k3s"></p>
+<!-- readmore -->
+
+<h2 id="installing-dietpi-on-the-nanopc-t6">Installing DietPi on the NanoPC-T6</h2><p>I'm completely new to <a href="https://dietpi.com">DietPi</a>, but nothing that FriendlyElec offered seemed to fit my needs. I'm not a fan of the pre-installed software and I wanted to start from scratch. I tried to find compatible OSs around and there weren't many, but DietPi seemed to be a good fit and it's actively maintained.</p>
+<p>At first I tried to run from an SD Card and try and copy the data manually, but I found out that the NanoPC-T6 has an eMMC slot, so I decided to go with that. I flashed FriendlyWRT into the SD Card, booted it and used their tools to flash DietPi into the eMMC.</p>
+<blockquote><p>For this to work properly under my home network setup I had to physically connect a computer and a keyboard to the boards and disable the firewall service using: <code>service firewall stop</code>. I believe this happened because the boards live in a different VLAN/subnet in my local network since I connect new devices to a different VLAN for security reasons. With that disabled I could access the boards from my computer and continue the setup.</p>
+</blockquote>
+<p><img src="/blog/2024/03/14/journey-to-k3s-basic-cluster-setup/friendlywrt-emmc-tools-360.jpg" alt="Flashing DietPi into the NanoPC-T6 using FriendlyWRT&#39;s web interface"></p>
+<h2 id="setting-up-the-os">Setting up the OS</h2><p>The first thing once you SSH to the boards is to change the default and global software passwords. Once the setup assistant was over I setup a new SSH key and disabled the password login.</p>
+<p>Before installing K3s I wanted to make sure the OS was up to date and had the necessary tools to run the cluster. I used the <code>dietpi-software</code> tool to be sure that some convenience utilities like <code>vim</code>, <code>curl</code> and <code>git</code> where present.</p>
+<p>I also set up the hostname by using the <code>dietpi-config</code> tool to <code>k3s-master-03</code>, <code>k3s-master-02</code> and <code>k3s-master-03</code> for the three boards.</p>
+<p>And installed <code>open-iscsi</code> to be prepared in the case I end up setting up <a href="https://longhorn.io/">Longhorn</a>.</p>
+<h2 id="setting-up-the-network">Setting up the network</h2><p>I'm using Tailscale to connect the boards to my home network and to the internet. I installed <a href="https://tailscale.com">Tailscale</a> using <code>dietpi-software</code> and link the device to my account using <code>tailscale up</code>.</p>
+<p>I also set up the static IP address for the boards using my home router. I'm using a custom <a href="https://www.pfsense.org/">pfsense</a> router and I set up the IP address for the boards using the MAC address of the boards on the VLAN they are going to reside in.</p>
+<h2 id="installing-k3s">Installing K3S</h2><p>I followed the <a href="https://docs.k3s.io/datastore/ha-embedded">official documentation</a> to create an embedded etcd highly available cluster.</p>
+<blockquote><p>I'm not a fan of the <code>curl ... | sh</code> installation methods around, but this is the official way to install K3S and I'm going to follow it for convenience. <strong>Always check the script before running it.</strong>.</p>
+</blockquote>
+<ol>
+<li><p>I created the first node using the following command:</p>
+<div class="hll"><pre><span></span>curl<span class="w"> </span>-sfL<span class="w"> </span>https://get.k3s.io<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">K3S_TOKEN</span><span class="o">=</span>&lt;token&gt;<span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>-<span class="w"> </span>server<span class="w"> </span>--cluster-init
+</pre></div>
+<p>I used the <code>K3S_TOKEN</code> environment variable to set the token for the cluster that I will need to join the other two nodes to the cluster. Since this is the first node of the cluster I had to provide the <code>--cluster-init</code> flag to initialize the cluster.</p>
+</li>
+<li><p>I joined the other two nodes to the cluster using the following command:</p>
+<div class="hll"><pre><span></span><span class="w"> </span>curl<span class="w"> </span>-sfL<span class="w"> </span>https://get.k3s.io<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">K3S_TOKEN</span><span class="o">=</span>&lt;token&gt;<span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>-<span class="w"> </span>server<span class="w"> </span>--server<span class="w"> </span>https://&lt;internal<span class="w"> </span>ip<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>node&gt;:6443
+</pre></div>
+</li>
+<li><p>Done! I have a three node K3S cluster running in my home lab. Is <strong>that</strong> simple.</p>
+</li>
+</ol>
+<p><img src="/blog/2024/03/14/journey-to-k3s-basic-cluster-setup/kubectl-nodes-ready-360.jpg" alt="Output of kubectl get nodes showing three ready nodes"></p>
+<h2 id="checking-that-it-works">Checking that it works</h2><p>I'm going to deploy a simple service to check that the cluster is working properly. I'm going to use the <code>nginx</code> image and expose it using an Ingress:</p>
+<ol>
+<li><p>Create the <code>hello-world</code> namespace:</p>
+<div class="hll"><pre><span></span><span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>hello-world
+</pre></div>
+</li>
+<li><p>Create a simple index file:</p>
+<div class="hll"><pre><span></span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>index.html
+</pre></div>
+</li>
+<li><p>Create a <code>ConfigMap</code> with the index file:</p>
+<div class="hll"><pre><span></span><span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>hello-world-index-html<span class="w"> </span>--from-file<span class="o">=</span>index.html<span class="w"> </span>-n<span class="w"> </span>hello-world
+</pre></div>
+</li>
+<li><p>Create a deployment using the <code>nginx</code> image and the config map we just created:</p>
+<div class="hll"><pre><span></span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s"> apiVersion: apps/v1</span>
+<span class="s"> kind: Deployment</span>
+<span class="s"> metadata:</span>
+<span class="s">     name: hello-world-nginx</span>
+<span class="s">     namespace: hello-world</span>
+<span class="s"> spec:</span>
+<span class="s">     selector:</span>
+<span class="s">         matchLabels:</span>
+<span class="s">         app: hello-world</span>
+<span class="s">     replicas: 3</span>
+<span class="s">     template:</span>
+<span class="s">         metadata:</span>
+<span class="s">         labels:</span>
+<span class="s">             app: hello-world</span>
+<span class="s">         spec:</span>
+<span class="s">         containers:</span>
+<span class="s">         - name: nginx</span>
+<span class="s">             image: nginx</span>
+<span class="s">             ports:</span>
+<span class="s">             - containerPort: 80</span>
+<span class="s">             volumeMounts:</span>
+<span class="s">             - name: hello-world-volume</span>
+<span class="s">             mountPath: /usr/share/nginx/html</span>
+<span class="s">         volumes:</span>
+<span class="s">         - name: hello-world-volume</span>
+<span class="s">             configMap:</span>
+<span class="s">             name: hello-world-index-html</span>
+<span class="s"> EOF</span>
+</pre></div>
+</li>
+<li><p>Create the service to expose the deployment:</p>
+<div class="hll"><pre><span></span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s"> apiVersion: v1</span>
+<span class="s"> kind: Service</span>
+<span class="s"> metadata:</span>
+<span class="s">     name: hello-world</span>
+<span class="s">     namespace: hello-world</span>
+<span class="s"> spec:</span>
+<span class="s">     ports:</span>
+<span class="s">         - port: 80</span>
+<span class="s">         protocol: TCP</span>
+<span class="s">     selector:</span>
+<span class="s">         app:  hello-world</span>
+<span class="s"> EOF</span>
+</pre></div>
+</li>
+<li><p>Create the Ingress to expose the service to the internet:</p>
+<div class="hll"><pre><span></span><span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s"> apiVersion: networking.k8s.io/v1</span>
+<span class="s"> kind: Ingress</span>
+<span class="s"> metadata:</span>
+<span class="s">     name: hello-world</span>
+<span class="s">     namespace: hello-world</span>
+<span class="s"> spec:</span>
+<span class="s">     ingressClassName: &quot;traefik&quot;</span>
+<span class="s">     rules:</span>
+<span class="s">     - host: hello-world.fmartingr.dev</span>
+<span class="s">       http:</span>
+<span class="s">         paths:</span>
+<span class="s">         - path: /</span>
+<span class="s">             pathType: Prefix</span>
+<span class="s">             backend:</span>
+<span class="s">             service:</span>
+<span class="s">                 name: hello-world</span>
+<span class="s">                 port:</span>
+<span class="s">                 number: 80</span>
+<span class="s"> EOF</span>
+</pre></div>
+</li>
+</ol>
+<p>Done! I can access the service from my local network using the <code>hello-world.fmartingr.dev</code> domain:</p>
+<p><img src="/blog/2024/03/14/journey-to-k3s-basic-cluster-setup/curl-ingress-ready-360.jpg" alt="A curl command to one of the nodes checking ingress connectivity"></p>
+<p>That's it! I have a cluster running and I can start playing with it. There's a lot more to be done and progress will be slow since I'm doing this in my free time to dogfood kubernetes at home.</p>
+<p>Will follow up with updates once I make more progress, see you on the next one.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

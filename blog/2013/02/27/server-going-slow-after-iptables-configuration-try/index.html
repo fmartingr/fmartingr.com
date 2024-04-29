@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Server going slow after IPTables configuration? Try this | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/02/27/server-going-slow-after-iptables-configuration-try/">Server going slow after IPTables configuration? Try this</a></h1>
+    <div class="info">
+      Published on February 27, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Recently I've started the migration of my company's servers to a new provider.
+After checking that the OS installed on the -now- old servers was Ubuntu 8.04
+(holy shit), I decided to make a fresh install of CentOS 6.3, cleaning up all
+the servers contents and setting up everything from scratch.</p>
+<p>After setting my iptables rules (INPUT whitelisted, OUTPUT accept all) I
+noticed a big delay on every connection made to my server. After checking a
+lot of things, these two solved the issue:</p>
+<h2 id="enable-unilimited-traffic-on-your-loopback-interface">Enable unilimited traffic on your loopback interface</h2><div class="hll"><pre><span></span>iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+</pre></div>
+<h2 id="enable-traffic-for-connections-started-by-your-server">Enable traffic for connections started by your server</h2><div class="hll"><pre><span></span>iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+</pre></div>
+<p>Hope this solves your issue as it did with mine.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

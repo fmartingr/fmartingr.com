@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Journey to K3S: Deploying the first service and its requirements | Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="blog post">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/">Journey to K3S: Deploying the first service and its requirements</a></h1>
+    <div class="info">
+      Published on March 25, 2024
+    </div>
+    
+      <div class="content">
+        
+        <h3>Edits</h3>
+        <p><strong>2024/04/29</strong>: Fixed a typo in the CloudNative PostgreSQL Operator chart example. The <code>valuesContent</code> was incorrect as it used attributes from the <code>Cluster</code> CRD, not the Chart.</p>
+
+        <hr />
+        
+        
+          <p>I have my K3S cluster up and running, and I'm ready to deploy my first service. I'm going to start migrating one of the simplest services I have running in my current docker setup, the RSS reader <a href="https://miniflux.app/">Miniflux</a>.</p>
+<p>I'm going to use Helm charts through the process since k3s supports Helm out of the box, but for this first service there's also some preparation to do. I'm missing the storage backend, a way to ingress traffic from the internet, a way to manage the certificates and the database. Also, I need to migrate my current data from one database to another, but those are postgresql databases so I guess a simple <code>pg_dump</code>/<code>pg_restore</code> or <code>psql</code> commands will do the trick.</p>
+<p><img src="/blog/2024/03/25/journey-to-k3s-deploying-the-first-service-and-its-requirements/k9s-miniflux-running-locally-640.jpg" alt="A screenshot showing the miniflux namespace in my k3s cluster with healthy pods and a request to the internal ingress endpoint showing a 200 status code"></p>
+<!-- readmore -->
+
+<h2 id="setting-up-longhorn-for-storage">Setting up Longhorn for storage</h2><p>The first thing I need is a storage backend for my services. I'm going to use Longhorn for this, since it's a simple and easy to use solution that works well with k3s. I'm going to install it using Helm, and I'm going to use the default configuration for now.</p>
+<div class="hll"><pre><span></span><span class="c1"># longhorn-helm-chart.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.cattle.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.longhorn.io</span>
+<span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+<span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-system</span>
+<span class="w">  </span><span class="nt">createNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.6.0</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-helm-chart.yaml
+</pre></div>
+<p>This should generate all required resources for Longhorn to work. In my case I also enabled the ingress for the Longhorn UI to do some set up of the node allocated storage according to my needs and hardware, though I will not cover that in this post.</p>
+<div class="hll"><pre><span></span><span class="c1"># longhorn-ingress.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-ingress</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-system</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">traefik.ingress.kubernetes.io/router.middlewares</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-system-longhorn-auth-middleware@kubernetescrd</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ingressClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn.k3s-01.home.arpa</span>
+<span class="w">    </span><span class="nt">http</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">        </span><span class="nt">backend</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">service</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-frontend</span>
+<span class="w">            </span><span class="nt">port</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-ingress.yaml
+</pre></div>
+<p>With this you should be able to access your Longhorn UI at the domain set up in your ingress. In my case it's <code>longhorn.k3s-01.home.arpa</code>.</p>
+<blockquote><p>Keep in mind that this is a local domain, so you might need to set up a local DNS server or add the domain to your <code>/etc/hosts</code> file.</p>
+</blockquote>
+<p>This example is not perfect by any means and if you plan to have this ingress exposed be sure to use a proper certificate and secure your ingress properly with authentication and other security measures.</p>
+<h2 id="setting-up-cert-manager-to-manage-certificates">Setting up cert-manager to manage certificates</h2><p>The next step is to set up cert-manager to manage the certificates for my services. I'm going to use Let's Encrypt as my certificate authority and allow cert-manager to generate domains for the external ingresses I'm going to set up.</p>
+<div class="hll"><pre><span></span><span class="c1"># cert-manager-helm-chart.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.cattle.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.jetstack.io</span>
+<span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager</span>
+<span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager</span>
+<span class="w">  </span><span class="nt">createNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.14.4</span>
+<span class="w">  </span><span class="nt">valuesContent</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">    </span><span class="no">installCRDs: true</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>cert-manager-helm-chart.yaml
+</pre></div>
+<p>In order to use Let's Encrypt as the certificate authority, I need to set up the issuer for it. I'm going to use the production issuer in this example since the idea is exposing the service to the internet.</p>
+<div class="hll"><pre><span></span><span class="c1"># letsencrypt-issuer.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIssuer</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-production</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">acme</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your@email.com</span>
+<span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://acme-v02.api.letsencrypt.org/directory</span>
+<span class="w">    </span><span class="nt">privateKeySecretRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-produdction</span>
+<span class="w">    </span><span class="nt">solvers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">http01</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ingress</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>letsencrypt-issuer.yaml
+</pre></div>
+<p>With this, I should be able to request certificates for my services using the <code>letsencrypt-production</code> issuer.</p>
+<h2 id="setting-up-the-cloudnative-postgreesql-operator">Setting up the CloudNative PostgreeSQL Operator</h2><blockquote><p>The chart for Miniflux is capable of deploying a PostgreSQL instance for the service, but I'm going to use the CloudNative PostgreSQL Operator to manage the database for this service (and others) on my own. This is because I want to have the ability to manage the databases separately from the services.</p>
+</blockquote>
+<p>Miniflux only supports postgresql so I'm going to use the CloudNative PostgreSQL Operator to manage the database, first let's intall the operator using the Helm chart:</p>
+<div class="hll"><pre><span></span><span class="c1"># cloudnative-pg-helm-chart.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.cattle.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloudnative-pg</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://cloudnative-pg.github.io/charts</span>
+<span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloudnative-pg</span>
+<span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cnpg-system</span>
+<span class="w">  </span><span class="nt">createNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>cloudnative-pg-helm-chart.yaml
+</pre></div>
+<p>This will install the CloudNative PostgreSQL Operator in the <code>cnpg-system</code> namespace. I'm going to create a PostgreSQL instance for Miniflux in the <code>miniflux</code> namespace.</p>
+<div class="hll"><pre><span></span><span class="c1"># miniflux-db.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql.cnpg.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux-db</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">    </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>miniflux-db.yaml
+</pre></div>
+<p>With this a PostgreSQL cluster with two instances and 2Gi of storage will be created in the <code>miniflux</code> namespace, note that I have specified the <code>longhorn</code> storage class for the storage.</p>
+<p>When this is finished a new secret with the connection information for the database called <code>miniflux-db-app</code> will be created. It will look like this:</p>
+<div class="hll"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secre</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/basic-auth</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux-db-app</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="w">  </span><span class="c1"># ...</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dbname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">jdbc-uri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">pgpass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded data&gt;</span>
+</pre></div>
+<p>We are going to reference this secret directly in the Miniflux deployment below.</p>
+<h2 id="deploying-miniflux">Deploying Miniflux</h2><p>Now that we have all the requirements set up, we can deploy Miniflux.</p>
+<p>I'm going to use <a href="https://artifacthub.io/packages/helm/gabe565/miniflux">gabe565's miniflux helm chart</a> for this, since they are simple and easy to use. I tried the <a href="https://artifacthub.io/packages/helm/truecharts/miniflux">TrueCharts</a> chart but I couldn't get it to work properly, since they only support amd64 and I'm running on arm64, though a few tweaks here and there <em>should</em> make it work.</p>
+<div class="hll"><pre><span></span><span class="c1"># miniflux-helm-chart.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.cattle.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.gabe565.com</span>
+<span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="w">  </span><span class="nt">createNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8.1</span>
+<span class="w">  </span><span class="nt">valuesContent</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">    </span><span class="no">image:</span>
+<span class="w">      </span><span class="no">tag: 2.1.1</span>
+<span class="w">    </span><span class="no">env:</span>
+<span class="w">      </span><span class="no">CREATE_ADMIN: &quot;0&quot;</span>
+<span class="w">      </span><span class="no">DATABASE_URL:</span>
+<span class="w">        </span><span class="no">secretKeyRef:</span>
+<span class="w">          </span><span class="no">name: miniflux-db-app</span>
+<span class="w">          </span><span class="no">key: uri</span>
+<span class="w">    </span><span class="no">postgresql:</span>
+<span class="w">      </span><span class="no">enabled: false</span>
+</pre></div>
+<blockquote><p>In order to customize Miniflux check out their <a href="https://miniflux.app/docs/configuration.html">configuration</a> documentation and set the appropriate values in the <code>env</code> section.</p>
+</blockquote>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>miniflux-helm-chart.yaml
+</pre></div>
+<blockquote><p>I'm using <code>CREATE_ADMIN: "0"</code> to avoid creating an admin user for Miniflux, since I already have one in my current database after I migrated it. If you want to create an admin user you can set this to <code>1</code> and set the <code>ADMIN_USERNAME</code> and <code>ADMIN_PASSWORD</code> values in the <code>env</code> section. See the <a href="https://artifacthub.io/packages/helm/gabe565/miniflux">chart documentation</a> for more information.</p>
+</blockquote>
+<p>This will create a Miniflux deployment in the <code>miniflux</code> namespace, using the <code>miniflux-db-app</code> database secret for the database connection.</p>
+<p>Wait until everything is ready in the <code>miniflux</code> namespace:</p>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>miniflux
+NAME<span class="w">                        </span>READY<span class="w">   </span>STATUS
+miniflux-678b9c8ff5-7dbj5<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running
+miniflux-db-1<span class="w">               </span><span class="m">1</span>/1<span class="w">     </span>Running
+miniflux-db-2<span class="w">               </span><span class="m">1</span>/1<span class="w">     </span>Running
+
+$<span class="w"> </span>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>miniflux<span class="w"> </span>miniflux-678b9c8ff5-7dbj5
+<span class="nv">time</span><span class="o">=</span><span class="m">2024</span>-03-24T23:00:42.487+01:00<span class="w"> </span><span class="nv">level</span><span class="o">=</span>INFO<span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Starting HTTP server&quot;</span><span class="w"> </span><span class="nv">listen_address</span><span class="o">=</span><span class="m">0</span>.0.0.0:8080
+</pre></div>
+<h2 id="setting-up-an-external-ingress">Setting up an external ingress</h2><blockquote><p>I'm not going to cover the networking setup for this but your cluster should be able to route traffic from the internet to the ingress controller (the master nodes). In my case I'm using a zero-trust approach with Tailscale to avoid exposing my homelab directly to the internet but there are a number of ways to do this, pick the one that suits you best.</p>
+</blockquote>
+<p>Setting up an ingress for the service that supports SSL is easy with cert-manager and Traefik, we only need to create an <code>Ingress</code> resource in the <code>miniflux</code> namespace with the appropiate configuration and annotations and cert-manager will take care of the rest:</p>
+<div class="hll"><pre><span></span><span class="c1"># miniflux-ingress.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux-external</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cert-manager.io/cluster-issuer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-production</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ingressClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux.fmartingr.com</span>
+<span class="w">    </span><span class="nt">http</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">        </span><span class="nt">backend</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">service</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux</span>
+<span class="w">            </span><span class="nt">port</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">  </span><span class="nt">tls</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux-fmartingr-com-tls</span>
+<span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">miniflux.fmartingr.com</span>
+</pre></div>
+<div class="hll"><pre><span></span>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>miniflux-ingress.yaml
+</pre></div>
+<p>This will create an ingress for Miniflux in the <code>miniflux</code> namespace and cert-manager will take care of the certificate generation and renewal using the <code>letsencrypt-production</code> issuer as specified in the <code>annotations</code> attribute.</p>
+<p>After a few minutes you should be able to access Miniflux at the domain set up in the <code>host</code> field:</p>
+<pre><code>$ curl -I https://miniflux.fmartingr.com
+HTTP/2 200
+server: traefik
+...
+</code></pre>
+<p>And that's it! You should have Miniflux up and running in your k3s cluster with all the requirements set up.</p>
+<p>I can't recommend <a href="https://miniflux.app">Miniflux</a> enough, it's a great RSS reader that is simple to use and has a great UI. It probably is the first service I deployed in my homelab and I'm happy to have it running in my k3s cluster now, years later.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  <div class="block-info">
+    If you want to approach me directly about this post use the most appropriate channel 
+    from <a href="/about/">the about page</a>.
+  </div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

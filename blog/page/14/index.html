@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/12/05/howto-starbound-dedicated-server-linux-machine/">How to: Starbound dedicated server on a linux machine</a></h1>
+    <div class="info">
+      Published on December 05, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/12/05/howto-starbound-dedicated-server-linux-machine/starbound-logo.jpg" alt="Starbound logo"></p>
+<p>The day it's here! Starbound beta is finally here, and what could be better
+than having a dedicated server to play with your friends? Let's get this done.</p>
+<h2 id="install-steamcmd">Install SteamCMD</h2><p>Official documentation: <a href="https://developer.valvesoftware.com/wiki/SteamCMD">https://developer.valvesoftware.com/wiki/SteamCMD</a></p>
+<p>Basically you need to download it's shell script to manage steam apps, take
+special attention to the lib32 section if you're running the server in a 64bit
+machine.</p>
+<div class="hll"><pre><span></span>wget http://media.steampowered.com/client/steamcmd_linux.tar.gz
+tar xzf steamcmd_linux.tar.gz
+</pre></div>
+<h2 id="install-starbound-on-the-server">Install Starbound on the server</h2><p>You will need to login with your steam username here to download/update
+starbound. Your account<strong> is not needed</strong> to keep the server running.</p>
+<div class="hll"><pre><span></span>./steamcmd.sh
+# Steam updating and validating stuff
+Steam&gt; login your_username_here
+# Your password WILL BE VISIBLE. But after a first login
+# your credentials will be cached so you don&#39;t need to
+# expose them everytime you need to use the steamcmd.
+Steam&gt; app_update 211820
+# This will install starbound, it will take a while
+# depending on the server bandwidth.
+Steam&gt; app_update 211820 validate
+# Validate installation, just in case.
+# I do this in two separate steps because -at least for me-
+# validating on a fresh install take a lot longer that
+# just installing and validating afterwards. Don&#39;t sure why.
+Steam&gt; quit
+# Finished!
+</pre></div>
+<h2 id="start-the-server">Start the server</h2><p>Go to <code>Steam/SteamApps/common/Starbound/linuxXX/</code> (where XX is 32 or 64 based
+on your server architecture).</p>
+<p>Launch <code>launch_starbound_client.sh</code></p>
+<p>If you want to use the universe you played on your computer, just upload the
+universe folder found on your computer to the same folder where the server
+script is.</p>
+<p>Happy gaming!</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/11/29/reading-data-ios-backups-manifestmbdb/">Reading data from iOS backups: Manifest.mbdb</a></h1>
+    <div class="info">
+      Published on November 29, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Recently, I&#39;ve been working on a tool to extract data from iOS backups, and one of the files that a backup have is the Manifest.mbdb (or mbdx for old versions).</p><p>The Manifest.mbdb is a binary file that contains records for the hashed files that the backup includes, the hashed files can be anything that a certain application requires or saved, from a image thumbnail to a sqlite3 database file.</p><p>Reading the file can be tricky, since the record itself have a variable length, so you can just split the file based on a delimiter, you need to read it byte to byte. I&#39;m going to expose here the data structures this file contains:</p><table border="0" cellpadding="0" cellspacing="0" id="string_entity" style="width:100%">
+    <tbody>
+        <tr>
+            <th colspan="4"><strong>String entity</strong></th>
+        </tr>
+        <tr>
+            <th><strong>Type</strong></th>
+            <th><strong>Name</strong></th>
+            <th><strong>Description</strong></th>
+            <th><strong>Null value</strong></th>
+        </tr>
+        <tr>
+            <td>uint16</td>
+            <td>Lenght</td>
+            <td>Length of the string</td>
+            <td>0x0000</td>
+        </tr>
+        <tr>
+            <td>ASCII data</td>
+            <td>Data</td>
+            <td>Actual string of (length) size. Don&#39;t need to read this if length is null.</td>
+            <td><em>nothing</em></td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" id="property_entity" style="width:100%">
+    <tbody>
+        <tr>
+            <th colspan="3"><strong>Property entity</strong></th>
+        </tr>
+        <tr>
+            <th><strong>Type</strong></th>
+            <th><strong>Name</strong></th>
+            <th><strong>Description</strong></th>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Key</td>
+            <td>Key of the property</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>value</td>
+            <td>Property value</td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+        <tr>
+            <th colspan="4"><strong>Record entity</strong></th>
+        </tr>
+        <tr>
+            <th><strong>Type</strong></th>
+            <th><strong>Field name</strong></th>
+            <th><strong>Description</strong></th>
+            <th><strong>Null value</strong></th>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Domain</td>
+            <td>App domain</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Path</td>
+            <td>Path to file</td>
+            <td>0x0000</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Target</td>
+            <td>&nbsp;</td>
+            <td>0xFFFF</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Hash</td>
+            <td>SHA-1 hash of the file</td>
+            <td>0xFFFF</td>
+        </tr>
+        <tr>
+            <td><a href="#string_entity">string</a></td>
+            <td>Encription key</td>
+            <td>Encryption key -if any-</td>
+            <td>0xFFFF</td>
+        </tr>
+        <tr>
+            <td>uint16</td>
+            <td>Mode</td>
+            <td>File mode:
+            <ul>
+                <li>0xAXXX: Symlink</li>
+                <li>0x4000: Directory</li>
+                <li>0x8000: File</li>
+            </ul>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint64</td>
+            <td>inode number</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>User ID</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Group ID</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Last modified time</td>
+            <td>EPOCH</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Last accesed time</td>
+            <td>EPOCH</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint32</td>
+            <td>Created time</td>
+            <td>EPOCH</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint64</td>
+            <td>File size</td>
+            <td>&nbsp;</td>
+            <td>0x0...0</td>
+        </tr>
+        <tr>
+            <td>uint8</td>
+            <td>Flag</td>
+            <td>0x1 to 0xB</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>uint8</td>
+            <td>Properties number</td>
+            <td>Number of properties to follow with this record</td>
+            <td>0x00</td>
+        </tr>
+        <tr>
+            <td><a href="#property_entity">property</a>[0...n]</td>
+            <td>Property objects</td>
+            <td>Each property object -if any-</td>
+            <td><em>nothing</em></td>
+        </tr>
+        <tr>
+            <td>--</td>
+            <td>File name</td>
+            <td>SHA1(domain + path)</td>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody>
+</table><p><strong>More info:&nbsp;</strong> <a href="http://theiphonewiki.com/wiki/ITunes_Backup#Manifest.mbdb">The iPhone Wiki</a> | <a href="http://nagareshwar.securityxploded.com/wp-content/uploads/2012/09/mbdb-record.jpg">This image I found</a></p>
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/08/10/warcraft-3-mac-wineskin/">Warcraft 3 on MAC with wineskin</a></h1>
+    <div class="info">
+      Published on August 10, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>A few days ago, I bought Warcraft III. I never finished it before, since I
+didn't own the game, and lately I had this inner urge to play a game on the
+Warcraft series. Since going back to World of Warcraft isn't an option, I
+decided to rollback to the part of the Warcraft lore that is unknown to me.</p>
+<p>Sadly after buying the game I discovered that they dropped support for the
+game when Apple did the conversion of their hardware from powerpc to intel.
+There was no way of running the mac version of the game on newer hardware, and
+I even contacted Blizzard support about the matter, but the answer was the one
+I feared: I had to use wine. This reminded me of the old days when I was a
+linux user and this was needed in order to play anything on linux.</p>
+<p><img src="/blog/2013/08/10/warcraft-3-mac-wineskin/wineskin.png" alt=""></p>
+<h2 id="installing-the-needed-software">Installing the needed software</h2><p>First of all, you will need to download
+<a href="http://wineskin.urgesoftware.com/tiki-
+index.php?page=Wineskin%2C+Play+your+favorite+Windows+games+on+Mac+OS+X+without+needing+Microsoft+Windows">Wineskin</a>,
+as we're going to use this to "emulate" our windows environment. Also,
+download the windows warcraft downloaders from your battle.net account.</p>
+<p>Execute it and download the last engine (clicking on the plus symbol) and also
+update the wrapper.</p>
+<p>You should see your wineskin window similar to the one on the left.</p>
+<p>Now you need to create a clean wrapper for your Warcraft III installation.</p>
+<h2 id="creating-the-wrapper">Creating the wrapper</h2><p>Just click on the "Create New Blank Wrapper" button and give it a name. I will
+go with "Warcraft III.app". It will ask you to install some mono/gecko
+libraries needed for the wrapper. Just go with it and wait until all the
+process finishes.</p>
+<p>You will be prompted if you want to open the containing folder, do it since
+now we need to configure our wrapper.</p>
+<p>Now, right click the app you created and select "Show package contents".</p>
+<p>Execute Wineskin.app, and select "Install software", on the next panel select
+"Select setup executable" and go to the path of your warcraft 3 downloader,
+that will prompt the installation menu when it finishes.</p>
+<p>Install your warcraft as you would in a windows machine, and when you exit the
+installer wineskin will ask for the main executable file, select "Warcraft
+III.exe". After that, repeat the process with the Frozen Throne executable.</p>
+<h2 id="configuration">Configuration</h2><p>We need to tweak some things before we can play, here's what I did:</p>
+<ul>
+<li>Go to set screen options and set windowed. Since I have a 16:9 screen and the game runs at 4:3, everything is streched. Maybe there's a 16:9 patch around the net.</li>
+<li>I customized the icon with <a href="http://icons.iconarchive.com/icons/3xhumed/mega-games-pack-36/256/Warcraft-3-Reign-of-Chaos-5-icon.png">this one</a>. You need to convert it to ICNS for using it with wineskin (you can use <a href="http://iconverticons.com/online/">this online tool</a>). Copy it into the package and select on the advanced options in the wineskin executable.</li>
+<li>If you want to play with the frozen throne expansion, change the Windows EXE on the advanced settings panel to "Frozen Throne.exe".</li>
+<li>Since wine can't play the cinematics, you can safely remove/rename the movies folder under the warcraft installation folder. (Default: <code>drive_c/Program Files/Warcraft III</code>)</li>
+<li>Delete the game installers if you stored them into the wineskin package to keep the .app file size to a minimum.</li>
+</ul>
+<h2 id="enjoy">Enjoy!</h2><p><img src="/blog/2013/08/10/warcraft-3-mac-wineskin/game.png" alt=""></p>
+<p>It's done! Store the Warcraft III.app somewhere if you don't want to repeat
+the process if you delete the game.</p>
+<h3 id="updates">Updates:</h3><ul>
+<li>Using the -opengl EXE flag will get you a smoother framerate. (thanks to <strong>Sylvain Prevost</strong> in the comments)</li>
+<li>Suggested engine: WS9Wine1.7.2. (by <strong>Sylvain Prevost</strong> in the comments)</li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/07/09/how-install-and-configure-yubikey-pam-module-archlinux/">How to install and configure the yubikey-pam module on archlinux</a></h1>
+    <div class="info">
+      Published on July 09, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/07/09/how-install-and-configure-yubikey-pam-module-archlinux/yubico.jpg" alt=""></p>
+<p>Not so long ago I've been gifted with a Yubikey. It's a two-auth hardware
+solution with multiple auth methods (OTP, Challenge-response, OATH-HOTP and
+static password). It easily scaled to one of my favourite and most useful
+gadgets.</p>
+<p>I've been a google authenticator user for a while, but the yubikey is just
+much easier to work with: when configured, you only need to tap a button on
+the usb stick to generate your key. You can use this in many ways, but in this
+post I'm focusing on ssh authentication and how to install the yubico-pam
+module into an Arch installation.</p>
+<h2 id="installing-the-required-packages">Installing the required packages</h2><p>Thanks to the awesome arch community we already have the needed packages on
+the AUR, these are: <a href="https://aur.archlinux.org/packages/yubico-pam-git/">yubico-pam-
+git</a>, <a href="https://aur.archlinux.org/packages/yubico-c-client-git/">yubico-c-client-
+git</a>, <a href="https://aur.archlinux.org/packages/yubikey-
+personalization-git/">yubikey-
+personalization-git</a> and
+<a href="https://aur.archlinux.org/packages/libyubikey/">libyubikey</a>. Keep in mind
+that you <em>may</em> need to install more packages depending on your system
+installation.</p>
+<p>You can install that with your favourite AUR helper or using <code>makepkg</code>:</p>
+<div class="hll"><pre><span></span>$ curl -O https://aur.archlinux.org/packages/li/libyubikey/libyubikey.tar.gz
+$ tar xvzf libyubikey.tar.gz
+$ cd libyubikey
+$ makepkg PKGBUILD
+# ...
+$ sudo pacman -U libyubikey-1.10-2-x86_64.pkg.tar.xz
+</pre></div>
+<p>Repeat that step for all the packages, in order: <em>libyubikey</em>, <em>yubico-c-
+client</em>, <em>yubikey-personalization</em> and <em>yubico-pam</em>. If you have trouble
+installing from the AUR <a href="https://wiki.archlinux.org/index.php/AUR#Installing_packages">refer to the appropiate wiki
+page</a>.</p>
+<h2 id="configure-the-pam-module">Configure the PAM module</h2><p>Edit <code>/etc/pam.d/sshd</code> and add on top on the rest of the auth modules:</p>
+<div class="hll"><pre><span></span>auth sufficient pam_yubico.so id=XXXX key=XXXX
+</pre></div>
+<p>You can obtain an ID/key conbination by registering your yubikey <a href="https://upgrade.yubico.com/getapikey/">at this
+page</a>.</p>
+<h2 id="authorization-methods">Authorization methods</h2><h3 id="individual-authorization-mapping">Individual authorization mapping</h3><p>If your server have multiple users this is the easiest method to let them
+configure their yubikeys. You just need to create the file
+<code>$HOME/.yubico/authorized_yubikeys</code> with the following contents:</p>
+<div class="hll"><pre><span></span>&lt;username&gt;:&lt;Yubikey token ID 1&gt;[:&lt;Yubikey token ID 2][:...]
+</pre></div>
+<p>The yubikey token identifier can be obtained by removing the last 32
+characters of any OTP value, and you can add more than one ID to the file.</p>
+<p>Restart your ssh server to apply the changes.</p>
+<h3 id="central-authorization-mapping">Central authorization mapping</h3><p>Create a file on <code>/etc/yubikey_mappings</code> that will contain all your users and
+their respective yubikey token identifiers, like this:</p>
+<div class="hll"><pre><span></span>&lt;first username&gt;:&lt;Yubikey token ID 1&gt;[:&lt;Yubikey token ID 2][:...]
+&lt;second username&gt;:&lt;Yubikey token ID 3&gt;[:&lt;Yubikey token ID 4][:...]
+</pre></div>
+<p>For this to work, you need to specify this file to the pam module <code>authfile</code>
+parameter:</p>
+<div class="hll"><pre><span></span>auth sufficient pam_yubico.so id=XXXX key=XXXX authfile=/etc/yubikey_mappings
+</pre></div>
+<p>After that estart your ssh server to apply the changes.</p>
+<h2 id="logging-in">Logging in</h2><p>The next time you're asked for a password on you ssh login you can use a
+yubikey OTP instead of your current password -if you have any-.</p>
+<p>This method works pretty well with authorized ssh keys as well, since you will
+log-in automatically from a computer with a configured ssh key but an OTP -or
+password- will be required for logging in from anywhere else.</p>
+<p><strong>Yubico-pam module |</strong> <a href="https://github.com/Yubico/yubico-pam">Github</a>
+<strong>Yubico |</strong> <a href="http://www.yubico.com/">Home page</a></p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/07/04/extracting-data-from-obfuscated-java-code/">Extracting data from obfuscated java code</a></h1>
+    <div class="info">
+      Published on July 04, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/07/04/extracting-data-from-obfuscated-java-code/header.png" alt=""></p>
+<p>For those who don't know, I started a site a while ago minecraft related (yes,
+<a href="/blog/2013/1/12/weekly-project-status-dropping-projects-hard/">the one I dropped</a>). If you don't know what minecraft is (really?!), you can check <a href="http://minecraft.net/">the
+official site</a>, since this game can be a little
+difficult to explain.</p>
+<p>The project (which is online at
+<a href="http://www.minecraftcodex.com">minecraftcodex.com</a>) is just a database of
+items, blocks, entities, etc. related to the game, but as in any other site of
+this kind, entering all this information can lead to an absolute <em>boredom</em>. So
+I thought... what if I can extract some of the data from the game
+<em>classfiles</em>? That would be awesome! <em>Spoiler alert</em> I did it.</p>
+<blockquote><p>Think this as my personal approach to all steps below: it doesn't mean that they're the best solutions.</p>
+</blockquote>
+<h2 id="unpackaging-the-jarfile-and-decompiling-the-classes">Unpackaging the jarfile and decompiling the classes</h2><p>First of all, you have a <em>minecraft.jar</em> file that it's just a packaged set of
+java compiled files, you can just <code>tar -xf</code> or <code>unzip</code> it into a folder:</p>
+<div class="hll"><pre><span></span>unzip -qq minecraft.jar -d ./jarfile
+</pre></div>
+<p>With this we now have a folder called _jarfile__ _filled with all the jar
+contents. We now need to use a tool to decompile all the compiled files into
+.java files, because the data we're looking for it's hard-coded into the
+source. For this purpose we're going to use <a href="http://varaneckas.com/jad/">JAD</a>,
+a java decompiler. With a single line of <em>bash</em> we can look for all the .class
+files and decompile them into .java source code:</p>
+<div class="hll"><pre><span></span>ls ./jarfile/*.class | xargs -n1 jad -sjava -dclasses &amp;&gt; /dev/null
+</pre></div>
+<p>All the class files have been converted and for ease of use, we've moved them
+into a separate directory. But there's a lot of files! And also, when we open
+one...</p>
+<div class="hll"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">aea</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">aeb</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">aea</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">abyte0</span><span class="o">[]</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">,</span>
+<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d2</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">a</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">abyte0</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span><span class="w"> </span><span class="n">d2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0F</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">nextFloat</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">6F</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5D</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+<p>Look at that beautiful obfuscated piece of code! This is getting more
+interesting at every step: almost 1.600 java files with obfuscated source
+code.</p>
+<h2 id="searching-for-the-data">Searching for the data</h2><p>I took the following approach: Since I know what I'm looking for (blocks,
+items, etc) and I also know that the information is hard-coded into the
+source, there must be some kind of string I can use to search all the files
+and get only the ones that contains the pieces of information I look for. For
+this test, I used the string "diamond":</p>
+<div class="hll"><pre><span></span>$ grep diamond ./classes/*
+./classes/bfp.java:        &quot;cloth&quot;, &quot;chain&quot;, &quot;iron&quot;, &quot;diamond&quot;, &quot;gold&quot;
+./classes/bge.java:        &quot;cloth&quot;, &quot;chain&quot;, &quot;iron&quot;, &quot;diamond&quot;, &quot;gold&quot;
+./classes/kd.java:        w = (new kc(17, &quot;diamonds&quot;, -1, 5, xn.p, k)).c();
+./classes/rf.java:        null, &quot;mob/horse/armor_metal.png&quot;, &quot;mob/horse/armor_gold.png&quot;, &quot;mob/horse/armor_diamond.png&quot;
+./classes/xn.java:        p = (new xn(8)).b(&quot;diamond&quot;).a(wh.l);
+./classes/xn.java:        cg = (new xn(163)).b(&quot;horsearmordiamond&quot;).d(1).a(wh.f);
+</pre></div>
+<p>As you can see, with a simple word we've filtered down to five files (from
+1.521 in this test). Is proof that we can get some information from the source
+code and we now to filter even more, looking around some files I selected
+another keyword: <em>flintAndSteel</em>, works great here, but in a real example you
+will need to use more than one keyword to look for data.</p>
+<div class="hll"><pre><span></span>$ grep flintAndSteel ./classes/*
+./classes/xn.java:    public static xn k = (new xh(3)).b(&quot;flintAndSteel&quot;);
+</pre></div>
+<p>Only one file now, we're going to assume that all the items are listed there
+and proceed to extract the information.</p>
+<h2 id="parsing-the-items">Parsing the items</h2><p>This was the more complicated thing to do. I started doing some regular
+expressions to matchs the values I wanted to extract, but soon that became
+inneficient due to:</p>
+<ul>
+<li>The obfuscated code varies with every released version/snapshot -or it should.</li>
+<li>The use of OOP difficulted method searching with RegEx matching, since the names could change from version to version, making the tool unusable on updates.</li>
+<li>The need to modify the RegEx if something in the code changes, or if we want to extract some other value.</li>
+</ul>
+<p>After some tests, I decided to <em>convert</em> the java code into python. For that,
+I used simple find and match to get the lines that had the definitions I
+wanted, something line this:</p>
+<div class="hll"><pre><span></span><span class="c1">// As a first simple filter, we only use a code line if a double quote is found on it.</span>
+<span class="c1">// Then, regex: /new (?P&lt;code&gt;[a-z]{2}\((?P&lt;id&gt;[1-9]{1,3}).*\&quot;(?P&lt;name&gt;\w+)\&quot;\))/</span>
+<span class="c1">// ...</span>
+<span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">xm</span><span class="p">(</span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="n">xo</span><span class="p">.</span><span class="na">e</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;hoeGold&quot;</span><span class="p">);</span>
+<span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">yi</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="n">aqh</span><span class="p">.</span><span class="na">aD</span><span class="p">.</span><span class="na">cE</span><span class="p">,</span><span class="w"> </span><span class="n">aqh</span><span class="p">.</span><span class="na">aE</span><span class="p">.</span><span class="na">cE</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;seeds&quot;</span><span class="p">);</span>
+<span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">xn</span><span class="p">(</span><span class="mi">40</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;wheat&quot;</span><span class="p">).</span><span class="na">a</span><span class="p">(</span><span class="n">wh</span><span class="p">.</span><span class="na">l</span><span class="p">);</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">vr</span><span class="p">)(</span><span class="k">new</span><span class="w"> </span><span class="n">vr</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="n">vt</span><span class="p">.</span><span class="na">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;helmetCloth&quot;</span><span class="p">);</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">vr</span><span class="p">)(</span><span class="k">new</span><span class="w"> </span><span class="n">vr</span><span class="p">(</span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="n">vt</span><span class="p">.</span><span class="na">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="na">b</span><span class="p">(</span><span class="s">&quot;chestplateCloth&quot;</span><span class="p">);</span>
+<span class="c1">// ...</span>
+</pre></div>
+<p>Since that java code is not python evaluable, just convert it:</p>
+<ul>
+<li>Remove unmatched parenthesis and double definitions</li>
+<li>Remove semicolons</li>
+<li>Remove variable definitios</li>
+<li>Converted arguments to string. This can be improved a lot, leaving decimals, converting floats to python notation, detecting words for string conversion, etc. Since for now I am not using any of the extra parameters this works for me.</li>
+<li>Be careful with reserved python names! (<code>and</code>, <code>all</code>, <code>abs</code>, ...)</li>
+</ul>
+<div class="hll"><pre><span></span><span class="o">//</span> <span class="n">Java</span><span class="p">:</span> <span class="n">U</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span> <span class="n">yi</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="n">aqh</span><span class="o">.</span><span class="n">aD</span><span class="o">.</span><span class="n">cE</span><span class="p">,</span> <span class="n">aqh</span><span class="o">.</span><span class="n">aE</span><span class="o">.</span><span class="n">cE</span><span class="p">))</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;seeds&quot;</span><span class="p">);</span>
+<span class="n">yi</span><span class="p">(</span><span class="s2">&quot;39&quot;</span><span class="p">,</span> <span class="s2">&quot;aqh.ad.cE&quot;</span><span class="p">,</span> <span class="s2">&quot;aqh.aE.cE&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;seeds&quot;</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">Java</span><span class="p">:</span> <span class="n">bm</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span> <span class="n">xi</span><span class="p">(</span><span class="mi">109</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.3</span><span class="n">F</span><span class="p">,</span> <span class="n">true</span><span class="p">))</span><span class="o">.</span><span class="n">a</span><span class="p">(</span><span class="n">mv</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="n">F</span><span class="p">)</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;chickenRaw&quot;</span><span class="p">);</span>
+<span class="n">xi</span><span class="p">(</span><span class="s2">&quot;109&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;0.3F&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">a</span><span class="p">(</span><span class="s2">&quot;mv.s.H&quot;</span><span class="p">,</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;0.3F&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s2">&quot;chickenRaw&quot;</span><span class="p">)</span>
+</pre></div>
+<p>Now I defined an object to match with the java code definitions when
+evaluating:</p>
+<div class="hll"><pre><span></span><span class="k">class</span> <span class="nc">GameItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">game_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;Item(</span><span class="si">%d</span><span class="s2">: &#39;</span><span class="si">%s</span><span class="s2">&#39;)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="s2">&quot;Sets the name&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span>
+</pre></div>
+<p>As you can see, this class have a global "catch-all" method, since we don't
+know the obsfuscated java names, that function will handle every call. In that
+concrete class, we now that an object method with only one string parameter is
+the one that define the item's name, and we do so in our model.</p>
+<p>Now, we will evaluate a line of code that will raise and exception saying that
+the class name <em>&lt;insert obfuscated class name here&gt;</em> is not defined.
+With that, we will declare that name as an instance of the GameItem class, so
+re-evaluating the code again will return a GameItem object:</p>
+<div class="hll"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Tries to evaluate the piece of code that we converted</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c1"># Class name do not exist! We need to define it.</span>
+    <span class="c1"># Extract class name from the error message</span>
+    <span class="c1"># Defined somewhere else: class_error_regex = re.compile(&#39;name \&#39;(?P&lt;name&gt;\w+)\&#39; is not defined&#39;)</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">class_error_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+    <span class="c1"># Define class name as instance of GameItem</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">],</span> <span class="n">class_name</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="p">(</span><span class="n">GameItem</span><span class="p">,),</span> <span class="p">{}))</span>
+    <span class="c1"># Evaluate again to get the object</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+</pre></div>
+<p>And with this, getting data from source code was possible and really helpful.</p>
+<p>A lot of things could be improved from this to get even more information from
+the classes, since after spending lot's of time looking for certain patterns
+on the code I can say what some/most of the parameters mean, and that means
+more automation on new releases!</p>
+<h2 id="real-use-case">Real use case</h2><p>Apart from getting the base data for the site (all the data shown on minecraft
+codex is directly mined from the source code), I made up a tool that shows
+changes from the last comparision -if any. This way I can easily discover what
+the awesome mojang team added to the game every snapshot they release:</p>
+<p><img src="/blog/2013/07/04/extracting-data-from-obfuscated-java-code/diff.png" alt=""></p>
+<p>This is the main tool I use for minecraft codex, is currently bound to the
+site itself but I'm refactoring it to made it standalone and publish it on
+github.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+
+  <div>
+  <div class="pagination">
+    <div class="float-left">
+      
+        <a href="/blog/page/13/">&laquo; Newer</a>
+      
+    </div>
+    <div class="float-right">
+      
+        <a href="/blog/page/15/">Older &raquo;</a>
+      
+    </div>
+    <div class="text-center">Page 14</div>
+    <div class="clearfloat"></div>
+  </div>
+</div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>

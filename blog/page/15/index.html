@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog | Felipe Martin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for fmartingr.com" href="/feed.xml" />
+    <link rel="icon" href="/static/images/favicon.ico">
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    
+    <script defer src="https://umami.fmartingr.dev/script.js" data-website-id="18da78a4-f6bd-4560-88fd-e28ca0b487fa"></script>
+    
+    
+  </head>
+  <body class="">
+    <div class="page-content center">
+      <header>
+        <div class="avatar">
+          <img class="avatar" src="/static/images/avatar.jpg?h=f834fb12">
+        </div>
+        <h1>Felipe Martín</h1>
+        <nav>
+          <a  href="/">/home</a>
+          
+            <a class="text-bold" href="/blog/">/blog</a>
+          
+            <a  href="/about/">/about</a>
+          
+        </nav>
+      </header>
+      <hr>
+      <section class="main-content">
+        
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/07/01/django-stampu-static-sites-with-django/">django-stampu: Static sites with django</a></h1>
+    <div class="info">
+      Published on July 01, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/07/01/django-stampu-static-sites-with-django/django-stampu.png" alt=""></p>
+<blockquote><p>After finishing zombiepress a friend of mine wanted to use it but asked for
+some kind of conversion to static since he uploads its current blog to github.
+That's how this project was born.</p>
+</blockquote>
+<p>Django as a static site? Of course, it's possible, only if your project it's
+using a simple backend infrastructure, it doesn't let users modify the
+database, and also doesn't have contact forms or that kind of stuff. The
+conversion of a blog into static content was really easy, in about 30 minutes
+I had an alpha working -which is the 0.1.2 version uploaded in github/pypi-.</p>
+<p>django-stampu is basically a crawler. Some people led me to solutions much
+more complicated. (Ex. Running a command and let the computer work.) And I
+didn't like that. I wanted a conversion of the site as I see it when running
+the <code>runserver</code> command, for that purpose you have to follow all the internal
+links of the site and save the items as *.html if the content-type matches. It
+also saves the static files in the site, but I need to look further into that,
+because it can't save files needed by css files yet, it only checks for
+src/href attributes on all tags in html files.</p>
+<p>Want to try it?</p>
+<ol>
+<li>Install django-stampu: <code>pip install django-stampu</code></li>
+<li>Add it to your <code>INSTALLED_APPS</code></li>
+<li>Execute the command: <code>python manage.py stamp</code></li>
+<li>Check the <code>_static</code> folder.</li>
+</ol>
+<p>Easy, right? That's what I want to hear!</p>
+<p>Keep in mind that this is a proof of concept, I need to improve lots of things
+and add some configuration variables for people that want to customize their
+sites.</p>
+<p>If you want to contribute in any way, you can <a href="https://github.com/fmartingr/django-stampu">check the source code at
+github</a>.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/06/24/zombiepress-is-here/">Zombiepress is here</a></h1>
+    <div class="info">
+      Published on June 24, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>It finally happened. I got tired of octopress and decided to finish what I
+started: my own blogging CMS.</p>
+<p>It's a really modest thing built with django. I've added some thing to make it
+easy to use (in my oppinion):</p>
+<ul>
+<li>settings.py main preferences (required for running the app) are set on environment variables instead of environment dependant settings files or the not so cool local_settings.py.</li>
+<li>A a key-&gt;value preferences config in the admin (<a href="https://github.com/fmartingr/zombiepress/blob/master/zombiepress/apps/config/models.py#L5">a simple django model with 3 fields</a>) for settings that may be needed to modify in a live environment and would be a shame if it were on the <em>settings.py</em> file. In example, I use it to <a href="https://github.com/fmartingr/zombiepress-fmartingr-theme/blob/master/blog/rss.jinja2#L4-L6">set some RSS preferences</a> and the <a href="https://github.com/fmartingr/zombiepress-fmartingr-theme/blob/master/blog/entry.jinja2#L62-L65">Disqus shortname for the blog comments</a>. To disable blog comments I just need to uncheck the "pass to template" option on the required variable.</li>
+<li>Theming: Not an absolute state of the art, but it's function works: a themes folder and a variable to select one on the settings.py, I just need to create the basic theme.</li>
+<li><strong>(experimental)</strong> Multilanguage support. A friend asked for a easy to use CMS with multilingual support, so I want to give it a shot. Since I never used django with managed multilingual content, it may be easy or it may be not. The code is there, someone has to try it.</li>
+</ul>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/02/27/manga-recommendation-enigma/">Manga recommendation: Enigma</a></h1>
+    <div class="info">
+      Published on February 27, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/02/27/manga-recommendation-enigma/enigma-cover.jpg" alt="&quot;Enigma&quot;"></p>
+<h3 id="summary">Summary</h3><p>Haiba Sumio is a student at a Tokyo High School with an interesting ability…
+He occasionally falls asleep and wakes up with premonitions of the future
+written out on his "Dream Diary". With this ability, Sumio helps out people in
+trouble before anything bad happens, until one day when his peaceful life
+completely changes.</p>
+<p><strong>Volumes</strong>: 7
+<strong>Chapters</strong>: 56 (finished)
+<strong>Genre</strong>: Adventure, Mystery, School, Shounen, Supernatural
+<strong>Story/Art</strong>: Sakaki, Kenji</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/02/27/server-going-slow-after-iptables-configuration-try/">Server going slow after IPTables configuration? Try this</a></h1>
+    <div class="info">
+      Published on February 27, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p>Recently I've started the migration of my company's servers to a new provider.
+After checking that the OS installed on the -now- old servers was Ubuntu 8.04
+(holy shit), I decided to make a fresh install of CentOS 6.3, cleaning up all
+the servers contents and setting up everything from scratch.</p>
+<p>After setting my iptables rules (INPUT whitelisted, OUTPUT accept all) I
+noticed a big delay on every connection made to my server. After checking a
+lot of things, these two solved the issue:</p>
+<h2 id="enable-unilimited-traffic-on-your-loopback-interface">Enable unilimited traffic on your loopback interface</h2><div class="hll"><pre><span></span>iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+</pre></div>
+<h2 id="enable-traffic-for-connections-started-by-your-server">Enable traffic for connections started by your server</h2><div class="hll"><pre><span></span>iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+</pre></div>
+<p>Hope this solves your issue as it did with mine.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+    
+  
+  <article class="blog-post">
+    <h1 class="title"><a href="/blog/2013/02/24/fringe-series-finale-my-oppinion/">Fringe series finale: My oppinion</a></h1>
+    <div class="info">
+      Published on February 24, 2013
+    </div>
+    
+      <div class="content">
+        
+        
+          <p><img src="/blog/2013/02/24/fringe-series-finale-my-oppinion/fringe.png" alt=""></p>
+<blockquote><p>Attention: This entry contains huge spoilers about the series finale of
+Fringe. Also, lots of negative opinions, if you like the series or don't
+understand how sarcasm works, leave.</p>
+</blockquote>
+<p>I've spent the last weeks watching the show from where I dropped it -the third
+season- and I can say that the final season is the worst of all. I don't know
+if the show was losing audicence, if they only wanted to finish it, because I
+don't know another reason to kill the show this way.</p>
+<p>From now on I'm talking only about the fifth season, as should be the more
+important and the one all of you -and myself- have fresh.</p>
+<ul>
+<li><p>The most stupid thing I remember: The tapes with the plan to get rid of the observers.
+Walter had a plan to defeat the observers, a plan that he never tell anyone
+until is destroyed from his mind by an observer. But, hey! He must have
+recorded the plan or something. I mean, he is a very smart one. He did. He
+recorded that he have a plan on a tape, but for knowing what it is you have to
+swim accross a sea of <em>amber</em> to find another eight tapes with the details. OH
+HOW SMART IS THAT! Just a stupid reason to keep characters busy. Without this
+the entire fifth season is done in two-three chapters.</p>
+</li>
+<li><p>The observers powers.
+So, I can read minds and predict -in some way- the future. How can SOMEONE
+DEFEAT YOU IF YOU CAN PREDICT WHAT ARE THEY GOING TO DO. And more, you SAW in
+Walter's mind what the plan was. The observers boss is just… asshole.</p>
+</li>
+<li><p>The plan.
+Tons of VHS tapes with a specific plan of how to build a machine to generate a
+wormhole, but in the last moment, hey! But the observers generate wormholes
+for their supplies, let's use that! Let's put humanity's hope on a last moment
+change! :D</p>
+</li>
+<li><p>Olivia's powers.
+You used your last <em>cortexiphan</em> -or however it's written- on revive yourself
+from a headshot (LOL), then you get injected fours times, each for every
+dimension swap you have to do. Despite the fact that just this sucks, there's
+more: William Bell needed a lot of time just to unleash her powers, and now,
+is not that she have the powers <em>active</em>, but also she knows how to swap
+dimensions on her own will. Fascinating. Also, from this point Olivia don't
+need fear to use her powers.</p>
+</li>
+<li><p>The observers chip.
+Peter removes a chip from a observer and the observer die. Removes it from
+himself and nothing happen. And I'm not talking about how deep the chip was
+jumping insinde the brain when Walter did the tests… just WTF, die already.</p>
+</li>
+<li><p>Gun's agains the observers.
+This is just a little thing: in <em>our</em> universe, Bell design some improved guns
+-that apparently only the rebels have 21 years in the future…- that shoots
+faster to deal with the observers. When Olivia travels to the alternative
+universe, they don't have that guns but can kill observers without a problem.</p>
+</li>
+<li><p>Time travel:
+Apparently there's only one shot for a single one to time-travel: September
+takes it. But when he's killed nothing prevents Walter for time traveling.</p>
+</li>
+<li><p>Olivia vs. Observer Boss.
+Apparently the energy needed to move a truck with the cortexiphan powers is
+the electricity of the entire New York. That's efficient use of energy.</p>
+</li>
+</ul>
+<p>There's more things, I'm sure, but I don't remember just now. Besides, there's
+more than enough here.</p>
+
+        
+      </div>
+    
+    <hr />
+  </article>
+
+  
+
+  <div>
+  <div class="pagination">
+    <div class="float-left">
+      
+        <a href="/blog/page/14/">&laquo; Newer</a>
+      
+    </div>
+    <div class="float-right">
+      
+        <a href="/blog/page/16/">Older &raquo;</a>
+      
+    </div>
+    <div class="text-center">Page 15</div>
+    <div class="clearfloat"></div>
+  </div>
+</div>
+
+      </section>
+      <hr>
+      <footer>
+        <div>My opinions are my own.</div>
+        <div>Created using <a target="_blank" href="https://getlektor.com">Lektor</a> | <a target="_blank" href="https://github.com/fmartingr/fmartingr.com">Source code</a> | <a href="/feed.xml">RSS Feed</a> | <a target="_blank" href="/about">About me</a></div>
+      </footer>
+    
+  
+
+  </body>
+</html>
