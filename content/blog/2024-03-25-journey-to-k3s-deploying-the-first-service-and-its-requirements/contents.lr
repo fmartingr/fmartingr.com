@@ -4,6 +4,9 @@ pub_date: 2024-03-25
 ---
 tags: k3s, homelab
 ---
+edit_comment:
+**2024/04/29**: Fixed a typo in the CloudNative PostgreSQL Operator chart example. The `valuesContent` was incorrect as it used attributes from the `Cluster` CRD, not the Chart.
+---
 body:
 
 I have my K3S cluster up and running, and I'm ready to deploy my first service. I'm going to start migrating one of the simplest services I have running in my current docker setup, the RSS reader [Miniflux](https://miniflux.app/).
@@ -143,12 +146,6 @@ spec:
   chart: cloudnative-pg
   targetNamespace: cnpg-system
   createNamespace: true
-  valuesContent: |-
-    mode: standalone
-    cluster:
-      instances: 2
-    backups:
-      enabled: true
 ```
 
 ```bash
