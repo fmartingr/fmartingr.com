@@ -7,6 +7,11 @@
     </div>
     {% if include_content %}
       <div class="content">
+        {% if not from_index and post.edit_comment %}
+        <h3>Edits</h3>
+        {{ post.edit_comment }}
+        <hr />
+        {% endif %}
         {% if from_index and summary|length > 1 %}
           {{ summary[0] }}
           <p class="text-right"><a href="{{ post|url }}">Read more &raquo;</a></p>
@@ -14,10 +19,6 @@
           {{ post.body }}
         {% endif %}
       </div>
-      {% if not from_index and post.edit_comment %}
-      <h3>Edits</h3>
-      {{ post.edit_comment }}
-      {% endif %}
     {% endif %}
     <hr />
   </article>
